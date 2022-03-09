@@ -9,6 +9,7 @@ const App = () => {
 
   const onAuthStateChanged = (user) => {
     setUser(user);
+    console.log(user);
     if (init) setInit(false);
   };
 
