@@ -1,7 +1,9 @@
 import React from "react";
-import { Button } from "react-native";
 import auth from "@react-native-firebase/auth";
-import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+} from "@react-native-google-signin/google-signin";
 
 GoogleSignin.configure({
   webClientId:
@@ -24,11 +26,11 @@ const GoogleSignIn = () => {
   };
 
   return (
-    <Button
-      title="Google Sign-In"
-      onPress={() =>
-        onGoogleButtonPress().then(() => console.log("Signed in with Google!"))
-      }
+    <GoogleSigninButton
+      style={{ width: 312, height: 50 }}
+      size={GoogleSigninButton.Size.Wide}
+      color={GoogleSigninButton.Color.Dark}
+      onPress={onGoogleButtonPress}
     />
   );
 };
