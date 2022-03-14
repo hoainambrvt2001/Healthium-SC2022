@@ -6,13 +6,14 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Provider, DefaultTheme } from "react-native-paper";
 
-import SearchHospitalScreen from "./screens/SearchHospitalScreen";
+import NavigationBar from "./components/NavigationBar";
+import MedicalServiceScreen from "./screens/MedicalServiceScreen";
 import SigninScreen from "./screens/SigninScreen";
 import StartScreen from "./screens/StartScreen";
 import HomeScreen from "./screens/HomeScreen";
 import SignOutScreen from "./screens/SignOutScreen";
 import AppointmentScreen from "./screens/AppointmentScreen";
-import NavigationBar from "./components/NavigationBar";
+import MedicalRecordScreen from "./screens/MedicalRecordScreen";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -93,8 +94,12 @@ const App = () => {
             <>
               <Stack.Screen name="HomeStack" component={HomeStackScreen} />
               <Stack.Screen
-                name="SearchHospital"
-                component={SearchHospitalScreen}
+                name="MedicalService"
+                component={MedicalServiceScreen}
+              />
+              <Stack.Screen
+                name="MedicalRecord"
+                component={MedicalRecordScreen}
               />
             </>
           ) : (

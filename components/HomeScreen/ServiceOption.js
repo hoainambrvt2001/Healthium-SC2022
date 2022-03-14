@@ -6,7 +6,11 @@ const ServiceOption = ({ service, navigation }) => {
   return (
     <TouchableWithoutFeedback
       onPress={() => {
-        navigation.navigate("SearchHospital");
+        if (service.title === "Medical record") {
+          navigation.navigate("MedicalRecord");
+        } else {
+          navigation.navigate("MedicalService");
+        }
       }}
     >
       <View

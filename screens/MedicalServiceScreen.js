@@ -1,11 +1,11 @@
 import React from "react";
 import { View, FlatList } from "react-native";
 import { Title } from "react-native-paper";
-import HospitalCard from "../components/SearchHospitalScreen/HospitalCard";
-import PopularService from "../components/SearchHospitalScreen/PopularService";
-import Activity from "../components/SearchHospitalScreen/Activity";
+import HospitalCard from "../components/MedicalService/HospitalCard";
+import PopularService from "../components/MedicalService/PopularService";
+import Activity from "../components/MedicalService/Activity";
 
-const SearchHospitalScreen = () => {
+const MedicalServiceScreen = () => {
   return (
     <View style={{ flex: 1 }}>
       <Title style={{ marginLeft: 10, marginVertical: 10 }}>
@@ -60,4 +60,4 @@ const SearchHospitalScreen = () => {
   );
 };
 
-export default SearchHospitalScreen;
+export default MedicalServiceScreen;
