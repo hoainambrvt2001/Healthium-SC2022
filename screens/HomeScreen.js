@@ -1,64 +1,9 @@
 import React from "react";
-import { View, Image, FlatList, TouchableWithoutFeedback } from "react-native";
-import { Card, Title, Subheading, Paragraph } from "react-native-paper";
-
-const listServices = [
-  {
-    img: require("../assets/hospital-icon.png"),
-    title: "Find hospital",
-  },
-  {
-    img: require("../assets/record-icon.png"),
-    title: "Medical record",
-  },
-  {
-    img: require("../assets/analytic-icon.png"),
-    title: "Treatment & Care",
-  },
-  {
-    img: require("../assets/calendar-icon.png"),
-    title: "Appointment",
-  },
-];
-const listNotes = [
-  {
-    id: 1,
-    date: "March 2",
-    title: "Trung Vuong Hospital",
-    description: "Health check",
-  },
-  {
-    id: 2,
-    date: "March 2",
-    title: "Trung Vuong Hospital",
-    description: "Health check",
-  },
-];
-
-const ServiceOptions = ({ service, navigation }) => {
-  return (
-    <TouchableWithoutFeedback
-      onPress={() => {
-        navigation.navigate("SearchHospital");
-      }}
-    >
-      <View
-        style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <View>
-          <Image source={service.img} style={{ width: 25, height: 25 }} />
-        </View>
-        <View>
-          <Paragraph>{service.title}</Paragraph>
-        </View>
-      </View>
-    </TouchableWithoutFeedback>
-  );
-};
+import { View, Image, FlatList } from "react-native";
+import { Title, Paragraph } from "react-native-paper";
+import ServiceOption from "../components/HomeScreen/ServiceOption";
+import NoteCard from "../components/HomeScreen/NoteCard";
+import { listNotes, listServices } from "../components/HomeScreen/CLONEDATA";
 
 const HomeScreen = ({ navigation }) => {
   return (
@@ -76,7 +21,7 @@ const HomeScreen = ({ navigation }) => {
       >
         {listServices.map((service, idx) => {
           return (
-            <ServiceOptions
+            <ServiceOption
               service={service}
               key={idx}
               navigation={navigation}
@@ -117,12 +62,14 @@ const HomeScreen = ({ navigation }) => {
         </View>
       </View>
 
-      <Title style={{ marginLeft: 10 }}>Your health note</Title>
+      <Title style={{ marginLeft: 10, marginBottom: 10 }}>
+        Your health note
+      </Title>
 
       <View
         style={{
           flex: 1,
-          marginVertical: 10,
+          marginBottom: 5,
           flexDirection: "row",
         }}
       >
@@ -136,26 +83,7 @@ const HomeScreen = ({ navigation }) => {
             data={listNotes}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => {
-              return (
-                <Card
-                  mode="elevated"
-                  style={{
-                    marginHorizontal: 10,
-                    backgroundColor: "#fafafa",
-                    borderRadius: 10,
-                    elevation: 4,
-                    minHeight: 150,
-                    marginTop: item.id != 1 ? 8 : 0,
-                    marginBottom: 8,
-                  }}
-                >
-                  <Card.Title title={item.date} />
-                  <Card.Content>
-                    <Subheading>{item.title}</Subheading>
-                    <Paragraph>{item.description}</Paragraph>
-                  </Card.Content>
-                </Card>
-              );
+              return <NoteCard item={item} minHeight={150} />;
             }}
           />
         </View>
@@ -169,26 +97,7 @@ const HomeScreen = ({ navigation }) => {
             data={listNotes}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => {
-              return (
-                <Card
-                  mode="elevated"
-                  style={{
-                    marginHorizontal: 10,
-                    backgroundColor: "#fafafa",
-                    borderRadius: 10,
-                    elevation: 4,
-                    minHeight: 250,
-                    marginTop: item.id != 1 ? 8 : 0,
-                    marginBottom: 8,
-                  }}
-                >
-                  <Card.Title title={item.date} />
-                  <Card.Content>
-                    <Subheading>{item.title}</Subheading>
-                    <Paragraph>{item.description}</Paragraph>
-                  </Card.Content>
-                </Card>
-              );
+              return <NoteCard item={item} minHeight={250} />;
             }}
           />
         </View>

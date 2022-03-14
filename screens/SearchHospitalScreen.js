@@ -1,12 +1,15 @@
 import React from "react";
-import { View, Image, FlatList, Text } from "react-native";
-import { Caption, Paragraph, Title } from "react-native-paper";
+import { View, FlatList } from "react-native";
+import { Title } from "react-native-paper";
+import HospitalCard from "../components/SearchHospitalScreen/HospitalCard";
+import PopularService from "../components/SearchHospitalScreen/PopularService";
+import Activity from "../components/SearchHospitalScreen/Activity";
 
-export const SearchHospitalScreen = () => {
+const SearchHospitalScreen = () => {
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
-      <Title style={{ marginLeft: 10, marginBottom: 10 }}>
-        Filter hospital
+    <View style={{ flex: 1 }}>
+      <Title style={{ marginLeft: 10, marginVertical: 10 }}>
+        Popular services
       </Title>
       <View
         style={{
@@ -21,26 +24,11 @@ export const SearchHospitalScreen = () => {
           data={[1, 2, 3, 4, 5]}
           keyExtractor={(item) => item}
           renderItem={() => {
-            return (
-              <View
-                style={{
-                  backgroundColor: "#F8F8F9",
-                  width: 70,
-                  height: 70,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderRadius: 10,
-                  marginHorizontal: 5,
-                }}
-              >
-                <Image source={require("../assets/hospital-icon-v2.png")} />
-                <Caption>Name</Caption>
-              </View>
-            );
+            return <PopularService />;
           }}
         />
       </View>
-      <Title style={{ marginLeft: 10, marginBottom: 10 }}>Injury type</Title>
+      <Title style={{ marginLeft: 10, marginBottom: 10 }}>Activities</Title>
       <View
         style={{
           flexDirection: "row",
@@ -54,22 +42,7 @@ export const SearchHospitalScreen = () => {
           data={[1, 2, 3, 4, 5]}
           keyExtractor={(item) => item}
           renderItem={() => {
-            return (
-              <View
-                style={{
-                  backgroundColor: "#F8F8F9",
-                  minWidth: 80,
-                  padding: 8,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderRadius: 16,
-                  borderWidth: 1,
-                  marginHorizontal: 5,
-                }}
-              >
-                <Text style={{ fontWeight: "700" }}>Catego</Text>
-              </View>
-            );
+            return <Activity />;
           }}
         />
       </View>
@@ -79,53 +52,12 @@ export const SearchHospitalScreen = () => {
           data={[1, 2, 3, 4, 5]}
           keyExtractor={(item) => item}
           renderItem={() => {
-            return (
-              <View
-                style={{
-                  flexDirection: "row",
-                  backgroundColor: "#F8F8F9",
-                  borderRadius: 10,
-                  elevation: 5,
-                  padding: 10,
-                  margin: 10,
-                }}
-              >
-                <Image
-                  source={require("../assets/trung-vuong-hospital.png")}
-                  style={{ width: 100, height: 100 }}
-                  borderRadius={3}
-                />
-                <View style={{ flex: 1, marginLeft: 15 }}>
-                  <Title>Trung Vuong Hospital</Title>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "flex-end",
-                    }}
-                  >
-                    <Caption style={{ fontSize: 13 }}>Speciality: </Caption>
-                    <Paragraph>Da khoa</Paragraph>
-                  </View>
-                  <View
-                    style={{ flexDirection: "row", alignItems: "flex-end" }}
-                  >
-                    <Caption style={{ fontSize: 13 }}>
-                      From your location:{" "}
-                    </Caption>
-                    <Paragraph>12km</Paragraph>
-                  </View>
-                  <View
-                    style={{ flexDirection: "row", alignItems: "flex-end" }}
-                  >
-                    <Caption style={{ fontSize: 13 }}>Status: </Caption>
-                    <Paragraph>Available</Paragraph>
-                  </View>
-                </View>
-              </View>
-            );
+            return <HospitalCard />;
           }}
         />
       </View>
     </View>
   );
 };
+
+export default SearchHospitalScreen;
