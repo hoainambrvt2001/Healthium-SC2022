@@ -1,70 +1,81 @@
-import React from "react";
-import { View, Text, Image } from "react-native";
-import { Paragraph, Title } from "react-native-paper";
-
-const HospitalCard = () => {
-  return (
-    <View
-      style={{
-        alignItems: "center",
-        minHeight: 230,
-      }}
-    >
-      <Image
-        source={require("../assets/background-img.png")}
-        style={{ width: "100%" }}
-      />
-      <View
-        style={{
-          position: "absolute",
-          top: 80,
-          alignItems: "center",
-          backgroundColor: "white",
-          padding: 20,
-          elevation: 5,
-          marginHorizontal: 30,
-          borderRadius: 10,
-          zIndex: 2,
-        }}
-      >
-        <Text style={{ marginBottom: 3 }}>Hospital</Text>
-        <Text
-          style={{
-            fontSize: 20,
-            color: "#00a19d",
-            fontWeight: "bold",
-            marginBottom: 3,
-          }}
-        >
-          Truong Vuong Hospital
-        </Text>
-        <Text style={{ marginBottom: 3 }}>
-          235 Nguyen Van Cu Phuong 12341234
-        </Text>
-        <Text>Call: 09123123</Text>
-      </View>
-    </View>
-  );
-};
+import React, { useState } from "react";
+import { View, Text, ScrollView, TouchableWithoutFeedback } from "react-native";
+import { Avatar, FAB, Title } from "react-native-paper";
+import MedicalHistory from "../components/MedicalRecord/MedicalHistory";
+import OverviewSection from "../components/MedicalRecord/OverviewSection";
 
 const MedicalRecordScreen = () => {
+  const [chosenOption, setChosenOption] = useState(0);
+
   return (
-    <View style={{ flex: 1 }}>
-      <HospitalCard />
-      <View style={{ paddingHorizontal: 20 }}>
-        <Title>Overview</Title>
-        <Paragraph>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s
-        </Paragraph>
-        <Title>Location</Title>
-        <Paragraph>235 Nguyen Van Cu, District 5, HCMC</Paragraph>
-        <Title>Map</Title>
-        <View>
-          <Text>Integrated Map Here</Text>
+    <View style={{ flex: 1, backgroundColor: "#00a19d" }}>
+      <View style={{ flexDirection: "row", padding: 10 }}>
+        <Avatar.Image
+          source={require("../assets/avatar.png")}
+          backgroundColor={"#ffff"}
+        />
+        <View style={{ marginHorizontal: 10 }}>
+          <Title style={{ color: "#ffffff" }}>Kamisato Ayaka</Title>
+          <Text style={{ color: "#ffffff" }}>Me - Female - 18 years old</Text>
         </View>
       </View>
+      <ScrollView
+        horizontal
+        style={{
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          paddingHorizontal: 10,
+          paddingVertical: 5,
+          backgroundColor: "#f5f7fd",
+          maxHeight: 50,
+        }}
+        showsHorizontalScrollIndicator={false}
+      >
+        {[
+          { title: "Overview" },
+          { title: "Medical history" },
+          { title: "Covid-19 Vacination" },
+        ].map((item, idx) => {
+          return (
+            <TouchableWithoutFeedback
+              key={idx}
+              onPress={() => {
+                setChosenOption(idx);
+              }}
+            >
+              <View
+                style={{
+                  marginRight: 20,
+                  borderBottomColor: chosenOption === idx ? "#00a19d" : null,
+                  borderBottomWidth: chosenOption === idx ? 3 : null,
+                }}
+              >
+                <Title
+                  style={{
+                    color: chosenOption === idx ? "#00a19d" : "#000000",
+                  }}
+                >
+                  {item.title}
+                </Title>
+              </View>
+            </TouchableWithoutFeedback>
+          );
+        })}
+      </ScrollView>
+
+      {chosenOption === 0 ? <OverviewSection /> : <MedicalHistory />}
+
+      <FAB
+        style={{
+          position: "absolute",
+          right: 0,
+          bottom: 0,
+          margin: 16,
+          marginBottom: 70,
+          elevation: 5,
+        }}
+        icon="plus"
+      />
     </View>
   );
 };

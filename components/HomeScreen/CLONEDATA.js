@@ -1,7 +1,7 @@
 export const listServices = [
   {
     img: require("../../assets/hospital-icon.png"),
-    title: "Find hospital",
+    title: "Medical service",
   },
   {
     img: require("../../assets/record-icon.png"),

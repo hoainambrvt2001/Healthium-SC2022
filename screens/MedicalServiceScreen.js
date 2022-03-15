@@ -5,7 +5,7 @@ import HospitalCard from "../components/MedicalService/HospitalCard";
 import PopularService from "../components/MedicalService/PopularService";
 import Activity from "../components/MedicalService/Activity";
 
-const MedicalServiceScreen = () => {
+const MedicalServiceScreen = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
       <Title style={{ marginLeft: 10, marginVertical: 10 }}>
@@ -52,7 +52,7 @@ const MedicalServiceScreen = () => {
           data={[1, 2, 3, 4, 5]}
           keyExtractor={(item) => item}
           renderItem={() => {
-            return <HospitalCard />;
+            return <HospitalCard navigation={navigation} />;
           }}
         />
       </View>

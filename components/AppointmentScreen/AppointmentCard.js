@@ -8,6 +8,7 @@ const AppointmentCard = ({
   appointmentDate,
   appointmentTime,
   appointmentPlace,
+  navigation,
 }) => {
   return (
     <View
@@ -89,6 +90,9 @@ const AppointmentCard = ({
           color="#54A9D3"
           labelStyle={{ color: "white", textTransform: "none" }}
           style={{ borderRadius: 50, width: 100 }}
+          onPress={() => {
+            navigation.navigate("Chat");
+          }}
         >
           Contact
         </Button>

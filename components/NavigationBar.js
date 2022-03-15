@@ -12,7 +12,7 @@ import {
 const NavigationBar = ({ navigation, route, back }) => {
   const mainRoute = getFocusedRouteNameFromRoute(route);
 
-  if (route.name === "SearchHospital") {
+  if (route.name === "MedicalService") {
     return (
       <View style={{ backgroundColor: "#00A19D", paddingBottom: 10 }}>
         <View

@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, FlatList } from "react-native";
 import AppointmentCard from "../components/AppointmentScreen/AppointmentCard";
 
-const AppointmentScreen = () => {
+const AppointmentScreen = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
       <View
@@ -56,7 +56,7 @@ const AppointmentScreen = () => {
           data={[1, 2, 3]}
           keyExtractor={(item) => item}
           renderItem={() => {
-            return <AppointmentCard />;
+            return <AppointmentCard navigation={navigation} />;
           }}
         />
       </View>

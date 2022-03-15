@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image, FlatList } from "react-native";
+import { View, Image, FlatList, TouchableWithoutFeedback } from "react-native";
 import { Title, Paragraph } from "react-native-paper";
 import ServiceOption from "../components/HomeScreen/ServiceOption";
 import NoteCard from "../components/HomeScreen/NoteCard";
@@ -32,35 +32,37 @@ const HomeScreen = ({ navigation }) => {
 
       <Title style={{ marginLeft: 10 }}>Notifications</Title>
 
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "baseline",
-          elevation: 4,
-          backgroundColor: "#fafafa",
-          marginVertical: 10,
-          marginHorizontal: 25,
-          padding: 10,
-          borderRadius: 10,
-        }}
-      >
-        <Image
-          source={require("../assets/sms-icon.png")}
-          style={{ width: 20, height: 20, marginHorizontal: 5 }}
-        />
+      <TouchableWithoutFeedback>
         <View
           style={{
-            marginLeft: 5,
-            minHeight: 100,
+            flexDirection: "row",
+            alignItems: "baseline",
+            elevation: 4,
+            backgroundColor: "#fafafa",
+            marginVertical: 10,
+            marginHorizontal: 25,
+            padding: 10,
+            borderRadius: 10,
           }}
         >
-          <Title>Doctor A</Title>
-          <Paragraph numberOfLines={3}>
-            Do ullamco ex velit anim do proident exercitation et anim tempor.
-            Lorem sunt deserunt labore non excepteur venia
-          </Paragraph>
+          <Image
+            source={require("../assets/sms-icon.png")}
+            style={{ width: 20, height: 20, marginHorizontal: 5 }}
+          />
+          <View
+            style={{
+              marginLeft: 5,
+              minHeight: 100,
+            }}
+          >
+            <Title>Doctor A</Title>
+            <Paragraph numberOfLines={3}>
+              Do ullamco ex velit anim do proident exercitation et anim tempor.
+              Lorem sunt deserunt labore non excepteur venia
+            </Paragraph>
+          </View>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
 
       <Title style={{ marginLeft: 10, marginBottom: 10 }}>
         Your health note

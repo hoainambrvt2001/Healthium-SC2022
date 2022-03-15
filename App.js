@@ -13,7 +13,9 @@ import StartScreen from "./screens/StartScreen";
 import HomeScreen from "./screens/HomeScreen";
 import SignOutScreen from "./screens/SignOutScreen";
 import AppointmentScreen from "./screens/AppointmentScreen";
+import HospitalDetailScreen from "./screens/HospitalDetailScreen";
 import MedicalRecordScreen from "./screens/MedicalRecordScreen";
+import ChatScreen from "./screens/ChatScreen";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -98,9 +100,14 @@ const App = () => {
                 component={MedicalServiceScreen}
               />
               <Stack.Screen
+                name="HospitalDetail"
+                component={HospitalDetailScreen}
+              />
+              <Stack.Screen
                 name="MedicalRecord"
                 component={MedicalRecordScreen}
               />
+              <Stack.Screen name="Chat" component={ChatScreen} />
             </>
           ) : (
             <>
