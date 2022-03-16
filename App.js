@@ -8,7 +8,7 @@ import { Provider, DefaultTheme } from "react-native-paper";
 
 import NavigationBar from "./components/NavigationBar";
 import MedicalServiceScreen from "./screens/MedicalServiceScreen";
-import SigninScreen from "./screens/SigninScreen";
+import SignInScreen from "./screens/SignInScreen";
 import StartScreen from "./screens/StartScreen";
 import HomeScreen from "./screens/HomeScreen";
 import SignOutScreen from "./screens/SignOutScreen";
@@ -16,6 +16,7 @@ import AppointmentScreen from "./screens/AppointmentScreen";
 import HospitalDetailScreen from "./screens/HospitalDetailScreen";
 import MedicalRecordScreen from "./screens/MedicalRecordScreen";
 import ChatScreen from "./screens/ChatScreen";
+import SignUpScreen from "./screens/SignUpScreen";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -120,7 +121,14 @@ const App = () => {
               />
               <Stack.Screen
                 name="SignIn"
-                component={SigninScreen}
+                component={SignInScreen}
+                options={{
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen
+                name="SignUp"
+                component={SignUpScreen}
                 options={{
                   headerShown: false,
                 }}
