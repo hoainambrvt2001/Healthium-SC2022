@@ -8,7 +8,7 @@ const SignInScreen = ({ navigation }) => {
     <View style={{ flex: 1 }}>
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <Image
-          source={require("../assets/AppLogo.png")}
+          source={require("assets/AppLogo.png")}
           style={{ right: 130, bottom: 50, height: 100, width: 100 }}
         />
         <Text style={{ fontSize: 28, fontWeight: "bold", marginBottom: 6 }}>

@@ -25,17 +25,17 @@ const OverviewSection = () => {
         },
 
         {
-          iconName: require("../../assets/analytic-icon.png"),
+          iconName: require("assets/analytic-icon.png"),
           typeName: "Heart rate",
           typeUnit: "beats/minute",
         },
         {
-          iconName: require("../../assets/blood-sample.png"),
+          iconName: require("assets/blood-sample.png"),
           typeName: "Blood sugar",
           typeUnit: "mg/DL",
         },
         {
-          iconName: require("../../assets/blood-pressure.png"),
+          iconName: require("assets/blood-pressure.png"),
           typeName: "Blood pressure",
           typeUnit: "mmHg",
         },

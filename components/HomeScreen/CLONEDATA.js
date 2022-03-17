@@ -1,18 +1,18 @@
 export const listServices = [
   {
-    img: require("../../assets/hospital-icon.png"),
+    img: require("assets/hospital-icon.png"),
     title: "Medical service",
   },
   {
-    img: require("../../assets/record-icon.png"),
+    img: require("assets/record-icon.png"),
     title: "Medical record",
   },
   {
-    img: require("../../assets/analytic-icon.png"),
+    img: require("assets/analytic-icon.png"),
     title: "Treatment & Care",
   },
   {
-    img: require("../../assets/calendar-icon.png"),
+    img: require("assets/calendar-icon.png"),
     title: "Appointment",
   },
 ];

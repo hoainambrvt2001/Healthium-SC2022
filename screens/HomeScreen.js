@@ -46,7 +46,7 @@ const HomeScreen = ({ navigation }) => {
           }}
         >
           <Image
-            source={require("../assets/sms-icon.png")}
+            source={require("assets/sms-icon.png")}
             style={{ width: 20, height: 20, marginHorizontal: 5 }}
           />
           <View

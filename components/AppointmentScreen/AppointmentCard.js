@@ -43,7 +43,7 @@ const AppointmentCard = ({
         </View>
         <View>
           <Avatar.Image
-            source={require("../../assets/doctor-avatar.png")}
+            source={require("assets/doctor-avatar.png")}
             style={{ backgroundColor: "#003145" }}
             size={50}
           />

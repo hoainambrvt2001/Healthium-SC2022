@@ -11,7 +11,7 @@ const HospitalCard = () => {
       }}
     >
       <Image
-        source={require("../assets/background-img.png")}
+        source={require("assets/background-img.png")}
         style={{ width: "100%" }}
       />
       <View

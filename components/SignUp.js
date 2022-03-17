@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import { TextInput, Button, HelperText } from "react-native-paper";
-import auth from "@react-native-firebase/auth";
 import validator from "validator";
 import md5 from "md5";
+
+// Firebase:
+// import auth from "@react-native-firebase/auth";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -19,8 +22,8 @@ const SignUp = () => {
       }) &&
       confirmPassword === password
     ) {
-      auth()
-        .createUserWithEmailAndPassword(email, md5(password))
+      const auth = getAuth();
+      createUserWithEmailAndPassword(auth, email, md5(password))
         .then(() => {
           console.log("User has sign up successfully!");
         })

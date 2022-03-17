@@ -15,7 +15,7 @@ const PopularService = ({ serviceName }) => {
         marginHorizontal: 5,
       }}
     >
-      <Image source={require("../../assets/hospital-icon-v2.png")} />
+      <Image source={require("assets/hospital-icon-v2.png")} />
       <Caption>{serviceName}</Caption>
     </View>
   );

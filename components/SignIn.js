@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { View, Text } from "react-native";
 import { TextInput, Button } from "react-native-paper";
-import auth from "@react-native-firebase/auth";
 import md5 from "md5";
+
+// Firebase:
+// import auth from "@react-native-firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -10,8 +13,9 @@ const SignIn = () => {
   const [secureTextEntry, setSecureTextEntry] = useState(true);
 
   const handleSignIn = () => {
-    auth()
-      .signInWithEmailAndPassword(email, md5(password))
+    const auth = getAuth();
+
+    signInWithEmailAndPassword(auth, email, md5(password))
       .then(() => {
         console.log("User has signed in successful!");
       })

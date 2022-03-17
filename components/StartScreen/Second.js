@@ -1,14 +1,14 @@
 import React from "react";
 import { View, Image } from "react-native";
 import { Text, Title, Button } from "react-native-paper";
-import { styles, second as localStyle } from "../../styles/StartScreenStyles";
+import { styles, second as localStyle } from "styles/StartScreenStyles";
 
 const Second = ({ setPage }) => {
   return (
     <View style={{ ...styles.wrapper, ...localStyle.screen }}>
       <Image
         style={localStyle.centerImage}
-        source={require("../../assets/Start/screen2.png")}
+        source={require("assets/Start/screen2.png")}
         // resizeMethod="auto"
         resizeMode="contain"
       />

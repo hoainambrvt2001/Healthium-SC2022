@@ -11,7 +11,7 @@ const MedicalRecordScreen = () => {
     <View style={{ flex: 1, backgroundColor: "#00a19d" }}>
       <View style={{ flexDirection: "row", padding: 10 }}>
         <Avatar.Image
-          source={require("../assets/avatar.png")}
+          source={require("assets/avatar.png")}
           backgroundColor={"#ffff"}
         />
         <View style={{ marginHorizontal: 10 }}>

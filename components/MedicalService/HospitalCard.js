@@ -57,7 +57,7 @@ const HospitalCard = ({
 };
 
 HospitalCard.defaultProps = {
-  hospitalImage: require("../../assets/trung-vuong-hospital.png"),
+  hospitalImage: require("assets/trung-vuong-hospital.png"),
   hospitalName: "Trung Vuong Hospital",
   hospitalSpeciality: "Da khoa",
   hospitalDistance: "12km",

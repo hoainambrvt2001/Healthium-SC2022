@@ -1,14 +1,14 @@
 import React from "react";
 import { View, Image } from "react-native";
 import { Text, Title, Button } from "react-native-paper";
-import { styles, third as localStyle } from "../../styles/StartScreenStyles";
+import { styles, third as localStyle } from "styles/StartScreenStyles";
 
 const Third = ({ navigation }) => {
   return (
     <View style={{ ...styles.wrapper, ...localStyle.screen }}>
       <Image
         style={localStyle.centerImage}
-        source={require("../../assets/Start/screen3.png")}
+        source={require("assets/Start/screen3.png")}
         resizeMode="contain"
       />
       <View style={styles.paging}>
