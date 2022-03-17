@@ -1,9 +1,9 @@
 import React from "react";
 import { View, FlatList } from "react-native";
 import { Title } from "react-native-paper";
-import HospitalCard from "../components/MedicalService/HospitalCard";
-import PopularService from "../components/MedicalService/PopularService";
-import Activity from "../components/MedicalService/Activity";
+import HospitalCard from "components/MedicalService/HospitalCard";
+import PopularService from "components/MedicalService/PopularService";
+import Activity from "components/MedicalService/Activity";
 
 const MedicalServiceScreen = ({ navigation }) => {
   return (

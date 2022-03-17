@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, ScrollView, TouchableWithoutFeedback } from "react-native";
 import { Avatar, FAB, Title } from "react-native-paper";
-import MedicalHistory from "../components/MedicalRecord/MedicalHistory";
-import OverviewSection from "../components/MedicalRecord/OverviewSection";
+import MedicalHistory from "components/MedicalRecord/MedicalHistory";
+import OverviewSection from "components/MedicalRecord/OverviewSection";
 
 const MedicalRecordScreen = () => {
   const [chosenOption, setChosenOption] = useState(0);

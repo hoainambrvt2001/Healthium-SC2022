@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Image, Text } from "react-native";
-import SignIn from "../components/SignIn";
+import SignIn from "components/SignIn";
 import { Button } from "react-native-paper";
 
 const SignInScreen = ({ navigation }) => {

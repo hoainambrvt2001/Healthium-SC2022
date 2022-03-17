@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, FlatList } from "react-native";
-import AppointmentCard from "../components/AppointmentScreen/AppointmentCard";
+import AppointmentCard from "components/AppointmentScreen/AppointmentCard";
 
 const AppointmentScreen = ({ navigation }) => {
   return (

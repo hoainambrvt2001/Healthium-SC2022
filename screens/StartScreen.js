@@ -1,5 +1,5 @@
 import React from "react";
-import Start from "../components/StartScreen";
+import Start from "components/StartScreen";
 
 const StartScreen = ({ navigation }) => {
   return <Start navigation={navigation} />;
