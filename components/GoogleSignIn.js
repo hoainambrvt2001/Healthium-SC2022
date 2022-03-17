@@ -1,38 +1,67 @@
-// import React from "react";
-// import auth from "@react-native-firebase/auth";
-// import {
-//   GoogleSignin,
-//   GoogleSigninButton,
-// } from "@react-native-google-signin/google-signin";
+import React, { useEffect } from "react";
+import * as WebBrowser from "expo-web-browser";
+import * as Google from "expo-auth-session/providers/google";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithCredential,
+} from "firebase/auth";
+import { Image, View } from "react-native";
+import { Button } from "react-native-paper";
 
-// GoogleSignin.configure({
-//   webClientId:
-//     "384455020533-sai940m1k4rtbqg5q9hlntfk39fe4ud8.apps.googleusercontent.com",
-// });
+WebBrowser.maybeCompleteAuthSession();
 
-// const GoogleSignIn = () => {
-//   const onGoogleButtonPress = async () => {
-//     try {
-//       // Get the users ID token
-//       const { idToken } = await GoogleSignin.signIn();
+const GoogleSignIn = () => {
+  const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
+    clientId:
+      "455009546602-chjlga7kqak4bp469h8q1sgqmlbvp0aa.apps.googleusercontent.com",
+  });
 
-//       // Create a Google credential with the token
-//       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-//       // Sign-in the user with the credential
-//       return auth().signInWithCredential(googleCredential);
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
+  useEffect(() => {
+    if (response?.type === "success") {
+      const { id_token } = response.params;
 
-//   return (
-//     <GoogleSigninButton
-//       style={{ width: 312, height: 50 }}
-//       size={GoogleSigninButton.Size.Wide}
-//       color={GoogleSigninButton.Color.Dark}
-//       onPress={onGoogleButtonPress}
-//     />
-//   );
-// };
+      const auth = getAuth();
+      const credential = GoogleAuthProvider.credential(id_token);
+      signInWithCredential(auth, credential);
+    }
+  }, [response]);
 
-// export default GoogleSignIn;
+  return (
+    <View>
+      <Button
+        disabled={!request}
+        title="Login with Google"
+        onPress={() => {
+          promptAsync();
+        }}
+        icon={({ direction }) => (
+          <Image
+            source={require("assets/google-icon.png")}
+            style={[
+              {
+                transform: [{ scaleX: direction === "rtl" ? -1 : 1 }],
+              },
+              {
+                width: 22,
+                height: 22,
+              },
+            ]}
+          />
+        )}
+        mode="contained"
+        style={{
+          backgroundColor: "#ffffff",
+          width: "100%",
+          paddingVertical: 3,
+          elevation: 2,
+        }}
+        labelStyle={{ color: "#000000" }}
+      >
+        Sign in with Google
+      </Button>
+    </View>
+  );
+};
+
+export default GoogleSignIn;

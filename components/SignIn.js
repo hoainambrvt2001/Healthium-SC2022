@@ -32,6 +32,7 @@ const SignIn = () => {
         mode="outlined"
         onChangeText={(email) => setEmail(email)}
       />
+      <View style={{ height: 5 }}></View>
       <TextInput
         label="Password"
         value={password}
@@ -50,7 +51,7 @@ const SignIn = () => {
       <View style={{ alignItems: "flex-end", marginVertical: 10 }}>
         <Text>Forgot Password?</Text>
       </View>
-      <View style={{ marginBottom: 10 }}>
+      <View>
         <Button
           mode="contained"
           style={{ padding: 2 }}

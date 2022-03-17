@@ -6,7 +6,7 @@ import SignUp from "components/SignUp";
 const SignUpScreen = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ alignItems: "flex-start", marginTop: 20, marginLeft: 10 }}>
+      <View style={{ alignItems: "flex-start", marginTop: 50, marginLeft: 10 }}>
         <IconButton
           icon="arrow-left"
           size={30}
@@ -24,7 +24,12 @@ const SignUpScreen = ({ navigation }) => {
           Create an account to UCare to experience our features
         </Text>
       </View>
-      <View style={{ paddingHorizontal: 30, marginBottom: 140 }}>
+      <View
+        style={{
+          paddingHorizontal: 30,
+          marginBottom: "30%",
+        }}
+      >
         <SignUp />
       </View>
       <View
