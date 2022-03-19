@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Image, Text } from "react-native";
-import SignIn from "components/SignIn";
+import SignIn from "components/Authentication/SignIn";
 import { Button } from "react-native-paper";
-import GoogleSignIn from "components/GoogleSignIn";
+import GoogleSignIn from "components/Authentication/GoogleSignIn";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const SignInScreen = ({ navigation }) => {

@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { IconButton, Button } from "react-native-paper";
-import SignUp from "components/SignUp";
+import SignUp from "components/Authentication/SignUp";
 
 const SignUpScreen = ({ navigation }) => {
   return (

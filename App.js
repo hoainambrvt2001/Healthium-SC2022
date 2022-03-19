@@ -14,6 +14,7 @@ import MedicalServiceScreen from "./screens/MedicalServiceScreen";
 import HospitalDetailScreen from "./screens/HospitalDetailScreen";
 import MedicalRecordScreen from "./screens/MedicalRecordScreen";
 import ChatScreen from "./screens/ChatScreen";
+import NotificationScreen from "screens/NotificationScreen";
 
 // Firebase:
 import "./firebaseServices/firebaseApp";
@@ -71,6 +72,10 @@ const App = () => {
                 component={MedicalRecordScreen}
               />
               <Stack.Screen name="Chat" component={ChatScreen} />
+              <Stack.Screen
+                name="NotificationScreen"
+                component={NotificationScreen}
+              />
             </>
           ) : (
             <>

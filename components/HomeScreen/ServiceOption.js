@@ -8,6 +8,8 @@ const ServiceOption = ({ service, navigation }) => {
       onPress={() => {
         if (service.title === "Medical record") {
           navigation.navigate("MedicalRecord");
+        } else if (service.title === "Treatment and Care") {
+          navigation.navigate("Booking");
         } else {
           navigation.navigate("MedicalService");
         }

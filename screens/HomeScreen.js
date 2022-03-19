@@ -32,7 +32,9 @@ const HomeScreen = ({ navigation }) => {
 
       <Title style={{ marginLeft: 10 }}>Notifications</Title>
 
-      <TouchableWithoutFeedback>
+      <TouchableWithoutFeedback
+        onPress={() => navigation.navigate("NotificationScreen")}
+      >
         <View
           style={{
             flexDirection: "row",

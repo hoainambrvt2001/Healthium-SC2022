@@ -9,6 +9,7 @@ const AppointmentCard = ({
   appointmentTime,
   appointmentPlace,
   navigation,
+  contactInfo,
 }) => {
   return (
     <View
@@ -85,22 +86,24 @@ const AppointmentCard = ({
           justifyContent: "space-evenly",
         }}
       >
+        {contactInfo ? (
+          <Button
+            mode="contained"
+            color="#54A9D3"
+            labelStyle={{ color: "white", textTransform: "none" }}
+            style={{ borderRadius: 50, width: 100 }}
+            onPress={() => {
+              navigation.navigate("Chat");
+            }}
+          >
+            Contact
+          </Button>
+        ) : null}
         <Button
           mode="contained"
           color="#54A9D3"
           labelStyle={{ color: "white", textTransform: "none" }}
-          style={{ borderRadius: 50, width: 100 }}
-          onPress={() => {
-            navigation.navigate("Chat");
-          }}
-        >
-          Contact
-        </Button>
-        <Button
-          mode="contained"
-          color="#54A9D3"
-          labelStyle={{ color: "white", textTransform: "none" }}
-          style={{ borderRadius: 50, width: 130 }}
+          style={{ borderRadius: 50, width: contactInfo ? 130 : 150 }}
         >
           Join meet
         </Button>
@@ -108,7 +111,10 @@ const AppointmentCard = ({
           mode="contained"
           color="#BEBDC5"
           labelStyle={{ color: "white", textTransform: "none" }}
-          style={{ borderRadius: 50, width: 100 }}
+          style={{ borderRadius: 50, width: contactInfo ? 100 : 150 }}
+          onPress={() => {
+            navigation.goBack();
+          }}
         >
           Cancel
         </Button>

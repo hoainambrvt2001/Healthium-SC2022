@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, FlatList } from "react-native";
-import AppointmentCard from "components/AppointmentScreen/AppointmentCard";
+import AppointmentCard from "components/Utils/AppointmentCard";
 
 const AppointmentScreen = ({ navigation }) => {
   return (
@@ -56,7 +56,9 @@ const AppointmentScreen = ({ navigation }) => {
           data={[1, 2, 3]}
           keyExtractor={(item) => item}
           renderItem={() => {
-            return <AppointmentCard navigation={navigation} />;
+            return (
+              <AppointmentCard navigation={navigation} contactInfo={true} />
+            );
           }}
         />
       </View>

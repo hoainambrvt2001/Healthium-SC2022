@@ -1,11 +1,12 @@
 import React from "react";
 import { View, Text, requireNativeComponent } from "react-native";
+import ChatSection from "components/ChatSection";
 
 const ChatScreen = () => {
   return (
-    <View>
-      <Text>ChatScreen</Text>
-    </View>
+    // <View>
+    <ChatSection />
+    // </View>
   );
 };
 

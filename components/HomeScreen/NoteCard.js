@@ -6,13 +6,11 @@ const NoteCard = ({ item, minHeight }) => {
     <Card
       mode="elevated"
       style={{
-        marginHorizontal: 10,
+        margin: 8,
         backgroundColor: "#fafafa",
         borderRadius: 10,
         elevation: 4,
         minHeight: minHeight,
-        marginTop: item.id != 1 ? 8 : 0,
-        marginBottom: 8,
         backgroundColor: "#FFFAFA",
       }}
     >
