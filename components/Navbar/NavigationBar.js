@@ -9,6 +9,8 @@ import TitleNavigation from "../NavigationBar/TitleNavigation";
 const NavigationBar = ({ navigation, route, back }) => {
   const mainRoute = getFocusedRouteNameFromRoute(route);
   let navBar;
+  // console.log("here");
+  // console.log(route);
 
   if (
     (route.name === "MainScreens" && !mainRoute) ||
@@ -16,7 +18,11 @@ const NavigationBar = ({ navigation, route, back }) => {
   ) {
     navBar = <HomeNavigation userName={"Nam Vo"} />;
   } else if (route.name === "MedicalService") {
-    navBar = <SearchNavigation navigation={navigation} back={back} />;
+    // console.log("in if");
+    // console.log(route);
+    navBar = (
+      <SearchNavigation navigation={navigation} route={route} back={back} />
+    );
   } else {
     navBar = (
       <TitleNavigation

@@ -6,6 +6,7 @@ export const defaultBackgroundColor = "#ffffff";
 
 export const styles = StyleSheet.create({
   left: {
-    backgroundColor: primaryColor,
+    backgroundColor: "rgb(179, 194, 206)",
+    maxWidth: "40%",
   },
 });

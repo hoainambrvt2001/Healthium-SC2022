@@ -3,7 +3,9 @@ import { View, Image, TouchableWithoutFeedback } from "react-native";
 import { Caption, Paragraph, Title } from "react-native-paper";
 
 const HospitalCard = ({
+  place_id,
   hospitalImage,
+  photoUrl,
   hospitalName,
   hospitalSpeciality,
   hospitalDistance,
@@ -13,7 +15,10 @@ const HospitalCard = ({
   return (
     <TouchableWithoutFeedback
       onPress={() => {
-        navigation.navigate("HospitalDetail");
+        navigation.navigate("HospitalDetail", {
+          place_id: place_id,
+          photoUrl: photoUrl,
+        });
       }}
     >
       <View
@@ -27,7 +32,7 @@ const HospitalCard = ({
         }}
       >
         <Image
-          source={hospitalImage}
+          source={photoUrl ? { uri: photoUrl } : hospitalImage}
           style={{ width: 100, height: 100 }}
           borderRadius={3}
         />
@@ -48,7 +53,9 @@ const HospitalCard = ({
           </View>
           <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
             <Caption style={{ fontSize: 13 }}>Status: </Caption>
-            <Paragraph>{hospitalStatus}</Paragraph>
+            <Paragraph>
+              {hospitalStatus ? "Available" : "Not available"}
+            </Paragraph>
           </View>
         </View>
       </View>

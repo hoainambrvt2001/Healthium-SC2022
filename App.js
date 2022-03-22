@@ -53,7 +53,11 @@ const App = () => {
         <Stack.Navigator
           initialRouteName="MainScreens"
           screenOptions={{
-            header: (props) => <NavigationBar {...props} />,
+            header: (props) => {
+              // console.log("props");
+              // console.log(props);
+              return <NavigationBar {...props} />;
+            },
           }}
         >
           {currentUser ? (

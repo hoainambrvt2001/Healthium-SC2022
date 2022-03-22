@@ -19,9 +19,9 @@ import {
 // Get a reference to the database service
 const db = getFirestore();
 
-const ChatSection = ({ user_id, curUser_id }) => {
+const ChatSection = ({ user_id, user_name, curUser_id }) => {
   const [mes, setMes] = useState([]);
-  const [user, setUser] = useState("");
+  let init = false;
   const chatsRef =
     user_id < curUser_id
       ? doc(db, "chats", `${user_id}-${curUser_id}`)
@@ -45,10 +45,7 @@ const ChatSection = ({ user_id, curUser_id }) => {
 
   const appendMessages = useCallback(
     (messages) => {
-      console.log(messages);
       setMes((previousMessages) => {
-        console.log("previous");
-        console.log(previousMessages);
         return GiftedChat.append(previousMessages, messages);
       });
     },
@@ -56,7 +53,6 @@ const ChatSection = ({ user_id, curUser_id }) => {
   );
 
   const handleSend = async (messages) => {
-    console.log("here");
     const writes = messages.map((m) =>
       setDoc(chatsRef, {
         messages: [m, ...mes],
@@ -68,99 +64,25 @@ const ChatSection = ({ user_id, curUser_id }) => {
   useEffect(() => {
     // readUser();
     const unsubscribe = onSnapshot(chatsRef, (doc) => {
-      console.log("doc");
-      console.log(doc.data());
       if (!doc.data().messages) return;
 
-      if (mes.length) {
+      if (init) {
         const newMessage = {
           ...doc.data().messages[0],
           createdAt: doc.data().messages[0].createdAt.toDate(),
         };
+        console.log(newMessage);
         appendMessages(newMessage);
       } else {
         const oldMessage = [...doc.data().messages].map((value) => {
-          // if ()
           return { ...value, createdAt: value.createdAt.toDate() };
         });
+        init = true;
         appendMessages(oldMessage);
       }
     });
     return () => unsubscribe();
   }, []);
-
-  useEffect(() => {
-    console.log("mes");
-    console.log(mes);
-  }, [mes]);
-
-  // const [messages, setMessages] = useState([]);
-
-  // useEffect(() => {
-  //   console.log("message");
-  //   console.log(messages);
-  // }, [messages]);
-
-  // useEffect(() => {
-  //   setMessages([
-  //     {
-  //       _id: 1,
-  //       text: "Hello 1",
-  //       createdAt: new Date(),
-  //       user: {
-  //         _id: 2,
-  //         name: "React Native",
-  //         avatar: "https://placeimg.com/140/140/any",
-  //       },
-  //     },
-  //     {
-  //       _id: 2,
-  //       text: "Hello 2",
-  //       createdAt: new Date(),
-  //       user: {
-  //         _id: 1,
-  //         name: "React Native",
-  //         avatar: "https://placeimg.com/140/140/any",
-  //       },
-  //     },
-  //     {
-  //       _id: 3,
-  //       text: "Hello 3",
-  //       createdAt: new Date(),
-  //       user: {
-  //         _id: 1,
-  //         name: "React Native",
-  //         avatar: "https://placeimg.com/140/140/any",
-  //       },
-  //     },
-  //     {
-  //       _id: 4,
-  //       text: "Hello 4",
-  //       createdAt: new Date().setMinutes(50),
-  //       user: {
-  //         _id: 1,
-  //         name: "React Native",
-  //         avatar: "https://placeimg.com/140/140/any",
-  //       },
-  //     },
-  //     {
-  //       _id: 5,
-  //       text: "Hello 5",
-  //       createdAt: new Date().setMinutes(50),
-  //       user: {
-  //         _id: 2,
-  //         name: "React Native",
-  //         avatar: "https://placeimg.com/140/140/any",
-  //       },
-  //     },
-  //   ]);
-  // }, []);
-
-  // const onSend = useCallback((messages = []) => {
-  //   setMessages((previousMessages) =>
-  //     GiftedChat.append(previousMessages, messages)
-  //   );
-  // }, []);
 
   return (
     <GiftedChat
@@ -168,30 +90,40 @@ const ChatSection = ({ user_id, curUser_id }) => {
       onSend={handleSend}
       user={{
         _id: user_id,
+        name: user_name,
       }}
-      // renderMessage={({ currentMessage }) => {
-      //   console.log(currentMessage);
-      //   // if (currText.indexOf("[x]") === -1) {
-      //   //   return (
-      //   //     <View style={styles.left}>
-      // <Text>{currentMessage.currText.replace("[x]", "").trim()}</Text>
-      //   //     </View>
-      //   //   );
-      //   // }
+      renderMessage={({ currentMessage }) => {
+        // console.log(currentMessage);
+        // if (currText.indexOf("[x]") === -1) {
+        //   return (
+        //     <View style={styles.left}>
+        // <Text>{currentMessage.currText.replace("[x]", "").trim()}</Text>;
+        //     </View>
+        //   );
+        // }
 
-      //   return (
-      //     <View>
-      //       <Text>haha </Text>
-      //     </View>
-      //   );
-      // }}
+        return (
+          <View
+            style={
+              currentMessage._id === currentMessage.user.user_id
+                ? styles.left
+                : styles.right
+            }
+          >
+            <Text>{currentMessage.text}</Text>
+          </View>
+        );
+      }}
     />
   );
 };
 
+const random = Math.floor(Math.random() * 2).toString();
+
 ChatSection.defaultProps = {
-  user_id: "1",
-  curUser_id: "2",
+  user_id: random == 1 ? "1" : "2",
+  user_name: random == 1 ? "dat" : "nam",
+  curUser_id: random == 1 ? "2" : "1",
 };
 
 export default ChatSection;

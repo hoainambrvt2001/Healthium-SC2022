@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   callout_image: {
-    width: 50,
+    width: 100,
     height: 100,
     // maxWidth: "40%",
   },

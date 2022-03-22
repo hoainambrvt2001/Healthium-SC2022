@@ -30,9 +30,11 @@ const InfoHospitalCard = ({
           marginBottom: 6,
         }}
       >
-        {hospitalName} Hopistal
+        {hospitalName}
       </Text>
-      <Text style={{ marginBottom: 6 }}>{hospitalAddress}</Text>
+      <Text style={{ marginBottom: 6, textAlign: "center" }}>
+        {hospitalAddress}
+      </Text>
       <Text>Call: {hospitalContact}</Text>
     </View>
   );

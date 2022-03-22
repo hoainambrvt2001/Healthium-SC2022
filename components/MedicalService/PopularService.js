@@ -1,10 +1,11 @@
 import React from "react";
-import { View, Image } from "react-native";
-import { Caption } from "react-native-paper";
+import { View, Image, TouchableOpacity } from "react-native";
+import { Caption, Button } from "react-native-paper";
 
-const PopularService = ({ serviceName }) => {
+const PopularService = ({ onPress, serviceName }) => {
   return (
-    <View
+    <TouchableOpacity
+      onPress={onPress}
       style={{
         backgroundColor: "#F8F8F9",
         width: 70,
@@ -17,12 +18,13 @@ const PopularService = ({ serviceName }) => {
     >
       <Image source={require("assets/hospital-icon-v2.png")} />
       <Caption>{serviceName}</Caption>
-    </View>
+    </TouchableOpacity>
   );
 };
 
 PopularService.defaultProps = {
   serviceName: "Service",
+  onPress: () => {},
 };
 
 export default PopularService;

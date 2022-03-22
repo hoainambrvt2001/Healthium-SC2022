@@ -3,7 +3,7 @@ import { View, Image, FlatList, TouchableWithoutFeedback } from "react-native";
 import { Title, Paragraph } from "react-native-paper";
 import ServiceOption from "components/HomeScreen/ServiceOption";
 import NoteCard from "components/HomeScreen/NoteCard";
-import { listNotes, listServices } from "components/HomeScreen/CLONEDATA";
+import { listNotes, listServices } from "components/Utils/CLONEDATA";
 
 const HomeScreen = ({ navigation }) => {
   return (
