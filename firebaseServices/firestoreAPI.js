@@ -30,3 +30,15 @@ export const getImage = ({ photo_reference }) => {
 
   return url;
 };
+
+export const getInfo = async (place_id, setInfo, setLoading) => {
+  const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${place_id}&fields=address_component,formatted_address,name,geometry,photo,rating,opening_hours/open_now,international_phone_number,formatted_phone_number&key=AIzaSyAWaAtaKV8BYTY2nDCmVtA5WW0M4yyi4Y0`;
+
+  setLoading(true);
+  const result = await fetch(url)
+    .then((response) => response.json())
+    .catch((e) => console.log(e));
+
+  setInfo({ ...result.result });
+  setLoading(false);
+};
