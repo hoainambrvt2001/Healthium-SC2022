@@ -15,7 +15,7 @@ const MedicalServiceScreen = ({ navigation }) => {
     lat: 10.7697759,
     lng: 106.6563129,
     pageToken: 5,
-    radius: 2000,
+    radius: 500,
     rankby: "prominence",
     type: "hospital",
   });

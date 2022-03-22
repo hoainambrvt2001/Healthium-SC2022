@@ -1,11 +1,12 @@
 import React from "react";
+import { View } from "react-native";
 import { Button } from "react-native-paper";
 
 // Firebase:
 // import auth from "@react-native-firebase/auth";
 import { getAuth, signOut } from "firebase/auth";
 
-const SignOutScreen = () => {
+const signOutButton = () => {
   return (
     <Button
       onPress={() => {
@@ -20,4 +21,8 @@ const SignOutScreen = () => {
   );
 };
 
-export default SignOutScreen;
+const UserProfileScreen = () => {
+  return <View></View>;
+};
+
+export default UserProfileScreen;

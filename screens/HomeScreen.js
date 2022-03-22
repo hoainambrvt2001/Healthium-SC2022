@@ -85,7 +85,7 @@ const HomeScreen = ({ navigation }) => {
           <FlatList
             showsVerticalScrollIndicator={false}
             data={listNotes}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(_, idx) => idx}
             renderItem={({ item }) => {
               return <NoteCard item={item} minHeight={150} />;
             }}
@@ -99,7 +99,7 @@ const HomeScreen = ({ navigation }) => {
           <FlatList
             showsVerticalScrollIndicator={false}
             data={listNotes}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(_, idx) => idx}
             renderItem={({ item }) => {
               return <NoteCard item={item} minHeight={250} />;
             }}

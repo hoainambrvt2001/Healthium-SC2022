@@ -1,7 +1,7 @@
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import HomeScreen from "./HomeScreen";
-import SignOutScreen from "./SignOutScreen";
+import UserProfileScreen from "./UserProfileScreen";
 import AppointmentScreen from "./AppointmentScreen";
 
 const Tab = createMaterialBottomTabNavigator();
@@ -30,8 +30,8 @@ const MainScreenRoutes = () => {
         }}
       />
       <Tab.Screen
-        name="SettingsScreen"
-        component={SignOutScreen}
+        name="UserProfileScreen"
+        component={UserProfileScreen}
         options={{
           tabBarLabel: "Settings",
           tabBarIcon: ({ color }) => (

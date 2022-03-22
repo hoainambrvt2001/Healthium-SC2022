@@ -4,7 +4,7 @@ import { styles } from "../../styles/ChatStyles";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { useState, useEffect, useCallback } from "react";
 import { GiftedChat } from "react-native-gifted-chat";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 import app from "../../firebaseServices/firebaseApp";
 import { getDatabase } from "firebase/database";
 import {

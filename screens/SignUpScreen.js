@@ -27,7 +27,6 @@ const SignUpScreen = ({ navigation }) => {
       <View
         style={{
           paddingHorizontal: 30,
-          marginBottom: "30%",
         }}
       >
         <SignUp />
@@ -39,9 +38,7 @@ const SignUpScreen = ({ navigation }) => {
           alignSelf: "center",
         }}
       >
-        <Text style={{ fontSize: 16, marginRight: -10 }}>
-          Already have an account?
-        </Text>
+        <Text style={{ fontSize: 16 }}>Already have an account?</Text>
         <Button
           onPress={() => {
             navigation.navigate("SignIn");

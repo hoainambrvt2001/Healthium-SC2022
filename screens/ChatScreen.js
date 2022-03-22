@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, requireNativeComponent } from "react-native";
+import { View, Text } from "react-native";
 import ChatSection from "components/ChatSection";
 
 const ChatScreen = () => {

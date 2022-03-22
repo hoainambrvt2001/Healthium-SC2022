@@ -36,7 +36,12 @@ const FirstStep = ({ navigation }) => {
             );
           }}
           ListFooterComponent={() => {
-            return <FAB icon="plus" onPress={() => console.log("Pressed")} />;
+            return (
+              <FAB
+                icon="plus"
+                onPress={() => navigation.navigate("CreatePatient")}
+              />
+            );
           }}
           ListFooterComponentStyle={{ justifyContent: "center" }}
         />

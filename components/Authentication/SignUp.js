@@ -1,96 +1,169 @@
-import React, { useState } from "react";
+import React from "react";
 import { View } from "react-native";
 import { TextInput, Button, HelperText } from "react-native-paper";
-import validator from "validator";
-import md5 from "md5";
+import { Formik } from "formik";
+import * as Yup from "yup";
 
 // Firebase:
-// import auth from "@react-native-firebase/auth";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const SignUp = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const auth = getAuth();
 
-  const handleSignUp = () => {
-    if (
-      validator.isEmail(email) &&
-      validator.isStrongPassword(password, {
-        minSymbols: 0,
-      }) &&
-      confirmPassword === password
-    ) {
-      const auth = getAuth();
-      createUserWithEmailAndPassword(auth, email, md5(password))
-        .then(() => {
-          console.log("User has sign up successfully!");
-        })
-        .catch((error) => {
-          if (error.code === "auth/email-already-in-use") {
-            console.log("That email address is already in use!");
-          }
-          if (error.code === "auth/invalid-email") {
-            console.log("That email address is invalid!");
-          }
-          console.log(error);
-        });
-    }
+  const userSchema = Yup.object({
+    name: Yup.string().required("Username is a required field."),
+    email: Yup.string()
+      .email("It must be a valid email.")
+      .required("Email is a required field."),
+    password: Yup.string()
+      .matches(
+        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/,
+        "Must Contain 8 Characters, One Uppercase, One Lowercase and One Number."
+      )
+      .required("Password is a required field."),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password")], "The password confirmation does not match.")
+      .required("Confirm Password is a required field."),
+  });
+
+  const handleSignUp = async (values, actions) => {
+    await createUserWithEmailAndPassword(auth, values.email, values.password)
+      .then(() => {
+        console.log("User has sign up successfully!");
+      })
+      .catch((error) => {
+        if (error.code === "auth/email-already-in-use") {
+          actions.setErrors({
+            email: "That email address is already in use!",
+          });
+        }
+        console.log(error);
+      });
   };
 
   return (
     <View>
-      <View style={{ marginBottom: 15 }}>
-        <TextInput
-          label="Name"
-          value={name}
-          mode="outlined"
-          onChangeText={(name) => setName(name)}
-          left={<TextInput.Icon name="account" color="#00A2B6" />}
-        />
-      </View>
-
-      <View style={{ marginBottom: 15 }}>
-        <TextInput
-          label="Email"
-          value={email}
-          mode="outlined"
-          onChangeText={(email) => setEmail(email)}
-          left={<TextInput.Icon name="email" color="#00A2B6" />}
-        />
-      </View>
-
-      <View style={{ marginBottom: 15 }}>
-        <TextInput
-          label="Password"
-          value={password}
-          mode="outlined"
-          onChangeText={(password) => setPassword(password)}
-          left={<TextInput.Icon name="lock" color="#00A2B6" />}
-        />
-      </View>
-
-      <View style={{ marginBottom: 40 }}>
-        <TextInput
-          label="Confirm Password"
-          value={confirmPassword}
-          mode="outlined"
-          onChangeText={(confirmPassword) =>
-            setConfirmPassword(confirmPassword)
-          }
-          left={<TextInput.Icon name="lock-check" color="#00A2B6" />}
-        />
-      </View>
-
-      <Button
-        mode="contained"
-        labelStyle={{ fontSize: 16 }}
-        style={{ padding: 2 }}
-        onPress={handleSignUp}
+      <Formik
+        initialValues={{
+          name: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        }}
+        initialTouched={{
+          name: false,
+          email: false,
+          password: false,
+          confirmPassword: false,
+        }}
+        validationSchema={userSchema}
+        onSubmit={(values, actions) => {
+          const timer = setTimeout(() => {
+            handleSignUp(values, actions);
+            actions.setSubmitting(false);
+            clearTimeout(timer);
+          }, 500);
+        }}
       >
-        Create
-      </Button>
+        {({
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          values,
+          touched,
+          errors,
+        }) => {
+          return (
+            <>
+              <View>
+                <TextInput
+                  label="Name"
+                  mode="outlined"
+                  value={values.name}
+                  onChangeText={handleChange("name")}
+                  onBlur={handleBlur("name")}
+                  left={<TextInput.Icon name="account" color="#00A2B6" />}
+                />
+                <HelperText
+                  type="error"
+                  padding="none"
+                  visible={touched.name && errors.name !== undefined}
+                >
+                  {errors.name}
+                </HelperText>
+              </View>
+
+              <View>
+                <TextInput
+                  label="Email"
+                  mode="outlined"
+                  value={values.email}
+                  onChangeText={handleChange("email")}
+                  onBlur={handleBlur("email")}
+                  left={<TextInput.Icon name="email" color="#00A2B6" />}
+                />
+                <HelperText
+                  type="error"
+                  padding="none"
+                  visible={touched.email && errors.email !== undefined}
+                >
+                  {errors.email}
+                </HelperText>
+              </View>
+
+              <View>
+                <TextInput
+                  label="Password"
+                  mode="outlined"
+                  value={values.password}
+                  onChangeText={handleChange("password")}
+                  onBlur={handleBlur("password")}
+                  left={<TextInput.Icon name="lock" color="#00A2B6" />}
+                  secureTextEntry={true}
+                />
+                <HelperText
+                  type="error"
+                  padding="none"
+                  visible={touched.password && errors.password !== undefined}
+                >
+                  {errors.password}
+                </HelperText>
+              </View>
+
+              <View style={{ marginBottom: 30 }}>
+                <TextInput
+                  label="Confirm Password"
+                  mode="outlined"
+                  value={values.confirmPassword}
+                  onChangeText={handleChange("confirmPassword")}
+                  onBlur={handleBlur("confirmPassword")}
+                  left={<TextInput.Icon name="lock-check" color="#00A2B6" />}
+                  secureTextEntry={true}
+                />
+                <HelperText
+                  type="error"
+                  padding="none"
+                  visible={
+                    touched.confirmPassword &&
+                    errors.confirmPassword !== undefined
+                  }
+                >
+                  {errors.confirmPassword}
+                </HelperText>
+              </View>
+
+              <Button
+                mode="contained"
+                labelStyle={{ fontSize: 16 }}
+                style={{ padding: 2, marginBottom: 50 }}
+                onPress={handleSubmit}
+              >
+                Create
+              </Button>
+            </>
+          );
+        }}
+      </Formik>
     </View>
   );
 };

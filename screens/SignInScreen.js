@@ -29,11 +29,12 @@ const SignInScreen = ({ navigation }) => {
             </Text>
           </View>
         </View>
-        <View style={{ paddingHorizontal: 30, marginBottom: "35%" }}>
+        <View style={{ paddingHorizontal: 30 }}>
           <SignIn />
           <View style={{ height: 20 }}></View>
           <GoogleSignIn />
         </View>
+        <View style={{ height: 70 }}></View>
         <View
           style={{
             flexDirection: "row",
@@ -41,9 +42,7 @@ const SignInScreen = ({ navigation }) => {
             alignSelf: "center",
           }}
         >
-          <Text style={{ fontSize: 16, marginRight: -10 }}>
-            Don't have an account?
-          </Text>
+          <Text style={{ fontSize: 16 }}>Don't have an account?</Text>
           <Button
             onPress={() => {
               navigation.navigate("SignUp");

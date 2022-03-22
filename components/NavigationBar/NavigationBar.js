@@ -2,9 +2,9 @@ import React from "react";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { globalStyles } from "styles/globalStyles";
-import HomeNavigation from "./NavigationBar/HomeNavigation";
-import SearchNavigation from "./NavigationBar/SearchNavigation";
-import TitleNavigation from "./NavigationBar/TitleNavigation";
+import HomeNavigation from "components/NavigationType/HomeNavigation";
+import SearchNavigation from "components/NavigationType/SearchNavigation";
+import TitleNavigation from "components/NavigationType/TitleNavigation";
 
 const NavigationBar = ({ navigation, route, back }) => {
   const mainRoute = getFocusedRouteNameFromRoute(route);

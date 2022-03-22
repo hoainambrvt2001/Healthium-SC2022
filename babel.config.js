@@ -11,6 +11,7 @@ module.exports = function (api) {
             screens: "./screens",
             assets: "./assets",
             styles: "./styles",
+            firebaseServices: "./firebaseServices",
           },
         },
       ],
