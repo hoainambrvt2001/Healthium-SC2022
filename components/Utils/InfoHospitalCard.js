@@ -32,14 +32,16 @@ const InfoHospitalCard = ({
       >
         {hospitalName} Hopistal
       </Text>
-      <Text style={{ marginBottom: 6 }}>{hospitalAddress}</Text>
+      <Text style={{ marginBottom: 6 }} numberOfLines={2}>
+        {hospitalAddress}
+      </Text>
       <Text>Call: {hospitalContact}</Text>
     </View>
   );
 };
 
 InfoHospitalCard.defaultProps = {
-  hospitalAddress: "Ho Chi Minh city, Vietnam",
+  hospitalAddress: "1231123 0asd0Ho Chi Minh city, Vietnam",
   hospitalName: "Truong Vuong",
   hospitalContact: "09123123",
 };

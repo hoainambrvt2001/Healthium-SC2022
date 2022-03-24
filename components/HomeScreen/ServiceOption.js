@@ -10,7 +10,7 @@ const ServiceOption = ({ service, navigation }) => {
         if (service.title === "Medical record") {
           navigation.navigate("MedicalRecord");
         } else if (service.title === "Treatment and Care") {
-          navigation.navigate("Booking");
+          navigation.navigate("TreatmentCare");
         } else {
           // navigation.dispatch(CommonActions.setParams({ testAnother: true }));
           navigation.navigate("MedicalService");

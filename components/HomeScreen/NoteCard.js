@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Paragraph } from "react-native-paper";
 
-const NoteCard = ({ item, minHeight }) => {
+const NoteCard = ({ item }) => {
   return (
     <Card
       mode="elevated"
@@ -10,8 +10,8 @@ const NoteCard = ({ item, minHeight }) => {
         backgroundColor: "#fafafa",
         borderRadius: 10,
         elevation: 4,
-        minHeight: minHeight,
         backgroundColor: "#FFFAFA",
+        // maxWidth: "50%",
       }}
     >
       <Card.Title title={item.title} titleStyle={{ color: "#7B6BA8" }} />

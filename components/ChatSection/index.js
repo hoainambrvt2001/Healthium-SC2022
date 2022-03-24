@@ -1,9 +1,9 @@
-import { FlatList, View } from "react-native";
-import { Card, Text, Subheading, Paragraph, Avatar } from "react-native-paper";
+import { TouchableWithoutFeedback, View } from "react-native";
+import { Text, Title, Avatar, Subheading } from "react-native-paper";
 import { styles } from "../../styles/ChatStyles";
-import Icon from "react-native-vector-icons/FontAwesome5";
+import Icon from "react-native-vector-icons/Feather";
 import { useState, useEffect, useCallback } from "react";
-import { GiftedChat } from "react-native-gifted-chat";
+import { GiftedChat, Send } from "react-native-gifted-chat";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 import app from "../../firebaseServices/firebaseApp";
 import { getDatabase } from "firebase/database";
@@ -27,21 +27,7 @@ const ChatSection = ({ user_id, user_name, curUser_id }) => {
       ? doc(db, "chats", `${user_id}-${curUser_id}`)
       : doc(db, "chats", `${curUser_id}-${user_id}`);
 
-  // const readUser = async () => {
-  //   const user = await AsyncStorage.getItem("user");
-  //   if (user) {
-  //     console.log("user");
-  //     console.log(user);
-  //     setUser(JSON.parse(user));
-  //   } else {
-  //     console.log("not user");
-  //     const _id = Math.random().toString(36).substring(7);
-  //     const user = { _id, name: _id.substring(0, 4) };
-  //     // console.log(user);
-  //     await AsyncStorage.setItem("user", JSON.stringify(user));
-  //     setUser(user);
-  //   }
-  // };
+  const avatar = "https://placeimg.com/140/140/any";
 
   const appendMessages = useCallback(
     (messages) => {
@@ -85,36 +71,70 @@ const ChatSection = ({ user_id, user_name, curUser_id }) => {
   }, []);
 
   return (
-    <GiftedChat
-      messages={mes}
-      onSend={handleSend}
-      user={{
-        _id: user_id,
-        name: user_name,
-      }}
-      renderMessage={({ currentMessage }) => {
-        // console.log(currentMessage);
-        // if (currText.indexOf("[x]") === -1) {
-        //   return (
-        //     <View style={styles.left}>
-        // <Text>{currentMessage.currText.replace("[x]", "").trim()}</Text>;
-        //     </View>
-        //   );
-        // }
+    <>
+      <View style={styles.info}>
+        <Avatar.Image
+          size={72}
+          source={{ uri: avatar }}
+          style={{ marginLeft: 32 }}
+        />
+        <View style={styles.detail}>
+          <Title style={styles.text}>Name</Title>
+          <Subheading style={styles.text}>Speciality</Subheading>
+        </View>
+      </View>
+      <GiftedChat
+        messages={mes}
+        onSend={handleSend}
+        user={{
+          _id: user_id,
+          name: user_name,
+        }}
+        renderBubble={({ currentMessage }) => {
+          const viewStyle =
+            currentMessage.user._id === curUser_id ? styles.left : styles.right;
+          const textStyle =
+            currentMessage.user._id === curUser_id
+              ? styles.leftText
+              : styles.rightText;
 
-        return (
-          <View
-            style={
-              currentMessage._id === currentMessage.user.user_id
-                ? styles.left
-                : styles.right
-            }
-          >
-            <Text>{currentMessage.text}</Text>
-          </View>
-        );
-      }}
-    />
+          const dateStyle =
+            currentMessage.user._id === curUser_id
+              ? styles.dateLeft
+              : styles.dateRight;
+
+          const option = {
+            hour: "numeric",
+            minute: "numeric",
+          };
+
+          const time = new Date(currentMessage.createdAt)
+            .toLocaleTimeString("en-US", option)
+            .replace(/(:\d{2}| [AP]M)$/, "");
+
+          return (
+            <View style={viewStyle}>
+              <Text style={textStyle}>{currentMessage.text}</Text>
+              <Text style={dateStyle}>
+                {time} {time >= 12 ? "PM" : "AM"}
+              </Text>
+            </View>
+          );
+        }}
+        renderSend={(props) => {
+          return (
+            <Send {...props}>
+              <Icon
+                size={36}
+                name="corner-down-right"
+                style={styles.send}
+                color="#00a19d"
+              />
+            </Send>
+          );
+        }}
+      />
+    </>
   );
 };
 

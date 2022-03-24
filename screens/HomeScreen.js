@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Image, FlatList, TouchableWithoutFeedback } from "react-native";
+import {
+  View,
+  Image,
+  FlatList,
+  TouchableWithoutFeedback,
+  ScrollView,
+  Text,
+} from "react-native";
 import { Title, Paragraph } from "react-native-paper";
 import ServiceOption from "components/HomeScreen/ServiceOption";
 import NoteCard from "components/HomeScreen/NoteCard";
@@ -70,28 +77,87 @@ const HomeScreen = ({ navigation }) => {
         Your health note
       </Title>
 
-      <View
+      {/* <View
         style={{
           flex: 1,
           marginBottom: 5,
           flexDirection: "row",
         }}
-      >
+      > */}
+      {/* <FlatList
+        data={[1]}
+        keyExtractor={(item) => item}
+        renderItem={() => {
+          const listItems = listNotes.map((ele) => {
+            return (
+              <>
+                <View
+                  style={{
+                    margin: 8,
+                    backgroundColor: "#fafafa",
+                    borderRadius: 10,
+                    elevation: 4,
+                    backgroundColor: "#FFFAFA",
+                    flexWrap: "wrap",
+                    maxWidth: "40%",
+                  }}
+                >
+                  <Text>{ele.title}</Text>
+                  <Text>{ele.description}</Text>
+                </View>
+              </>
+            );
+          });
+          return [...listItems];
+        }}
+      /> */}
+      <ScrollView>
         <View
           style={{
-            flex: 1,
+            width: "100%",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            alignItems: "flex-start",
+            justifyContent: "space-between",
+            paddingLeft: 8,
+            paddingRight: 8,
+            paddingBottom: 16,
           }}
         >
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            data={listNotes}
-            keyExtractor={(_, idx) => idx}
-            renderItem={({ item }) => {
-              return <NoteCard item={item} minHeight={150} />;
-            }}
-          />
+          {listNotes.map((ele, index) => {
+            return (
+              <>
+                <View
+                  style={{
+                    padding: 8,
+                    backgroundColor: "#fafafa",
+                    borderRadius: 10,
+                    elevation: 4,
+                    backgroundColor: "#FFFAFA",
+                    maxWidth: "80%",
+                    marginTop: index === 0 ? 0 : 16,
+                  }}
+                >
+                  <Title style={{ color: "#7B6BA8" }}>{ele.title}</Title>
+                  <Paragraph style={{ color: "#7B6BA8" }}>
+                    {ele.description}
+                  </Paragraph>
+                </View>
+                {/* <NoteCard item={ele} minHeight={150} /> */}
+              </>
+            );
+          })}
         </View>
-        <View
+        {/* <FlatList
+          showsVerticalScrollIndicator={false}
+          data={listNotes}
+          keyExtractor={(_, idx) => idx}
+          renderItem={({ item }) => {
+            return <NoteCard item={item} minHeight={150} />;
+          }}
+        /> */}
+      </ScrollView>
+      {/* <View
           style={{
             flex: 1,
           }}
@@ -104,8 +170,8 @@ const HomeScreen = ({ navigation }) => {
               return <NoteCard item={item} minHeight={250} />;
             }}
           />
-        </View>
-      </View>
+        </View> */}
+      {/* </View> */}
     </View>
   );
 };

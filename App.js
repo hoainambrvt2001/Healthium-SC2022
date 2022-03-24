@@ -16,6 +16,7 @@ import MedicalRecordScreen from "screens/MedicalRecordScreen";
 import ChatScreen from "screens/ChatScreen";
 import BookingScreen from "screens/BookingScreen";
 import CreatePatientScreen from "screens/CreatePatientScreen";
+import TreatmentCareScreen from "screens/TreatmentCareScreen";
 
 // Firebase:
 import "./firebaseServices/firebaseApp";
@@ -77,6 +78,10 @@ const App = () => {
                 component={MedicalRecordScreen}
               />
               <Stack.Screen name="Chat" component={ChatScreen} />
+              <Stack.Screen
+                name="TreatmentCare"
+                component={TreatmentCareScreen}
+              />
               <Stack.Screen name="Booking" component={BookingScreen} />
               <Stack.Screen
                 name="CreatePatient"

@@ -16,6 +16,8 @@ const TitleNavigation = ({ navigation, mainRoute, route, back }) => {
     routeTitle = "Medical Record";
   } else if (route.name === "CreatePatient") {
     routeTitle = "Patient Information";
+  } else if (route.name === "TreatmentCare") {
+    routeTitle = "Treatment and Care";
   }
 
   return (

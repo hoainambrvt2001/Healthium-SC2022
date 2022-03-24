@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image } from "react-native";
-import { Paragraph, Title } from "react-native-paper";
+import { View, Text, Image, ScrollView } from "react-native";
+import { Paragraph, Title, Button } from "react-native-paper";
 import InfoHospitalCard from "components/Utils/InfoHospitalCard";
 import MyMapView from "components/Map/MyMapView";
 import { getInfo } from "firebaseServices/firestoreAPI";
 
 const HospitalDetailScreen = ({
+  navigation,
   route: {
     params: { place_id, photoUrl },
   },
@@ -24,7 +25,7 @@ const HospitalDetailScreen = ({
   console.log(photoUrl);
 
   return (
-    <View style={{ flex: 1 }}>
+    <ScrollView style={{ flex: 1, paddingBottom: 16 }}>
       <View
         style={{
           alignItems: "center",
@@ -40,9 +41,7 @@ const HospitalDetailScreen = ({
             hospitalAddress={info.formatted_address}
             hospitalName={info.name}
             hospitalContact={
-              info.formatted_phone_number ||
-              info.international_phone_number ||
-              "unknown"
+              info.formatted_phone_number || info.international_phone_number
             }
           />
         </View>
@@ -69,7 +68,21 @@ const HospitalDetailScreen = ({
           />
         )}
       </View>
-    </View>
+      <View>
+        <Button
+          style={{
+            backgroundColor: "#00a19d",
+            marginTop: 50,
+            marginLeft: 20,
+            marginRight: 20,
+            marginBottom: 20,
+          }}
+          onPress={() => navigation.navigate("Booking")}
+        >
+          <Title style={{ color: "white" }}>Book appointment</Title>
+        </Button>
+      </View>
+    </ScrollView>
   );
 };
 
