@@ -4,7 +4,7 @@ import { Title } from "react-native-paper";
 import HospitalCard from "components/MedicalService/HospitalCard";
 import PopularService from "components/MedicalService/PopularService";
 import Activity from "components/MedicalService/Activity";
-import { getPlaces, getImage } from "firebaseServices/firestoreAPI";
+import { getPlaces, getImage } from "firebaseServices/firestoreApi";
 
 const MedicalServiceScreen = ({ navigation }) => {
   // console.log("params in body");

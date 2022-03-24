@@ -29,7 +29,7 @@ const SignUpScreen = ({ navigation }) => {
           paddingHorizontal: 30,
         }}
       >
-        <SignUp />
+        <SignUp navigation={navigation} />
       </View>
       <View
         style={{

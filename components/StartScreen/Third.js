@@ -38,7 +38,7 @@ const Third = ({ navigation }) => {
       <Button
         style={styles.button}
         color="#4B4C4D"
-        onPress={() => navigation.navigate("SignIn")}
+        onPress={() => navigation.navigate("MainScreens")}
       >
         Next
       </Button>

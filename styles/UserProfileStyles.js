@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { primaryColor } from "./globalStyles";
 
-const defaultBackgroundColor = "#e5ecf8";
+const defaultBackgroundColor = "#ffffff";
 
 export const textColor = "#a1adc7";
 export const titleColor = "#29272e";
@@ -14,17 +14,25 @@ export const styles = StyleSheet.create({
   },
   subtitle: {
     color: textColor,
-    fontWeight: "700",
-    paddingBottom: 8,
+    fontWeight: "bold",
   },
   logout: {
     width: "100%",
-    backgroundColor: "white",
-    padding: 8,
+    backgroundColor: "#fafafa",
+    padding: 5,
     textAlignVertical: "center",
     marginTop: 24,
     marginBottom: 16,
-    fontWeight: "700",
+    fontWeight: "bold",
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
   },
   wrap: {
     marginTop: 8,
@@ -63,11 +71,20 @@ export const avatar = StyleSheet.create({
 export const option = StyleSheet.create({
   container: {
     width: "100%",
-    backgroundColor: "white",
+    backgroundColor: "#fafafa",
     padding: 16,
-    marginTop: 1,
+    marginVertical: 8,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
   },
 });

@@ -3,7 +3,7 @@ import { View, Text, Image, ScrollView } from "react-native";
 import { Paragraph, Title, Button } from "react-native-paper";
 import InfoHospitalCard from "components/Utils/InfoHospitalCard";
 import MyMapView from "components/Map/MyMapView";
-import { getInfo } from "firebaseServices/firestoreAPI";
+import { getInfo } from "firebaseServices/firestoreApi";
 
 const HospitalDetailScreen = ({
   navigation,

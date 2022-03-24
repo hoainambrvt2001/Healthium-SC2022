@@ -32,7 +32,7 @@ const SignInScreen = ({ navigation }) => {
         <View style={{ paddingHorizontal: 30 }}>
           <SignIn />
           <View style={{ height: 20 }}></View>
-          <GoogleSignIn />
+          <GoogleSignIn navigation={navigation} />
         </View>
         <View style={{ height: 70 }}></View>
         <View

@@ -56,8 +56,6 @@ const App = () => {
           initialRouteName="MainScreens"
           screenOptions={{
             header: (props) => {
-              // console.log("props");
-              // console.log(props);
               return <NavigationBar {...props} />;
             },
           }}
@@ -87,9 +85,6 @@ const App = () => {
                 name="CreatePatient"
                 component={CreatePatientScreen}
               />
-            </>
-          ) : (
-            <>
               <Stack.Screen
                 name="StartScreen"
                 component={StartScreen}
@@ -97,6 +92,9 @@ const App = () => {
                   headerShown: false,
                 }}
               />
+            </>
+          ) : (
+            <>
               <Stack.Screen
                 name="SignIn"
                 component={SignInScreen}

@@ -7,7 +7,9 @@ import * as Yup from "yup";
 // Firebase:
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
-const SignUp = () => {
+import { createNewUser } from "firebaseServices/firestoreApi";
+
+const SignUp = ({ navigation }) => {
   const auth = getAuth();
 
   const userSchema = Yup.object({
@@ -28,8 +30,10 @@ const SignUp = () => {
 
   const handleSignUp = async (values, actions) => {
     await createUserWithEmailAndPassword(auth, values.email, values.password)
-      .then(() => {
-        console.log("User has sign up successfully!");
+      .then((userCredential) => {
+        const user = userCredential.user;
+        createNewUser({ ...values, userId: user.uid });
+        navigation.navigate("StartScreen");
       })
       .catch((error) => {
         if (error.code === "auth/email-already-in-use") {

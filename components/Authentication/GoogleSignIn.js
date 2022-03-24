@@ -8,10 +8,11 @@ import {
 } from "firebase/auth";
 import { Image, View } from "react-native";
 import { Button } from "react-native-paper";
+import { createNewUser, existsUser } from "firebaseServices/firestoreApi";
 
 WebBrowser.maybeCompleteAuthSession();
 
-const GoogleSignIn = () => {
+const GoogleSignIn = ({ navigation }) => {
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
     clientId:
       "455009546602-chjlga7kqak4bp469h8q1sgqmlbvp0aa.apps.googleusercontent.com",
@@ -23,7 +24,23 @@ const GoogleSignIn = () => {
 
       const auth = getAuth();
       const credential = GoogleAuthProvider.credential(id_token);
-      signInWithCredential(auth, credential);
+      signInWithCredential(auth, credential)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          if (!existsUser(user.uid)) {
+            const userInfos = {
+              email: user.email,
+              name: user.displayName,
+              userId: user.uid,
+              phoneNumber: user.phoneNumber,
+            };
+            createNewUser(userInfos);
+            navigation.navigate("StartScreen");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }, [response]);
 

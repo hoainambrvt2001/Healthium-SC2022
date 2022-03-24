@@ -9,9 +9,10 @@ const UserAvatar = ({ name, mail }) => {
       <View style={avatar.container}>
         <View style={avatar.visualLayer}></View>
         <Avatar.Image
-          source={{ uri: "https://placeimg.com/140/140/any" }}
+          source={require("assets/avatar.png")}
           size={150}
           style={avatar.avatar}
+          backgroundColor={"#ffff"}
         />
       </View>
       <View style={{ ...avatar.container, marginTop: 8 }}>

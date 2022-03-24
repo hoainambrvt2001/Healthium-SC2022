@@ -1,4 +1,15 @@
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  setDoc,
+  doc,
+  getDoc,
+} from "firebase/firestore";
 const API_KEY = "AIzaSyAWaAtaKV8BYTY2nDCmVtA5WW0M4yyi4Y0";
+
+const firestore = getFirestore();
 
 export const getPlaces = async (
   {
@@ -41,4 +52,31 @@ export const getInfo = async (place_id, setInfo, setLoading) => {
 
   setInfo({ ...result.result });
   setLoading(false);
+};
+
+export const createNewUser = async (userInfos) => {
+  try {
+    await setDoc(doc(firestore, "users", userInfos.userId), {
+      userId: userInfos.userId,
+      name: userInfos.name,
+      email: userInfos.email,
+      avatar: "",
+      birthday: "",
+      idCardNumber: "",
+      address: "",
+      phoneNumber: userInfos.phoneNumber ? userInfos.phoneNumber : "",
+      role: "basic-user",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const existsUser = async (userId) => {
+  try {
+    const userDoc = await getDoc(doc(firestore, "users", userId));
+    return userDoc.exists();
+  } catch (error) {
+    console.log(error);
+  }
 };

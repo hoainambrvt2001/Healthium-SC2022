@@ -1,12 +1,11 @@
 import React from "react";
-import { View, ScrollView } from "react-native";
-import { Button, Subheading, Title } from "react-native-paper";
+import { View, ScrollView, Text } from "react-native";
+import { Button, Subheading } from "react-native-paper";
 import UserAvatar from "components/UserProfileScreen/UserAvatar";
 import Option from "components/UserProfileScreen/Option";
 import { styles } from "styles/UserProfileStyles";
 
 // Firebase:
-// import auth from "@react-native-firebase/auth";
 import { getAuth, signOut } from "firebase/auth";
 
 const SignOutButton = () => {
@@ -20,9 +19,16 @@ const SignOutButton = () => {
       }}
       style={styles.logout}
     >
-      <Subheading style={{ color: "#29272e", fontWeight: "700" }}>
-        LOG OUT
-      </Subheading>
+      <Text
+        style={{
+          color: "#29272e",
+          fontWeight: "bold",
+          textTransform: "none",
+          fontSize: 18,
+        }}
+      >
+        Log out
+      </Text>
     </Button>
   );
 };
