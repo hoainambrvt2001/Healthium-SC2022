@@ -31,9 +31,7 @@ const HealthCard = ({ iconName, typeName, typeUnit, value, measureTime }) => {
       {value ? (
         <>
           <Text style={{ color: "#787a7e" }}>Measure at </Text>
-          <Text style={{ color: "#787a7e" }}>
-            {measureTime.time} - {measureTime.date}
-          </Text>
+          <Text style={{ color: "#787a7e" }}>{measureTime}</Text>
         </>
       ) : null}
     </View>

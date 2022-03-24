@@ -59,7 +59,6 @@ const CreatePatientScreen = () => {
         }}
         validationSchema={patientSchema}
         onSubmit={async (values, actions) => {
-          console.log(values);
           await setDoc(doc(firestore, "patients", user.uid), {
             values,
           });

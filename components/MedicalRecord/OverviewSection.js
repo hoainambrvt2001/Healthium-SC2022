@@ -2,7 +2,7 @@ import React from "react";
 import { View } from "react-native";
 import HealthCard from "./HealthCard";
 
-const OverviewSection = () => {
+const OverviewSection = ({ medicalRecord }) => {
   return (
     <View
       style={{
@@ -17,37 +17,44 @@ const OverviewSection = () => {
           iconName: "thermometer-lines",
           typeName: "Temperature",
           typeUnit: "oC",
+          value: medicalRecord.temperature || "",
+          measureTime: medicalRecord.temperatureMeasureTime || "",
         },
         {
           iconName: "heart-pulse",
           typeName: "SPO2",
           typeUnit: "%",
+          value: medicalRecord.SPO2 || "",
+          measureTime: medicalRecord.SPO2MeasureTime || "",
         },
 
         {
           iconName: require("assets/analytic-icon.png"),
           typeName: "Heart rate",
           typeUnit: "beats/minute",
+          value: medicalRecord.heartRate || "",
+          measureTime: medicalRecord.heartRateMeasureTime || "",
         },
         {
           iconName: require("assets/blood-sample.png"),
           typeName: "Blood sugar",
           typeUnit: "mg/DL",
+          value: medicalRecord.bloodSugar || "",
+          measureTime: medicalRecord.bloodSugarMeasureTime || "",
         },
         {
           iconName: require("assets/blood-pressure.png"),
           typeName: "Blood pressure",
           typeUnit: "mmHg",
+          value: medicalRecord.bloodPressure || "",
+          measureTime: medicalRecord.bloodPressureMeasureTime || "",
         },
         {
           iconName: "human-male-height",
           typeName: "Height",
           typeUnit: "Cm",
-          value: 174.0,
-          measureTime: {
-            time: "15:41",
-            date: "20/01/2022",
-          },
+          value: medicalRecord.height || "",
+          measureTime: medicalRecord.heightMeasureTime || "",
         },
       ].map((item, idx) => {
         return (
@@ -56,8 +63,8 @@ const OverviewSection = () => {
               iconName={item.iconName}
               typeName={item.typeName}
               typeUnit={item.typeUnit}
-              value={item.value ? item.value : null}
-              measureTime={item.measureTime ? item.measureTime : null}
+              value={item.value}
+              measureTime={item.measureTime}
             />
           </View>
         );

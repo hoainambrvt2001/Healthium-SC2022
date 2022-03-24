@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { Avatar, Title, Paragraph } from "react-native-paper";
 import { avatar } from "styles/UserProfileStyles";
 
-const UserAvatar = ({ name, mail }) => {
+const UserAvatar = ({ userInfo }) => {
   return (
     <>
       <View style={avatar.container}>
@@ -16,16 +16,13 @@ const UserAvatar = ({ name, mail }) => {
         />
       </View>
       <View style={{ ...avatar.container, marginTop: 8 }}>
-        <Title>{name}</Title>
-        <Paragraph style={{ color: "rgb(155,155,155)" }}>{mail}</Paragraph>
+        <Title>{userInfo.name || "Name"}</Title>
+        <Paragraph style={{ color: "rgb(155,155,155)" }}>
+          {userInfo.email || "email@gmail.com"}
+        </Paragraph>
       </View>
     </>
   );
-};
-
-UserAvatar.defaultProps = {
-  name: "Name",
-  mail: "email@gmail.com",
 };
 
 export default UserAvatar;

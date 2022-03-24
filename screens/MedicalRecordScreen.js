@@ -1,11 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, TouchableWithoutFeedback } from "react-native";
 import { Avatar, FAB, Title } from "react-native-paper";
 import MedicalHistory from "components/MedicalRecord/MedicalHistory";
 import OverviewSection from "components/MedicalRecord/OverviewSection";
+import { getAuth } from "firebase/auth";
+import { getMedicalRecord, getUserInfo } from "firebaseServices/firestoreApi";
 
-const MedicalRecordScreen = () => {
+const MedicalRecordScreen = ({ navigation }) => {
+  const [medicalRecord, setMedicalRecord] = useState({});
+  const [userInfo, setUserInfo] = useState({});
   const [chosenOption, setChosenOption] = useState(0);
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  useEffect(() => {
+    const getUIF = async () => {
+      await getUserInfo(user.uid)
+        .then((info) => {
+          setUserInfo(info);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+    getUIF();
+
+    const getMR = async () => {
+      await getMedicalRecord(user.uid)
+        .then((record) => {
+          setMedicalRecord(record);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+    getMR();
+
+    const unsubscribe = navigation.addListener("focus", () => {
+      return getMR();
+    });
+
+    return unsubscribe;
+  }, []);
 
   return (
     <View style={{ flex: 1, backgroundColor: "#00a19d" }}>
@@ -15,8 +51,11 @@ const MedicalRecordScreen = () => {
           backgroundColor={"#ffff"}
         />
         <View style={{ marginHorizontal: 10 }}>
-          <Title style={{ color: "#ffffff" }}>Kamisato Ayaka</Title>
-          <Text style={{ color: "#ffffff" }}>Me - Female - 18 years old</Text>
+          <Title style={{ color: "#ffffff" }}>{userInfo.name}</Title>
+          <Text style={{ color: "#ffffff" }}>
+            Me {userInfo.gender ? `-${userInfo.gender}` : null}
+            {userInfo.birthday ? `-${userInfo.birthday}` : null}
+          </Text>
         </View>
       </View>
       <ScrollView
@@ -63,7 +102,11 @@ const MedicalRecordScreen = () => {
         })}
       </ScrollView>
 
-      {chosenOption === 0 ? <OverviewSection /> : <MedicalHistory />}
+      {chosenOption === 0 ? (
+        <OverviewSection medicalRecord={medicalRecord} />
+      ) : (
+        <MedicalHistory />
+      )}
 
       <FAB
         style={{
@@ -75,6 +118,7 @@ const MedicalRecordScreen = () => {
           elevation: 5,
         }}
         icon="plus"
+        onPress={() => navigation.navigate("CreateMedicalRecordScreen")}
       />
     </View>
   );

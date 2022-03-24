@@ -21,6 +21,11 @@ import TreatmentCareScreen from "screens/TreatmentCareScreen";
 // Firebase:
 import "./firebaseServices/firebaseApp";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import CreateMedicalRecordScreen from "screens/CreateMedicalRecordScreen";
+
+// Log:
+import { LogBox } from "react-native";
+LogBox.ignoreAllLogs(); // Ignore all log notifications
 
 const Stack = createNativeStackNavigator();
 
@@ -91,6 +96,10 @@ const App = () => {
                 options={{
                   headerShown: false,
                 }}
+              />
+              <Stack.Screen
+                name="CreateMedicalRecordScreen"
+                component={CreateMedicalRecordScreen}
               />
             </>
           ) : (

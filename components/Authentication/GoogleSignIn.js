@@ -21,22 +21,23 @@ const GoogleSignIn = ({ navigation }) => {
   useEffect(() => {
     if (response?.type === "success") {
       const { id_token } = response.params;
-
       const auth = getAuth();
       const credential = GoogleAuthProvider.credential(id_token);
       signInWithCredential(auth, credential)
         .then((userCredential) => {
           const user = userCredential.user;
-          if (!existsUser(user.uid)) {
-            const userInfos = {
-              email: user.email,
-              name: user.displayName,
-              userId: user.uid,
-              phoneNumber: user.phoneNumber,
-            };
-            createNewUser(userInfos);
-            navigation.navigate("StartScreen");
-          }
+          existsUser(user.uid).then((isExist) => {
+            if (!isExist) {
+              const userInfos = {
+                email: user.email,
+                name: user.displayName,
+                userId: user.uid,
+                phoneNumber: user.phoneNumber,
+              };
+              createNewUser(userInfos);
+              navigation.navigate("StartScreen");
+            }
+          });
         })
         .catch((error) => {
           console.log(error);
