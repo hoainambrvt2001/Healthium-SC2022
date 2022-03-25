@@ -1,10 +1,8 @@
 import app from "./firebaseApp";
 import {
   getFirestore,
-  collection,
   setDoc,
   doc,
-  addDoc,
   getDoc,
   updateDoc,
 } from "firebase/firestore";
@@ -69,6 +67,21 @@ export const createNewUser = async (userInfos) => {
       phoneNumber: userInfos.phoneNumber ? userInfos.phoneNumber : "",
       role: "basic-user",
       gender: "",
+      medicalRecord: {
+        temperature: "",
+        temperatureMeasureTime: "",
+        SPO2: "",
+        SPO2MeasureTime: "",
+        heartRate: "",
+        heartRateMeasureTime: "",
+        bloodSugar: "",
+        bloodSugarMeasureTime: "",
+        bloodPressure: "",
+        bloodPressureMeasureTime: "",
+        height: "",
+        heightMeasureTime: "",
+      },
+      patients: [],
     });
   } catch (error) {
     console.log(error);
@@ -105,10 +118,10 @@ export const getMedicalRecord = async (userId) => {
       if (userDoc.data().medicalRecord) {
         return userDoc.data().medicalRecord;
       } else {
-        return {};
+        return null;
       }
     } else {
-      return {};
+      return null;
     }
   } catch (error) {
     console.log(error);
@@ -123,6 +136,29 @@ export const addMedicalRecord = async (medicalRecord, userId) => {
         ...medicalRecord,
       },
     });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const addPatient = async (patientInfo, userId) => {
+  try {
+    const userRef = doc(firestore, "users", userId);
+    const userSnap = await getDoc(userRef);
+    if (userSnap.exists()) {
+      const userDoc = userSnap.data();
+      userDoc.patients.push({ ...patientInfo, no: userDoc.patients.length });
+      await updateDoc(userRef, userDoc);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateUserInfo = async (userInfo, userId) => {
+  try {
+    const userRef = doc(firestore, "users", userId);
+    await updateDoc(userRef, userInfo);
   } catch (error) {
     console.log(error);
   }

@@ -6,7 +6,16 @@ import Icon from "react-native-vector-icons/AntDesign";
 
 const Option = ({ name, desc, navigation, border }) => {
   return (
-    <TouchableOpacity style={[option.container, border]}>
+    <TouchableOpacity
+      style={[option.container, border]}
+      onPress={() => {
+        if (name === "Privacy") {
+          navigation.navigate("ResetPassword");
+        } else if (name === "Profile settings") {
+          navigation.navigate("ProfileSettings");
+        }
+      }}
+    >
       <View>
         <Subheading style={{ color: titleColor, fontWeight: "700" }}>
           {name}

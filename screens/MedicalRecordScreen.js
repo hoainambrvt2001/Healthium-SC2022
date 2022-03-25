@@ -34,7 +34,6 @@ const MedicalRecordScreen = ({ navigation }) => {
           console.log(error);
         });
     };
-    getMR();
 
     const unsubscribe = navigation.addListener("focus", () => {
       return getMR();
@@ -118,7 +117,7 @@ const MedicalRecordScreen = ({ navigation }) => {
           elevation: 5,
         }}
         icon="plus"
-        onPress={() => navigation.navigate("CreateMedicalRecordScreen")}
+        onPress={() => navigation.navigate("CreateMedicalRecord")}
       />
     </View>
   );

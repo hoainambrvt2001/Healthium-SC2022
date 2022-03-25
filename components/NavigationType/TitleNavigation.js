@@ -15,9 +15,13 @@ const TitleNavigation = ({ navigation, mainRoute, route, back }) => {
   } else if (route.name === "MedicalRecord") {
     routeTitle = "Medical Record";
   } else if (route.name === "CreatePatient") {
-    routeTitle = "Patient Information";
+    routeTitle = "New Patient Information";
   } else if (route.name === "TreatmentCare") {
     routeTitle = "Treatment and Care";
+  } else if (route.name === "ProfileSettings") {
+    routeTitle = "Profile Settings";
+  } else if (route.name === "CreateMedicalRecord") {
+    routeTitle = "Manage Medical Record";
   }
 
   return (

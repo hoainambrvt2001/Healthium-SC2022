@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import {
   Avatar,
   RadioButton,
@@ -13,52 +13,67 @@ import { getAuth } from "firebase/auth";
 import { Formik } from "formik";
 import moment from "moment";
 import * as Yup from "yup";
-import { addPatient } from "firebaseServices/firestoreApi";
+import { getUserInfo, updateUserInfo } from "firebaseServices/firestoreApi";
 
 const BoxDivider = ({ height }) => {
   return <View style={{ height: height }}></View>;
 };
 
-const CreatePatientScreen = ({ navigation }) => {
+const ProfileSettingScreen = ({ navigation }) => {
+  const [userInfo, setUserInfo] = useState({
+    name: "",
+    birthday: "",
+    idCardNumber: "",
+    gender: "",
+    phoneNumber: "",
+    address: "",
+  });
   const [checked, setChecked] = useState(0);
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const auth = getAuth();
   const user = auth.currentUser;
 
-  const patientSchema = Yup.object({
-    patientName: Yup.string().required("Full name is a required field."),
-    patientBirthday: Yup.date().required("Birthday is a required field."),
-    patientIdCardNo: Yup.string().required(
-      "Id card number is a required field."
-    ),
-    patientGender: Yup.string().required("Gender is a required field."),
-    patientTel: Yup.number().required("Phone number is a required field."),
-    patientAddress: Yup.string().required("Address is a required field."),
+  useEffect(() => {
+    const getUIF = async () => {
+      await getUserInfo(user.uid)
+        .then((infos) => {
+          setUserInfo({
+            name: infos.name,
+            birthday: infos.birthday.toDate(),
+            idCardNumber: infos.idCardNumber,
+            gender: infos.gender,
+            phoneNumber: infos.phoneNumber,
+            address: infos.address,
+          });
+        })
+        .catch((errors) => {
+          console.log(errors);
+        });
+    };
+    getUIF();
+  }, []);
+
+  const userInfoSchema = Yup.object({
+    name: Yup.string().required("Full name is a required field."),
+    birthday: Yup.date(),
+    idCardNumber: Yup.string(),
+    gender: Yup.string(),
+    phoneNumber: Yup.number(),
+    address: Yup.string(),
   });
 
   return (
     <ScrollView style={{ flex: 1, paddingHorizontal: 15 }}>
       <Formik
-        initialValues={{
-          patientName: "",
-          patientBirthday: "",
-          patientIdCardNo: "",
-          patientGender: "Male",
-          patientTel: "",
-          patientAddress: "",
-        }}
+        initialValues={userInfo}
+        enableReinitialize={true}
         initialTouched={{
-          patientName: false,
-          patientBirthday: false,
-          patientIdCardNo: false,
-          patientGender: false,
-          patientTel: false,
-          patientAddress: false,
+          name: false,
         }}
-        validationSchema={patientSchema}
-        onSubmit={async (values, actions) => {
-          addPatient(values, user.uid);
+        validationSchema={userInfoSchema}
+        onSubmit={(values, actions) => {
+          updateUserInfo(values, user.uid);
           actions.setSubmitting(false);
           navigation.goBack();
         }}
@@ -75,47 +90,57 @@ const CreatePatientScreen = ({ navigation }) => {
         }) => {
           return (
             <>
-              <BoxDivider height={15} />
-              <View style={{ alignItems: "center" }}>
-                <Avatar.Image
-                  size={100}
-                  source={
-                    values.patientGender === "Male"
-                      ? require("assets/man-icon.png")
-                      : require("assets/woman-icon.png")
-                  }
-                  style={{
-                    backgroundColor: "#ffffff",
-                    borderColor: "#CCCDC6",
-                    borderWidth: 1,
-                  }}
-                />
+              <View
+                style={{
+                  paddingVertical: 15,
+                  alignItems: "center",
+                }}
+              >
+                <TouchableOpacity activeOpacity={0.6}>
+                  <View>
+                    <Avatar.Image
+                      size={100}
+                      source={require("assets/avatar.png")}
+                      style={{
+                        backgroundColor: "#ffffff",
+                        borderColor: "#CCCDC6",
+                        borderWidth: 1,
+                      }}
+                    />
+                    <Avatar.Icon
+                      size={26}
+                      icon="camera"
+                      style={{
+                        position: "absolute",
+                        bottom: 0,
+                        right: "10%",
+                      }}
+                    />
+                  </View>
+                </TouchableOpacity>
               </View>
-              <BoxDivider height={15} />
               <Title>Basic Detail</Title>
-              <Text>Full name</Text>
+              <Text>Name</Text>
               <TextInput
-                value={values.patientName}
+                value={values.name}
                 mode="outlined"
-                onChangeText={handleChange("patientName")}
-                onBlur={handleBlur("patientName")}
+                onChangeText={handleChange("name")}
+                onBlur={handleBlur("name")}
                 outlineColor="#CCCDC6"
               />
               <HelperText
                 type="error"
-                visible={
-                  touched.patientName && errors.patientName !== undefined
-                }
+                visible={touched.name && errors.name !== undefined}
                 padding="none"
               >
-                {errors.patientName}
+                {errors.name}
               </HelperText>
               <Text>Date of birth</Text>
               <BoxDivider height={5} />
               <Button
                 onPress={() => {
                   setShowDatePicker(true);
-                  setFieldTouched("patientBirthday", true);
+                  setFieldTouched("birthday", true);
                 }}
                 mode="outlined"
                 style={{
@@ -124,51 +149,34 @@ const CreatePatientScreen = ({ navigation }) => {
                   borderColor: "#CCCDC6",
                 }}
               >
-                {values.patientBirthday
-                  ? moment(values.patientBirthday).format("LL")
+                {values.birthday
+                  ? moment(values.birthday).format("LL")
                   : "Set date"}
               </Button>
               {showDatePicker && (
                 <DateTimePicker
-                  value={
-                    values.patientBirthday ? values.patientBirthday : new Date()
-                  }
+                  value={values.birthday ? values.birthday : new Date()}
                   mode={"date"}
                   onChange={(_, selectedDate) => {
                     setShowDatePicker(false);
                     let currentDate = selectedDate;
                     if (currentDate) {
-                      setFieldValue("patientBirthday", selectedDate);
+                      setFieldValue("birthday", selectedDate);
                     }
                   }}
                   maximumDate={new Date()}
                 />
               )}
-              <HelperText
-                type="error"
-                visible={touched.patientBirthday && errors.patientBirthday}
-                padding="none"
-              >
-                {errors.patientBirthday}
-              </HelperText>
+              <BoxDivider height={15} />
               <Text>ID Card Number</Text>
               <TextInput
-                value={values.patientIdCardNo}
+                value={values.idCardNumber}
                 mode="outlined"
-                onChangeText={handleChange("patientIdCardNo")}
-                onBlur={handleBlur("patientIdCardNo")}
+                onChangeText={handleChange("idCardNumber")}
+                onBlur={handleBlur("idCardNumber")}
                 outlineColor="#CCCDC6"
               />
-              <HelperText
-                type="error"
-                visible={
-                  touched.patientIdCardNo &&
-                  errors.patientIdCardNo !== undefined
-                }
-                padding="none"
-              >
-                {errors.patientIdCardNo}
-              </HelperText>
+              <BoxDivider height={15} />
               <Text>Gender</Text>
               <BoxDivider height={5} />
               <View
@@ -188,7 +196,7 @@ const CreatePatientScreen = ({ navigation }) => {
                     status={checked === 0 ? "checked" : "unchecked"}
                     onPress={() => {
                       setChecked(0);
-                      setFieldValue("patientGender", "Male");
+                      setFieldValue("gender", "Male");
                     }}
                     label="Male"
                     position="leading"
@@ -207,7 +215,7 @@ const CreatePatientScreen = ({ navigation }) => {
                     status={checked === 1 ? "checked" : "unchecked"}
                     onPress={() => {
                       setChecked(1);
-                      setFieldValue("patientGender", "Female");
+                      setFieldValue("gender", "Female");
                     }}
                     label="Female"
                     position="leading"
@@ -218,38 +226,25 @@ const CreatePatientScreen = ({ navigation }) => {
               <Title>Contact Detail</Title>
               <Text>Mobile number</Text>
               <TextInput
-                value={values.patientTel}
+                value={values.phoneNumber}
                 mode="outlined"
-                onChangeText={handleChange("patientTel")}
-                onBlur={handleBlur("patientTel")}
+                onChangeText={handleChange("phoneNumber")}
+                onBlur={handleBlur("phoneNumber")}
                 outlineColor="#CCCDC6"
                 keyboardType="numeric"
               />
-              <HelperText
-                type="error"
-                visible={touched.patientTel && errors.patientTel !== undefined}
-                padding="none"
-              >
-                {errors.patientTel}
-              </HelperText>
+              <BoxDivider height={15} />
               <Text>Address</Text>
               <TextInput
-                value={values.patientAddress}
+                value={values.address}
                 mode="outlined"
-                onChangeText={handleChange("patientAddress")}
-                onBlur={handleBlur("patientAddress")}
+                onChangeText={handleChange("address")}
+                onBlur={handleBlur("address")}
                 outlineColor="#CCCDC6"
               />
-              <HelperText
-                type="error"
-                visible={touched.patientAddress && errors.patientAddress}
-                padding="none"
-              >
-                {errors.patientAddress}
-              </HelperText>
-              <BoxDivider height={10} />
+              <BoxDivider height={30} />
               <Button mode="contained" onPress={handleSubmit}>
-                Submit
+                Save
               </Button>
               <BoxDivider height={30} />
             </>
@@ -260,4 +255,4 @@ const CreatePatientScreen = ({ navigation }) => {
   );
 };
 
-export default CreatePatientScreen;
+export default ProfileSettingScreen;

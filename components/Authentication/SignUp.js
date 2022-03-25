@@ -62,11 +62,8 @@ const SignUp = ({ navigation }) => {
         }}
         validationSchema={userSchema}
         onSubmit={(values, actions) => {
-          const timer = setTimeout(() => {
-            handleSignUp(values, actions);
-            actions.setSubmitting(false);
-            clearTimeout(timer);
-          }, 500);
+          handleSignUp(values, actions);
+          actions.setSubmitting(false);
         }}
       >
         {({

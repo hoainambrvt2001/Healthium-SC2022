@@ -13,7 +13,20 @@ const BoxDivider = ({ height }) => {
 };
 
 const CreateMedicalRecordScreen = ({ navigation }) => {
-  const [medicalRecord, setMedicalRecord] = useState({});
+  const [medicalRecord, setMedicalRecord] = useState({
+    temperature: "",
+    temperatureMeasureTime: "",
+    SPO2: "",
+    SPO2MeasureTime: "",
+    heartRate: "",
+    heartRateMeasureTime: "",
+    bloodSugar: "",
+    bloodSugarMeasureTime: "",
+    bloodPressure: "",
+    bloodPressureMeasureTime: "",
+    height: "",
+    heightMeasureTime: "",
+  });
   const auth = getAuth();
   const user = auth.currentUser;
 
@@ -21,7 +34,7 @@ const CreateMedicalRecordScreen = ({ navigation }) => {
     const getMR = async () => {
       await getMedicalRecord(user.uid)
         .then((record) => {
-          setMedicalRecord(record);
+          if (record) setMedicalRecord(record);
         })
         .catch((error) => {
           console.log(error);
@@ -33,20 +46,8 @@ const CreateMedicalRecordScreen = ({ navigation }) => {
   return (
     <ScrollView style={{ flex: 1, paddingHorizontal: 15 }}>
       <Formik
-        initialValues={{
-          temperature: "",
-          temperatureMeasureTime: "",
-          SPO2: "",
-          SPO2MeasureTime: "",
-          heartRate: "",
-          heartRateMeasureTime: "",
-          bloodSugar: "",
-          bloodSugarMeasureTime: "",
-          bloodPressure: "",
-          bloodPressureMeasureTime: "",
-          height: "",
-          heightMeasureTime: "",
-        }}
+        initialValues={medicalRecord}
+        enableReinitialize={true}
         onSubmit={(values, actions) => {
           addMedicalRecord(values, user.uid);
           actions.setSubmitting(false);
@@ -84,7 +85,6 @@ const CreateMedicalRecordScreen = ({ navigation }) => {
                 onChangeText={handleChange("temperature")}
                 onBlur={handleBlur("temperature")}
                 outlineColor="#CCCDC6"
-                placeholder={medicalRecord.temperature || ""}
               />
               <Text>Measure time: </Text>
               <TextInput
@@ -93,7 +93,6 @@ const CreateMedicalRecordScreen = ({ navigation }) => {
                 onChangeText={handleChange("temperatureMeasureTime")}
                 onBlur={handleBlur("temperatureMeasureTime")}
                 outlineColor="#CCCDC6"
-                placeholder={medicalRecord.temperatureMeasureTime || ""}
               />
               <BoxDivider height={10} />
               <Title>SPO2 (%)</Title>
@@ -104,7 +103,6 @@ const CreateMedicalRecordScreen = ({ navigation }) => {
                 onChangeText={handleChange("SPO2")}
                 onBlur={handleBlur("SPO2")}
                 outlineColor="#CCCDC6"
-                placeholder={medicalRecord.SPO2 || ""}
               />
               <Text>Measure time: </Text>
               <TextInput
@@ -113,7 +111,6 @@ const CreateMedicalRecordScreen = ({ navigation }) => {
                 onChangeText={handleChange("SPO2MeasureTime")}
                 onBlur={handleBlur("SPO2MeasureTime")}
                 outlineColor="#CCCDC6"
-                placeholder={medicalRecord.SPO2MeasureTime || ""}
               />
               <BoxDivider height={10} />
               <Title>Heart rate (beats/minute)</Title>
@@ -124,7 +121,6 @@ const CreateMedicalRecordScreen = ({ navigation }) => {
                 onChangeText={handleChange("heartRate")}
                 onBlur={handleBlur("heartRate")}
                 outlineColor="#CCCDC6"
-                placeholder={medicalRecord.heartRate || ""}
               />
               <Text>Measure time: </Text>
               <TextInput
@@ -133,7 +129,6 @@ const CreateMedicalRecordScreen = ({ navigation }) => {
                 onChangeText={handleChange("heartRateMeasureTime")}
                 onBlur={handleBlur("heartRateMeasureTime")}
                 outlineColor="#CCCDC6"
-                placeholder={medicalRecord.heartRateMeasureTime || ""}
               />
               <BoxDivider height={10} />
               <Title>Blood sugar (mg/DL)</Title>
@@ -144,7 +139,6 @@ const CreateMedicalRecordScreen = ({ navigation }) => {
                 onChangeText={handleChange("bloodSugar")}
                 onBlur={handleBlur("bloodSugar")}
                 outlineColor="#CCCDC6"
-                placeholder={medicalRecord.bloodSugar || ""}
               />
               <Text>Measure time: </Text>
               <TextInput
@@ -153,7 +147,6 @@ const CreateMedicalRecordScreen = ({ navigation }) => {
                 onChangeText={handleChange("bloodSugarMeasureTime")}
                 onBlur={handleBlur("bloodSugarMeasureTime")}
                 outlineColor="#CCCDC6"
-                placeholder={medicalRecord.bloodSugarMeasureTime || ""}
               />
               <BoxDivider height={10} />
               <Title>Blood presssure (mmHg)</Title>
@@ -164,7 +157,6 @@ const CreateMedicalRecordScreen = ({ navigation }) => {
                 onChangeText={handleChange("bloodPressure")}
                 onBlur={handleBlur("bloodPressure")}
                 outlineColor="#CCCDC6"
-                placeholder={medicalRecord.bloodPressure || ""}
               />
               <Text>Measure time: </Text>
               <TextInput
@@ -173,7 +165,6 @@ const CreateMedicalRecordScreen = ({ navigation }) => {
                 onChangeText={handleChange("bloodPressureMeasureTime")}
                 onBlur={handleBlur("bloodPressureMeasureTime")}
                 outlineColor="#CCCDC6"
-                placeholder={medicalRecord.bloodPressureMeasureTime || ""}
               />
               <BoxDivider height={10} />
               <Title>Height (Cm)</Title>
@@ -184,7 +175,6 @@ const CreateMedicalRecordScreen = ({ navigation }) => {
                 onChangeText={handleChange("height")}
                 onBlur={handleBlur("height")}
                 outlineColor="#CCCDC6"
-                placeholder={medicalRecord.height || ""}
               />
               <Text>Measure time: </Text>
               <TextInput
@@ -193,7 +183,6 @@ const CreateMedicalRecordScreen = ({ navigation }) => {
                 onChangeText={handleChange("heightMeasureTime")}
                 onBlur={handleBlur("heightMeasureTime")}
                 outlineColor="#CCCDC6"
-                placeholder={medicalRecord.heightPressureMeasureTime || ""}
               />
               <BoxDivider height={40} />
               <Button mode="contained" onPress={handleSubmit}>
