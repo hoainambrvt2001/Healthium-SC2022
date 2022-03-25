@@ -11,8 +11,8 @@ const InfoHospitalCard = ({
       style={{
         alignItems: "center",
         backgroundColor: "#ffffff",
-        paddingHorizontal: 20,
-        paddingVertical: 15,
+        paddingHorizontal: 15,
+        paddingVertical: 20,
         elevation: 5,
         marginHorizontal: 30,
         borderRadius: 10,
@@ -28,11 +28,12 @@ const InfoHospitalCard = ({
           color: "#00a19d",
           fontWeight: "bold",
           marginBottom: 6,
+          textAlign: "center",
         }}
       >
         {hospitalName} Hopistal
       </Text>
-      <Text style={{ marginBottom: 6 }} numberOfLines={2}>
+      <Text style={{ marginBottom: 6, textAlign: "center" }} numberOfLines={2}>
         {hospitalAddress}
       </Text>
       <Text>Call: {hospitalContact}</Text>

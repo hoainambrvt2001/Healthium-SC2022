@@ -1,3 +1,4 @@
+import app from "./firebaseApp";
 import {
   getFirestore,
   collection,
@@ -6,6 +7,7 @@ import {
   setDoc,
   doc,
   getDoc,
+  getDocs,
 } from "firebase/firestore";
 const API_KEY = "AIzaSyAWaAtaKV8BYTY2nDCmVtA5WW0M4yyi4Y0";
 
@@ -78,5 +80,32 @@ export const existsUser = async (userId) => {
     return userDoc.exists();
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const getFacilities = async (setItems) => {
+  try {
+    const facilities = await getDocs(collection(firestore, "facilites"));
+    const value = [];
+    facilities.forEach((doc) => {
+      value.push({ ...doc.data() });
+    });
+    setItems([...value]);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getCurFacility = async (setItem, id) => {
+  try {
+    const facilitie = await getDoc(doc(firestore, "facilites", id));
+    console.log("facility");
+    console.log(facilitie.data());
+    const value = facilitie.data();
+    // console.log("value");
+    // console.log(value);
+    setItem({ ...value });
+  } catch (e) {
+    console.log(e);
   }
 };

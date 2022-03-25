@@ -3,26 +3,32 @@ import { View, Text, Image, ScrollView } from "react-native";
 import { Paragraph, Title, Button } from "react-native-paper";
 import InfoHospitalCard from "components/Utils/InfoHospitalCard";
 import MyMapView from "components/Map/MyMapView";
-import { getInfo } from "firebaseServices/firestoreApi";
+import { getCurFacility } from "firebaseServices/firestoreApi";
 
 const HospitalDetailScreen = ({
   navigation,
   route: {
-    params: { place_id, photoUrl },
+    params: { hospitalId },
   },
-  hospitalBackground,
 }) => {
-  const [info, setInfo] = useState({});
+  const [item, setItem] = useState({});
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    getInfo(place_id, setInfo, setLoading);
+  useEffect(async () => {
+    setLoading(true);
+    await getCurFacility(setItem, hospitalId);
+    setLoading(false);
   }, []);
 
-  // console.log("info");
-  // console.log(info);
-  console.log("photo url");
-  console.log(photoUrl);
+  // console.log("item");
+  // console.log(item);
+
+  if (loading)
+    return (
+      <View>
+        <Text>loading</Text>
+      </View>
+    );
 
   return (
     <ScrollView style={{ flex: 1, paddingBottom: 16 }}>
@@ -33,40 +39,39 @@ const HospitalDetailScreen = ({
         }}
       >
         <Image
-          source={photoUrl ? { uri: photoUrl } : hospitalBackground}
-          style={{ width: "100%", height: 160 }}
+          source={{ uri: item.hospitalPhoto }}
+          style={{ width: "100%", height: 160, position: "absolute", top: 0 }}
         />
-        <View style={{ position: "absolute", top: 80 }}>
+        <View
+          style={{
+            paddingHorizontal: 10,
+            paddingTop: 40,
+            paddingBottom: 20,
+            width: "100%",
+          }}
+        >
           <InfoHospitalCard
-            hospitalAddress={info.formatted_address}
-            hospitalName={info.name}
-            hospitalContact={
-              info.formatted_phone_number || info.international_phone_number
-            }
+            hospitalAddress={item.hospitalAddress}
+            hospitalName={item.hospitalName}
+            hospitalContact={item.hospitalHotline}
           />
         </View>
       </View>
       <View style={{ paddingHorizontal: 20 }}>
         <Title>Overview</Title>
-        <Paragraph>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s
-        </Paragraph>
+        <Paragraph>{item.hospitalDescription}</Paragraph>
         <Title>Location</Title>
-        <Paragraph>{info.formatted_address}</Paragraph>
+        <Paragraph>{item.hospitalAddress}</Paragraph>
         <Title>Map</Title>
-        {loading ? (
-          <Text>loading</Text>
-        ) : (
-          <MyMapView
-            place_id={place_id}
-            name={info.name}
-            rating={info.rating}
-            geometry={info.geometry}
-            photoUrl={photoUrl}
-          />
-        )}
+
+        <MyMapView
+          hospitalId={hospitalId}
+          hospitalName={item.hospitalName}
+          userRating={item.userRating}
+          lat={item.lat}
+          lng={item.lng}
+          hospitalPhoto={item.hospitalPhoto}
+        />
       </View>
       <View>
         <Button
@@ -86,15 +91,15 @@ const HospitalDetailScreen = ({
   );
 };
 
-HospitalDetailScreen.defaultProps = {
-  route: {
-    params: {
-      place_id: "ChIJ09_Ur8QudTER54hAhHDo7Pw",
-      photoUrl: undefined,
-      // place Id of Trung vuong hospital
-    },
-  },
-  hospitalBackground: require("assets/background-img.png"),
-};
+// HospitalDetailScreen.defaultProps = {
+//   route: {
+//     params: {
+//       place_id: "ChIJ09_Ur8QudTER54hAhHDo7Pw",
+//       photoUrl: undefined,
+//       // place Id of Trung vuong hospital
+//     },
+//   },
+//   hospitalBackground: require("assets/background-img.png"),
+// };
 
 export default HospitalDetailScreen;

@@ -4,12 +4,12 @@ import { useState, useEffect } from "react";
 import { styles } from "../../styles/MapStyles";
 import MapView, { Marker, Callout } from "react-native-maps";
 
-const CustomCallout = ({ name, rating, photoUrl, defaultPhoto }) => {
+const CustomCallout = ({ name, rating, photoUrl }) => {
   return (
     <View style={styles.callout}>
       {/* <View style={styles.callout_image}> */}
       <Image
-        source={photoUrl ? { uri: photoUrl } : defaultPhoto}
+        source={{ uri: photoUrl }}
         style={{ width: 100, height: 100, resizeMode: "cover" }}
         borderRadius={3}
       />
@@ -24,21 +24,13 @@ const CustomCallout = ({ name, rating, photoUrl, defaultPhoto }) => {
 };
 
 const MyMapView = ({
-  place_id,
-  name,
-  rating,
-  geometry,
-  photoUrl,
-  defaultPhoto,
+  hospitalId,
+  hospitalName,
+  userRating,
+  lat,
+  lng,
+  hospitalPhoto,
 }) => {
-  if (!geometry) {
-    geometry = {
-      location: {
-        lat: 0,
-        lng: 0,
-      },
-    };
-  }
   const { width } = Dimensions.get("window");
   const latitudeDelta = 0.01;
   const longitudeDelta = latitudeDelta * (width / 225);
@@ -50,25 +42,24 @@ const MyMapView = ({
         <MapView
           style={styles.map}
           initialRegion={{
-            latitude: geometry.location.lat,
-            longitude: geometry.location.lng,
+            latitude: Number(lat),
+            longitude: Number(lng),
             latitudeDelta: latitudeDelta,
             longitudeDelta: longitudeDelta,
           }}
         >
           <Marker
-            key={place_id}
+            // key={hospitalId}
             coordinate={{
-              latitude: geometry.location.lat,
-              longitude: geometry.location.lng,
+              latitude: Number(lat),
+              longitude: Number(lng),
             }}
           >
             <Callout>
               <CustomCallout
-                name={name}
-                rating={rating}
-                photoUrl={photoUrl}
-                defaultPhoto={defaultPhoto}
+                name={hospitalName}
+                rating={userRating}
+                photoUrl={hospitalPhoto}
               />
             </Callout>
           </Marker>
@@ -78,11 +69,11 @@ const MyMapView = ({
   );
 };
 
-MyMapView.defaultProps = {
-  place_id: "ChIJ09_Ur8QudTER54hAhHDo7Pw",
-  name: "Trung Vuong Hospital",
-  rating: 5,
-  defaultPhoto: require("assets/trung-vuong-hospital.png"),
-};
+// MyMapView.defaultProps = {
+//   place_id: "ChIJ09_Ur8QudTER54hAhHDo7Pw",
+//   name: "Trung Vuong Hospital",
+//   rating: 5,
+//   // defaultPhoto: require("assets/trung-vuong-hospital.png"),
+// };
 
 export default MyMapView;

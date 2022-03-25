@@ -5,7 +5,7 @@ import Icon from "react-native-vector-icons/Feather";
 import { useState, useEffect, useCallback } from "react";
 import { GiftedChat, Send } from "react-native-gifted-chat";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
-import app from "../../firebaseServices/firebaseApp";
+
 import { getDatabase } from "firebase/database";
 import {
   doc,

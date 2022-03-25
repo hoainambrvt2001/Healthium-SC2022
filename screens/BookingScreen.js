@@ -14,14 +14,22 @@ const BookingScreen = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ height: 160 }}>
+      <View style={{ position: "relative" }}>
         <View
           style={{
-            height: 80,
             alignItems: "center",
-            backgroundColor: primaryColor,
+            // backgroundColor: primaryColor,
           }}
         >
+          <View
+            style={{
+              width: "100%",
+              height: "50%",
+              backgroundColor: primaryColor,
+              position: "absolute",
+              top: 0,
+            }}
+          ></View>
           <InfoHospitalCard
             hospitalAddress={"Ho Chi Minh city, Vietnam"}
             hospitalName={"Truong Vuong"}
@@ -29,7 +37,7 @@ const BookingScreen = ({ navigation }) => {
           />
         </View>
       </View>
-      <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
+      <View style={{ paddingHorizontal: 15, marginBottom: 10, marginTop: 20 }}>
         <StepSection step={step} />
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>

@@ -3,21 +3,19 @@ import { View, Image, TouchableWithoutFeedback } from "react-native";
 import { Caption, Paragraph, Title } from "react-native-paper";
 
 const HospitalCard = ({
-  place_id,
-  hospitalImage,
-  photoUrl,
+  hospitalId,
   hospitalName,
+  hospitalPhoto,
   hospitalSpeciality,
   hospitalDistance,
-  hospitalStatus,
+  status,
   navigation,
 }) => {
   return (
     <TouchableWithoutFeedback
       onPress={() => {
         navigation.navigate("HospitalDetail", {
-          place_id: place_id,
-          photoUrl: photoUrl,
+          hospitalId: hospitalId,
         });
       }}
     >
@@ -32,7 +30,7 @@ const HospitalCard = ({
         }}
       >
         <Image
-          source={photoUrl ? { uri: photoUrl } : hospitalImage}
+          source={{ uri: hospitalPhoto }}
           style={{ width: 100, height: 100 }}
           borderRadius={3}
         />
@@ -53,8 +51,8 @@ const HospitalCard = ({
           </View>
           <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
             <Caption style={{ fontSize: 13 }}>Status: </Caption>
-            <Paragraph>
-              {hospitalStatus ? "Available" : "Not available"}
+            <Paragraph style={{ textTransform: "capitalize" }}>
+              {status}
             </Paragraph>
           </View>
         </View>
@@ -64,11 +62,13 @@ const HospitalCard = ({
 };
 
 HospitalCard.defaultProps = {
-  hospitalImage: require("assets/trung-vuong-hospital.png"),
+  hospitalId: "ChIJyaazF8IudTERwnq3Lqfig8s",
   hospitalName: "Trung Vuong Hospital",
-  hospitalSpeciality: "Da khoa",
+  hospitalPhoto:
+    "https://lh5.googleusercontent.com/p/AF1QipO58edXeYn_JXO4Xkh3oi5UXruumBxKfT4qnV8t=w408-h306-k-no",
+  hospitalSpeciality: "polyclinic",
   hospitalDistance: "12km",
-  hospitalStatus: "Available",
+  status: "available",
 };
 
 export default HospitalCard;
