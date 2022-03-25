@@ -6,6 +6,17 @@ import OverviewSection from "components/MedicalRecord/OverviewSection";
 import { getAuth } from "firebase/auth";
 import { getMedicalRecord, getUserInfo } from "firebaseServices/firestoreApi";
 
+const getAge = (birthday) => {
+  const today = new Date();
+  const birthDate = birthday.toDate();
+  let age = today.getFullYear() - birthDate.getFullYear();
+  let m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  return age;
+};
+
 const MedicalRecordScreen = ({ navigation }) => {
   const [medicalRecord, setMedicalRecord] = useState({});
   const [userInfo, setUserInfo] = useState({});
@@ -53,7 +64,9 @@ const MedicalRecordScreen = ({ navigation }) => {
           <Title style={{ color: "#ffffff" }}>{userInfo.name}</Title>
           <Text style={{ color: "#ffffff" }}>
             Me {userInfo.gender ? `-${userInfo.gender}` : null}
-            {userInfo.birthday ? `-${userInfo.birthday}` : null}
+            {userInfo.birthday
+              ? `- ${getAge(userInfo.birthday)} year olds`
+              : null}
           </Text>
         </View>
       </View>
