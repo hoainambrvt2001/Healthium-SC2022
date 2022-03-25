@@ -6,10 +6,12 @@ import {
   getDoc,
   updateDoc,
 } from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const API_KEY = "AIzaSyAWaAtaKV8BYTY2nDCmVtA5WW0M4yyi4Y0";
 
 const firestore = getFirestore();
+const storage = getStorage();
 
 export const getPlaces = async (
   {
@@ -60,7 +62,7 @@ export const createNewUser = async (userInfos) => {
       userId: userInfos.userId,
       name: userInfos.name,
       email: userInfos.email,
-      avatar: "",
+      avatar: userInfos.photoURL || "",
       birthday: "",
       idCardNumber: "",
       address: "",
@@ -155,10 +157,37 @@ export const addPatient = async (patientInfo, userId) => {
   }
 };
 
-export const updateUserInfo = async (userInfo, userId) => {
+const uploadImageAsync = async (userId, uri) => {
+  const blob = await new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = () => {
+      resolve(xhr.response);
+    };
+    xhr.onerror = (e) => {
+      console.log(e);
+      reject(new TypeError("Network request failed"));
+    };
+    xhr.responseType = "blob";
+    xhr.open("GET", uri, true);
+    xhr.send(null);
+  });
+
+  const userAvatarRef = ref(storage, `avatars/${userId}.jpg`);
+  const result = await uploadBytes(userAvatarRef, blob, {
+    contentType: "image/jpeg",
+  });
+  blob.close();
+  return getDownloadURL(userAvatarRef);
+};
+
+export const updateUserInfo = async (userInfo, userId, userAvatar) => {
   try {
     const userRef = doc(firestore, "users", userId);
-    await updateDoc(userRef, userInfo);
+    await uploadImageAsync(userId, userAvatar)
+      .then((imgUrl) => {
+        userInfo.avatar = imgUrl;
+      })
+      .then(() => updateDoc(userRef, userInfo));
   } catch (error) {
     console.log(error);
   }

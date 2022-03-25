@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Image } from "react-native";
 import { Headline, Subheading } from "react-native-paper";
+import { getAuth } from "firebase/auth";
+import { getUserInfo } from "firebaseServices/firestoreApi";
 
-const HomeNavigation = ({ userName }) => {
+const HomeNavigation = () => {
+  const [username, setUsername] = useState("");
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  useEffect(() => {
+    getUserInfo(user.uid)
+      .then((infos) => {
+        setUsername(infos.name);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <View
       style={{
@@ -23,7 +39,7 @@ const HomeNavigation = ({ userName }) => {
       </View>
       <View style={{ marginLeft: 25 }}>
         <Headline style={{ color: "white", fontWeight: "700" }}>
-          {userName}
+          {username}
         </Headline>
       </View>
     </View>

@@ -9,7 +9,11 @@ const UserAvatar = ({ userInfo }) => {
       <View style={avatar.container}>
         <View style={avatar.visualLayer}></View>
         <Avatar.Image
-          source={require("assets/avatar.png")}
+          source={
+            userInfo.avatar
+              ? { uri: userInfo.avatar }
+              : require("assets/avatar.png")
+          }
           size={150}
           style={avatar.avatar}
           backgroundColor={"#ffff"}

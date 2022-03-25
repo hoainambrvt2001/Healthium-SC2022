@@ -13,7 +13,12 @@ import { getAuth } from "firebase/auth";
 import { Formik } from "formik";
 import moment from "moment";
 import * as Yup from "yup";
-import { getUserInfo, updateUserInfo } from "firebaseServices/firestoreApi";
+import {
+  getUserAvatar,
+  getUserInfo,
+  updateUserInfo,
+} from "firebaseServices/firestoreApi";
+import * as ImagePicker from "expo-image-picker";
 
 const BoxDivider = ({ height }) => {
   return <View style={{ height: height }}></View>;
@@ -28,6 +33,7 @@ const ProfileSettingScreen = ({ navigation }) => {
     phoneNumber: "",
     address: "",
   });
+  const [userAvatar, setUserAvatar] = useState("");
   const [checked, setChecked] = useState(0);
   const [showDatePicker, setShowDatePicker] = useState(false);
 
@@ -35,7 +41,7 @@ const ProfileSettingScreen = ({ navigation }) => {
   const user = auth.currentUser;
 
   useEffect(() => {
-    const getUIF = async () => {
+    const getUserInfomation = async () => {
       await getUserInfo(user.uid)
         .then((infos) => {
           setUserInfo({
@@ -46,12 +52,13 @@ const ProfileSettingScreen = ({ navigation }) => {
             phoneNumber: infos.phoneNumber,
             address: infos.address,
           });
+          setUserAvatar(infos.avatar);
         })
         .catch((errors) => {
           console.log(errors);
         });
     };
-    getUIF();
+    getUserInfomation();
   }, []);
 
   const userInfoSchema = Yup.object({
@@ -63,6 +70,19 @@ const ProfileSettingScreen = ({ navigation }) => {
     address: Yup.string(),
   });
 
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setUserAvatar(result.uri);
+    }
+  };
+
   return (
     <ScrollView style={{ flex: 1, paddingHorizontal: 15 }}>
       <Formik
@@ -73,7 +93,7 @@ const ProfileSettingScreen = ({ navigation }) => {
         }}
         validationSchema={userInfoSchema}
         onSubmit={(values, actions) => {
-          updateUserInfo(values, user.uid);
+          updateUserInfo(values, user.uid, userAvatar);
           actions.setSubmitting(false);
           navigation.goBack();
         }}
@@ -96,11 +116,15 @@ const ProfileSettingScreen = ({ navigation }) => {
                   alignItems: "center",
                 }}
               >
-                <TouchableOpacity activeOpacity={0.6}>
+                <TouchableOpacity activeOpacity={0.6} onPress={pickImage}>
                   <View>
                     <Avatar.Image
                       size={100}
-                      source={require("assets/avatar.png")}
+                      source={
+                        userAvatar
+                          ? { uri: userAvatar }
+                          : require("assets/avatar.png")
+                      }
                       style={{
                         backgroundColor: "#ffffff",
                         borderColor: "#CCCDC6",

@@ -59,10 +59,22 @@ const UserProfileScreen = ({ navigation }) => {
   const user = auth.currentUser;
 
   useEffect(() => {
-    getUserInfo(user.uid).then((userInfo) => {
-      setUserInfo(userInfo);
+    const getUserInfomation = async () => {
+      await getUserInfo(user.uid)
+        .then((infos) => {
+          setUserInfo(infos);
+        })
+        .catch((errors) => {
+          console.log(errors);
+        });
+    };
+
+    const unsubscribe = navigation.addListener("focus", () => {
+      return getUserInfomation();
     });
-  }, []);
+
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <ScrollView style={styles.container}>

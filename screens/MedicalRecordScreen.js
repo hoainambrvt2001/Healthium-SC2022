@@ -25,7 +25,7 @@ const MedicalRecordScreen = ({ navigation }) => {
   const user = auth.currentUser;
 
   useEffect(() => {
-    const getUIF = async () => {
+    const getUserInfomation = async () => {
       await getUserInfo(user.uid)
         .then((info) => {
           setUserInfo(info);
@@ -34,9 +34,9 @@ const MedicalRecordScreen = ({ navigation }) => {
           console.log(error);
         });
     };
-    getUIF();
+    getUserInfomation();
 
-    const getMR = async () => {
+    const getUserMedicalRecord = async () => {
       await getMedicalRecord(user.uid)
         .then((record) => {
           setMedicalRecord(record);
@@ -47,17 +47,21 @@ const MedicalRecordScreen = ({ navigation }) => {
     };
 
     const unsubscribe = navigation.addListener("focus", () => {
-      return getMR();
+      return getUserMedicalRecord();
     });
 
     return unsubscribe;
-  }, []);
+  }, [navigation]);
 
   return (
     <View style={{ flex: 1, backgroundColor: "#00a19d" }}>
       <View style={{ flexDirection: "row", padding: 10 }}>
         <Avatar.Image
-          source={require("assets/avatar.png")}
+          source={
+            userInfo.avatar
+              ? { uri: userInfo.avatar }
+              : require("assets/avatar.png")
+          }
           backgroundColor={"#ffff"}
         />
         <View style={{ marginHorizontal: 10 }}>

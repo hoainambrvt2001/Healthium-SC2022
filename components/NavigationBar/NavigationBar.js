@@ -14,7 +14,7 @@ const NavigationBar = ({ navigation, route, back }) => {
     (route.name === "MainScreens" && !mainRoute) ||
     mainRoute === "HomeScreen"
   ) {
-    navBar = <HomeNavigation userName={"Nam Vo"} />;
+    navBar = <HomeNavigation />;
   } else if (route.name === "MedicalService") {
     navBar = <SearchNavigation navigation={navigation} back={back} />;
   } else {
