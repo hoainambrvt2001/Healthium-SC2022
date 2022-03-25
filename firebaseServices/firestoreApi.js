@@ -6,6 +6,7 @@ import {
   getDoc,
   getDocs,
   updateDoc,
+  collection,
 } from "firebase/firestore";
 
 const API_KEY = "AIzaSyAWaAtaKV8BYTY2nDCmVtA5WW0M4yyi4Y0";
