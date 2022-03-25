@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableWithoutFeedback } from "react-native";
 import { TextInput, Button, HelperText } from "react-native-paper";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -7,7 +7,7 @@ import * as Yup from "yup";
 // Firebase:
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
-const SignIn = () => {
+const SignIn = ({ navigation }) => {
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const auth = getAuth();
 
@@ -50,11 +50,8 @@ const SignIn = () => {
         }}
         validationSchema={userSchema}
         onSubmit={(values, actions) => {
-          const timer = setTimeout(() => {
-            handleSignIn(values, actions);
-            actions.setSubmitting(false);
-            clearTimeout(timer);
-          }, 500);
+          handleSignIn(values, actions);
+          actions.setSubmitting(false);
         }}
       >
         {({
@@ -110,7 +107,11 @@ const SignIn = () => {
                 </HelperText>
               </View>
               <View style={{ alignItems: "flex-end", marginBottom: 10 }}>
-                <Text>Forgot Password?</Text>
+                <TouchableWithoutFeedback
+                  onPress={() => navigation.navigate("ResetPassword")}
+                >
+                  <Text>Forgot Password?</Text>
+                </TouchableWithoutFeedback>
               </View>
               <View>
                 <Button

@@ -25,6 +25,8 @@ import CreateMedicalRecordScreen from "screens/CreateMedicalRecordScreen";
 
 // Log:
 import { LogBox } from "react-native";
+import ResetPasswordScreen from "screens/ResetPasswordScreen";
+import ProfileSettingScreen from "screens/ProfileSettingScreen";
 LogBox.ignoreAllLogs(); // Ignore all log notifications
 
 const Stack = createNativeStackNavigator();
@@ -98,8 +100,19 @@ const App = () => {
                 }}
               />
               <Stack.Screen
-                name="CreateMedicalRecordScreen"
+                name="CreateMedicalRecord"
                 component={CreateMedicalRecordScreen}
+              />
+              <Stack.Screen
+                name="ResetPassword"
+                component={ResetPasswordScreen}
+                options={{
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen
+                name="ProfileSettings"
+                component={ProfileSettingScreen}
               />
             </>
           ) : (
@@ -114,6 +127,13 @@ const App = () => {
               <Stack.Screen
                 name="SignUp"
                 component={SignUpScreen}
+                options={{
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen
+                name="ResetPassword"
+                component={ResetPasswordScreen}
                 options={{
                   headerShown: false,
                 }}
