@@ -2,13 +2,14 @@ import app from "./firebaseApp";
 import {
   getFirestore,
   collection,
-  query,
-  where,
   setDoc,
   doc,
+  addDoc,
   getDoc,
   getDocs,
+  updateDoc,
 } from "firebase/firestore";
+
 const API_KEY = "AIzaSyAWaAtaKV8BYTY2nDCmVtA5WW0M4yyi4Y0";
 
 const firestore = getFirestore();
@@ -68,6 +69,7 @@ export const createNewUser = async (userInfos) => {
       address: "",
       phoneNumber: userInfos.phoneNumber ? userInfos.phoneNumber : "",
       role: "basic-user",
+      gender: "",
     });
   } catch (error) {
     console.log(error);
@@ -107,5 +109,49 @@ export const getCurFacility = async (setItem, id) => {
     setItem({ ...value });
   } catch (e) {
     console.log(e);
+  }
+};
+
+export const getUserInfo = async (userId) => {
+  try {
+    const userDoc = await getDoc(doc(firestore, "users", userId));
+    if (userDoc.exists()) {
+      return userDoc.data();
+    } else {
+      return {};
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getMedicalRecord = async (userId) => {
+  try {
+    const userRef = doc(firestore, "users", userId);
+    const userDoc = await getDoc(userRef);
+    if (userDoc.exists()) {
+      if (userDoc.data().medicalRecord) {
+        return userDoc.data().medicalRecord;
+      } else {
+        return {};
+      }
+    } else {
+      return {};
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const addMedicalRecord = async (medicalRecord, userId) => {
+  try {
+    const userRef = doc(firestore, "users", userId);
+    await updateDoc(userRef, {
+      medicalRecord: {
+        ...medicalRecord,
+      },
+    });
+  } catch (error) {
+    console.log(error);
   }
 };

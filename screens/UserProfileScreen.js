@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, ScrollView, Text } from "react-native";
 import { Button, Subheading } from "react-native-paper";
 import UserAvatar from "components/UserProfileScreen/UserAvatar";
@@ -7,12 +7,32 @@ import { styles } from "styles/UserProfileStyles";
 
 // Firebase:
 import { getAuth, signOut } from "firebase/auth";
+import { getUserInfo } from "firebaseServices/firestoreApi";
+
+const auth = getAuth();
+
+const general = [
+  {
+    name: "Profile settings",
+    desc: "Update and modify your profile",
+  },
+  {
+    name: "Privacy",
+    desc: "Change your password",
+  },
+];
+
+const support = [
+  {
+    name: "About us",
+    desc: "Know more about our team and goal",
+  },
+];
 
 const SignOutButton = () => {
   return (
     <Button
       onPress={() => {
-        const auth = getAuth();
         signOut(auth).then(() => {
           console.log("User has signed-out successful!");
         });
@@ -34,34 +54,19 @@ const SignOutButton = () => {
 };
 
 const UserProfileScreen = ({ navigation }) => {
-  const general = [
-    {
-      name: "Profile settings",
-      desc: "Update and modify your profile",
-    },
-    {
-      name: "Privacy",
-      desc: "Change your password",
-    },
-  ];
+  const [userInfo, setUserInfo] = useState({});
 
-  const support = [
-    {
-      name: "About us",
-      desc: "Know more about our team and goal",
-    },
-  ];
+  const user = auth.currentUser;
 
-  const system = [
-    {
-      name: "Log out",
-      desc: "",
-    },
-  ];
+  useEffect(() => {
+    getUserInfo(user.uid).then((userInfo) => {
+      setUserInfo(userInfo);
+    });
+  }, []);
 
   return (
     <ScrollView style={styles.container}>
-      <UserAvatar />
+      <UserAvatar userInfo={userInfo} />
       <View style={styles.wrap}>
         <Subheading style={styles.subtitle}>General</Subheading>
         <View
