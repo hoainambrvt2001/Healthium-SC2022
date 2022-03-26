@@ -11,20 +11,21 @@ import {
 } from "firebaseServices/firestoreApi";
 
 const MedicalServiceScreen = ({ navigation, route }) => {
-  // console.log("params in body");
-  // console.log(route);
+  console.log("params in body");
+  console.log(route);
 
   const [queryList, setQueryList] = useState({
-    searchText: route.params.searchText ?? "",
     type: "",
     activity: "",
   });
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isInit, setIsInit] = useState(false);
 
   const serviceDict = {
+    all: "All services",
     hospital: "Hospital",
-    doctor: "Clinic",
+    polyclinic: "Clinic",
     drugstore: "Drugstore",
     dental: "Dental Care",
     physiotherapist: "Physical recovery",
@@ -48,12 +49,24 @@ const MedicalServiceScreen = ({ navigation, route }) => {
   // {name:"Mental Care"},
   // {name:"Prenal Care"},
 
+  // getFacilities(setItems);
+
   useEffect(async () => {
     // getPlaces(queryList, setItems, setLoading);
+    if (isInit) return;
     setLoading(true);
-    await getFacilities(setItems, setLoading);
+    await getFacilities(setItems);
     setLoading(false);
-  }, [queryList]);
+    setIsInit(true);
+  }, [isInit]);
+
+  const handleSetQuery = (type) => {
+    if (type === "athome") setQueryList({ ...queryList, type: "at-home" });
+    else if (type === "childrencare")
+      setQueryList({ ...queryList, type: "children-care" });
+    else if (type === "all") setQueryList({ ...queryList, type: "" });
+    else setQueryList({ ...queryList, type: type });
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -75,7 +88,7 @@ const MedicalServiceScreen = ({ navigation, route }) => {
           renderItem={({ item: [type, serviceName] }) => {
             return (
               <PopularService
-                onPress={() => setQueryList({ ...queryList, type: type })}
+                onPress={() => handleSetQuery(type)}
                 serviceName={serviceName}
               />
             );
@@ -131,10 +144,16 @@ const MedicalServiceScreen = ({ navigation, route }) => {
               //       photo_reference: photos[0].photo_reference,
               //     })
               //   : undefined;
+              console.log("here");
+              console.log(queryList.type);
+              console.log(route.params.searchText);
               if (
-                hospitalSpeciality == queryList.type &&
-                hospitalName.includes(queryList.searchText)
+                hospitalSpeciality.toLowerCase().includes(queryList.type) &&
+                hospitalName
+                  .toLowerCase()
+                  .includes(route.params.searchText.toLowerCase())
               ) {
+                console.log("in if");
                 return (
                   <HospitalCard
                     hospitalId={hospitalId}
