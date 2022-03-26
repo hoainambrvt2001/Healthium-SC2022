@@ -17,7 +17,13 @@ import {
 // Get a reference to the database service
 const db = getFirestore();
 
-const ChatSection = ({ userId, doctorId, doctorName, doctorAvatar }) => {
+const ChatSection = ({
+  userId,
+  doctorId,
+  doctorName,
+  doctorAvatar,
+  doctorSpeciality,
+}) => {
   const [mes, setMes] = useState([]);
   let init = false;
   const chatsRef = doc(db, "chats", `${userId}-${doctorId}`);
@@ -47,7 +53,7 @@ const ChatSection = ({ userId, doctorId, doctorName, doctorAvatar }) => {
   useEffect(() => {
     // readUser();
     const unsubscribe = onSnapshot(chatsRef, (doc) => {
-      if (!doc.data().messages) return;
+      if (!doc.data()) return;
 
       if (init) {
         const newMessage = {

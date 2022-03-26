@@ -5,14 +5,18 @@ import { getAppointments } from "firebaseServices/firestoreApi";
 
 const AppointmentScreen = ({ navigation }) => {
   const [appointments, setAppointments] = useState([]);
+  const [isInit, setIsInit] = useState(false);
 
   useEffect(async () => {
-    if (appointments.length) {
+    if (!isInit) {
       await getAppointments().then((data) => {
+        console.log("data");
+        console.log(data);
         setAppointments([...data]);
       });
+      setIsInit(true);
     }
-  }, [appointments]);
+  }, [isInit]);
 
   return (
     <View style={{ flex: 1 }}>

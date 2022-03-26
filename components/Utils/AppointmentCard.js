@@ -106,6 +106,7 @@ const AppointmentCard = ({
                 doctorId: doctorId,
                 doctorName: doctorName,
                 doctorAvatar: doctorAvatar,
+                doctorSpeciality: doctorSpeciality,
               });
             }}
           >
