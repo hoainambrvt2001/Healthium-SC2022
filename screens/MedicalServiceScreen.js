@@ -4,9 +4,13 @@ import { Title } from "react-native-paper";
 import HospitalCard from "components/MedicalService/HospitalCard";
 import PopularService from "components/MedicalService/PopularService";
 import Activity from "components/MedicalService/Activity";
-import { getPlaces, getImage } from "firebaseServices/firestoreApi";
+import {
+  getPlaces,
+  getImage,
+  getFacilities,
+} from "firebaseServices/firestoreApi";
 
-const MedicalServiceScreen = ({ navigation }) => {
+const MedicalServiceScreen = ({ navigation, route }) => {
   // console.log("params in body");
   // console.log(route);
 
@@ -28,6 +32,10 @@ const MedicalServiceScreen = ({ navigation }) => {
     drugstore: "Drugstore",
     dental: "Dental Care",
     physiotherapist: "Physical recovery",
+    athome: "At home",
+    polyclinic: "Polyclinic",
+    prenentalcare: "Prenental Care",
+    childrencare: "Children Care",
   };
   // name:"Nutrition Support"},
   // {name:"At-home Service"},
@@ -37,8 +45,11 @@ const MedicalServiceScreen = ({ navigation }) => {
   // {name:"Mental Care"},
   // {name:"Prenal Care"},
 
-  useEffect(() => {
-    getPlaces(queryList, setItems, setLoading);
+  useEffect(async () => {
+    // getPlaces(queryList, setItems, setLoading);
+    setLoading(true);
+    await getFacilities(setItems, setLoading);
+    setLoading(false);
   }, [queryList]);
 
   return (
@@ -96,29 +107,27 @@ const MedicalServiceScreen = ({ navigation }) => {
             keyExtractor={(item) => item.place_id}
             renderItem={({
               item: {
-                place_id,
-                name,
-                photos,
-                opening_hours,
-                geometry: { location },
+                hospitalId,
+                hospitalName,
+                hospitalPhoto,
+                hospitalSpeciality,
+                status,
               },
             }) => {
               // console.log("photots");
               // console.log(photos);
-              const photoUrl = photos
-                ? getImage({
-                    photo_reference: photos[0].photo_reference,
-                  })
-                : undefined;
+              // const photoUrl = photos
+              //   ? getImage({
+              //       photo_reference: photos[0].photo_reference,
+              //     })
+              //   : undefined;
               return (
                 <HospitalCard
-                  place_id={place_id}
-                  hospitalImage={photoUrl}
-                  hospitalName={name}
-                  photoUrl={photoUrl}
-                  hospitalStatus={
-                    opening_hours ? opening_hours.open_now : false
-                  }
+                  hospitalId={hospitalId}
+                  hospitalName={hospitalName}
+                  hospitalPhoto={hospitalPhoto}
+                  hospitalSpeciality={hospitalSpeciality}
+                  status={status}
                   navigation={navigation}
                 />
               );

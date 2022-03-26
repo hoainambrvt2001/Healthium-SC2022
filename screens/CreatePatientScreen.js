@@ -19,7 +19,12 @@ const BoxDivider = ({ height }) => {
   return <View style={{ height: height }}></View>;
 };
 
-const CreatePatientScreen = ({ navigation }) => {
+const CreatePatientScreen = ({
+  navigation,
+  route: {
+    params: { setToggle, toggle },
+  },
+}) => {
   const [checked, setChecked] = useState(0);
   const [showDatePicker, setShowDatePicker] = useState(false);
 
@@ -60,6 +65,7 @@ const CreatePatientScreen = ({ navigation }) => {
         onSubmit={async (values, actions) => {
           addPatient(values, user.uid);
           actions.setSubmitting(false);
+          if (setToggle) setToggle(!toggle);
           navigation.goBack();
         }}
       >

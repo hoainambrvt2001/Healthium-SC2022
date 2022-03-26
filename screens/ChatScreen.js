@@ -2,10 +2,10 @@ import React from "react";
 import { View, Text } from "react-native";
 import ChatSection from "components/ChatSection";
 
-const ChatScreen = () => {
+const ChatScreen = ({ navigation, route: { params } }) => {
   return (
     // <View>
-    <ChatSection />
+    <ChatSection {...params} />
     // </View>
   );
 };

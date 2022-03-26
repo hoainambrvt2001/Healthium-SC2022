@@ -13,6 +13,7 @@ const BoxDivider = ({ height }) => {
 };
 
 const CreateMedicalRecordScreen = ({ navigation }) => {
+  const [userAvatar, setUserAvatar] = useState("");
   const [medicalRecord, setMedicalRecord] = useState({
     temperature: "",
     temperatureMeasureTime: "",
@@ -33,8 +34,11 @@ const CreateMedicalRecordScreen = ({ navigation }) => {
   useEffect(() => {
     const getMR = async () => {
       await getMedicalRecord(user.uid)
-        .then((record) => {
-          if (record) setMedicalRecord(record);
+        .then((data) => {
+          if (data) {
+            setMedicalRecord(data.medicalRecord);
+            setUserAvatar(data.userAvatar);
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -51,13 +55,6 @@ const CreateMedicalRecordScreen = ({ navigation }) => {
         onSubmit={(values, actions) => {
           addMedicalRecord(values, user.uid);
           actions.setSubmitting(false);
-          getMedicalRecord(user.uid)
-            .then((record) => {
-              setMedicalRecord(record);
-            })
-            .catch((error) => {
-              console.log(error);
-            });
           navigation.goBack();
         }}
       >
@@ -68,7 +65,11 @@ const CreateMedicalRecordScreen = ({ navigation }) => {
               <View style={{ alignItems: "center" }}>
                 <Avatar.Image
                   size={100}
-                  source={require("assets/avatar.png")}
+                  source={
+                    userAvatar
+                      ? { uri: userAvatar }
+                      : require("assets/avatar.png")
+                  }
                   style={{
                     backgroundColor: "#ffffff",
                     borderColor: "#CCCDC6",

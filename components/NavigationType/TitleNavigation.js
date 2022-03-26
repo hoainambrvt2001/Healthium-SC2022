@@ -22,6 +22,8 @@ const TitleNavigation = ({ navigation, mainRoute, route, back }) => {
     routeTitle = "Profile Settings";
   } else if (route.name === "CreateMedicalRecord") {
     routeTitle = "Manage Medical Record";
+  } else if (mainRoute === "NotificationScreen") {
+    routeTitle = "Notification";
   }
 
   return (

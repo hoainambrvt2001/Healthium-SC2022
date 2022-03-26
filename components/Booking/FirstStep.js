@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, FlatList } from "react-native";
 import { FAB, Title } from "react-native-paper";
 import {
@@ -11,7 +11,59 @@ import NoteCard from "components/HomeScreen/NoteCard";
 import PatientCard from "components/Booking/PatientCard";
 import ServiceCard from "components/Booking/ServiceCard";
 
-const FirstStep = ({ navigation }) => {
+const FirstStep = ({
+  navigation,
+  patients,
+  services,
+  setToggle,
+  toggle,
+  appointmentInfo,
+  setAppointmentInfo,
+}) => {
+  const [patientChoice, setPatientChoice] = useState(appointmentInfo.patientNo);
+  const [serviceChoice, setServiceChoice] = useState([]);
+
+  useEffect(() => {
+    if (patientChoice === -1) return;
+    setAppointmentInfo({
+      ...appointmentInfo,
+      patientNo: patients[patientChoice].no,
+    });
+  }, [patientChoice]);
+
+  useEffect(() => {
+    if (!serviceChoice.length && appointmentInfo.services.length) {
+      const value = services.map(({ name }, index) => {
+        const [isInclude] = appointmentInfo.services.map((ele) => {
+          if (ele.name === name) return true;
+        });
+        if (isInclude) return index;
+        return -1;
+      });
+      setServiceChoice(value.filter((ele) => ele > -1));
+
+      return;
+    }
+    const value = [];
+    serviceChoice.forEach((ele) => value.push(services[ele]));
+    setAppointmentInfo({ ...appointmentInfo, services: value });
+  }, [serviceChoice]);
+
+  const handleChoosePatient = (index) => {
+    setPatientChoice(index);
+  };
+
+  const handleChooseService = (index) => {
+    const temp = serviceChoice;
+    const indexOf = temp.indexOf(index);
+    if (indexOf === -1) {
+      setServiceChoice([...temp, index]);
+    } else {
+      temp.splice(indexOf, 1);
+      setServiceChoice([...temp]);
+    }
+  };
+
   return (
     <>
       <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
@@ -21,17 +73,19 @@ const FirstStep = ({ navigation }) => {
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
-          data={listPatients}
+          data={patients}
           keyExtractor={(_, idx) => idx}
-          renderItem={({ item }) => {
+          renderItem={({ item, index }) => {
             return (
               <PatientCard
+                handlePress={() => handleChoosePatient(index)}
+                isChose={patientChoice === index ? 1 : 0}
                 patientName={item.patientName}
                 patientGender={item.patientGender}
-                patientId={item.patientId}
-                patientBirthday={item.patientBirthday}
+                patientId={item.patientIdCardNo}
+                patientBirthday={new Date(item.patientBirthday.toDate())}
                 patientAddress={item.patientAddress}
-                patientPhone={item.patientPhone}
+                patientPhone={item.patientTel}
               />
             );
           }}
@@ -39,14 +93,19 @@ const FirstStep = ({ navigation }) => {
             return (
               <FAB
                 icon="plus"
-                onPress={() => navigation.navigate("CreatePatient")}
+                onPress={() =>
+                  navigation.navigate("CreatePatient", {
+                    setToggle: setToggle,
+                    toggle: toggle,
+                  })
+                }
               />
             );
           }}
           ListFooterComponentStyle={{ justifyContent: "center" }}
         />
       </View>
-      <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
+      {/* <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
         <Title>Update your symptom</Title>
       </View>
       <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
@@ -63,17 +122,22 @@ const FirstStep = ({ navigation }) => {
           }}
           ListFooterComponentStyle={{ justifyContent: "center" }}
         />
-      </View>
+      </View> */}
       <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
         <Title>Services</Title>
       </View>
       <View style={{ paddingHorizontal: 30, marginBottom: 30 }}>
-        {listHospitalServices.map((hospitalService, idx) => {
+        {services.map((hospitalService, idx) => {
+          const temp = serviceChoice;
+          const isChose = temp.includes(idx);
           return (
             <ServiceCard
               key={idx}
-              serviceName={hospitalService.serviceName}
-              servicePrice={hospitalService.servicePrice}
+              index={idx}
+              isChose={isChose ? 1 : 0}
+              handlePress={() => handleChooseService(idx)}
+              serviceName={hospitalService.name}
+              servicePrice={hospitalService.price}
             />
           );
         })}

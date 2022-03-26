@@ -38,8 +38,8 @@ const MedicalRecordScreen = ({ navigation }) => {
 
     const getUserMedicalRecord = async () => {
       await getMedicalRecord(user.uid)
-        .then((record) => {
-          setMedicalRecord(record);
+        .then((data) => {
+          setMedicalRecord(data.medicalRecord);
         })
         .catch((error) => {
           console.log(error);
