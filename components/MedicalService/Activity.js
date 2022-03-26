@@ -1,9 +1,9 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 
-const Activity = ({ activityName }) => {
+const Activity = ({ activityName, onPress }) => {
   return (
-    <View
+    <TouchableOpacity
       style={{
         backgroundColor: "#F8F8F9",
         minWidth: 80,
@@ -14,9 +14,10 @@ const Activity = ({ activityName }) => {
         borderWidth: 1,
         marginHorizontal: 5,
       }}
+      onPress={onPress}
     >
       <Text style={{ fontWeight: "700" }}>{activityName}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 

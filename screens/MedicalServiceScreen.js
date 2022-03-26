@@ -15,13 +15,9 @@ const MedicalServiceScreen = ({ navigation, route }) => {
   // console.log(route);
 
   const [queryList, setQueryList] = useState({
-    queryType: "nearbysearch",
-    lat: 10.7697759,
-    lng: 106.6563129,
-    pageToken: 5,
-    radius: 500,
-    rankby: "prominence",
-    type: "hospital",
+    searchText: route.params.searchText ?? "",
+    type: "",
+    activity: "",
   });
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -36,6 +32,13 @@ const MedicalServiceScreen = ({ navigation, route }) => {
     polyclinic: "Polyclinic",
     prenentalcare: "Prenental Care",
     childrencare: "Children Care",
+  };
+
+  const activityDict = {
+    nearby: "Near by",
+    mostrating: "Most rating",
+    recently: "Recently visit",
+    insurance: "Insurance app",
   };
   // name:"Nutrition Support"},
   // {name:"At-home Service"},
@@ -90,10 +93,17 @@ const MedicalServiceScreen = ({ navigation, route }) => {
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
-          data={[1, 2, 3, 4, 5]}
-          keyExtractor={(item) => item}
-          renderItem={() => {
-            return <Activity />;
+          data={Object.entries(activityDict)}
+          keyExtractor={(item) => item[0]}
+          renderItem={({ item: [type, activityName] }) => {
+            return (
+              <Activity
+                activityName={activityName}
+                onPress={() => {
+                  setQueryList({ ...queryList, activity: type });
+                }}
+              />
+            );
           }}
         />
       </View>
@@ -104,7 +114,7 @@ const MedicalServiceScreen = ({ navigation, route }) => {
           <FlatList
             showsVerticalScrollIndicator={false}
             data={items}
-            keyExtractor={(item) => item.place_id}
+            keyExtractor={(item) => item.hospitalId}
             renderItem={({
               item: {
                 hospitalId,
@@ -121,16 +131,22 @@ const MedicalServiceScreen = ({ navigation, route }) => {
               //       photo_reference: photos[0].photo_reference,
               //     })
               //   : undefined;
-              return (
-                <HospitalCard
-                  hospitalId={hospitalId}
-                  hospitalName={hospitalName}
-                  hospitalPhoto={hospitalPhoto}
-                  hospitalSpeciality={hospitalSpeciality}
-                  status={status}
-                  navigation={navigation}
-                />
-              );
+              if (
+                hospitalSpeciality == queryList.type &&
+                hospitalName.includes(queryList.searchText)
+              ) {
+                return (
+                  <HospitalCard
+                    hospitalId={hospitalId}
+                    hospitalName={hospitalName}
+                    hospitalPhoto={hospitalPhoto}
+                    hospitalSpeciality={hospitalSpeciality}
+                    status={status}
+                    navigation={navigation}
+                  />
+                );
+              }
+              return null;
             }}
           />
         )}
