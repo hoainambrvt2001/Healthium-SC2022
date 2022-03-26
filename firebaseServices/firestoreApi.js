@@ -7,11 +7,15 @@ import {
   getDocs,
   updateDoc,
   collection,
+  query,
+  where,
+  addDoc,
 } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 const API_KEY = "AIzaSyAWaAtaKV8BYTY2nDCmVtA5WW0M4yyi4Y0";
 
-const firestore = getFirestore();
+export const firestore = getFirestore();
 
 export const getPlaces = async (
   {
@@ -115,8 +119,7 @@ export const getFacilities = async (setItems) => {
 export const getCurFacility = async (setItem, id) => {
   try {
     const facilitie = await getDoc(doc(firestore, "facilites", id));
-    console.log("facility");
-    console.log(facilitie.data());
+
     const value = facilitie.data();
     // console.log("value");
     // console.log(value);
@@ -190,5 +193,128 @@ export const updateUserInfo = async (userInfo, userId) => {
     await updateDoc(userRef, userInfo);
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const getCurUser = async () => {
+  try {
+    const auth = await getAuth();
+    const uid = auth.currentUser.uid;
+    const currentUser = await getDoc(doc(firestore, "users", uid));
+    return currentUser.data();
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getService = async (id) => {
+  try {
+    const services = await getDocs(
+      collection(firestore, `facilites/${id}/services`)
+    );
+    const value = [];
+    services.forEach((doc) => {
+      value.push({
+        ...doc.data(),
+      });
+    });
+    return [...value];
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getDoctors = async (id) => {
+  try {
+    // const doctorList = await getDocs(
+    //   query(collection(firestore, "doctors"), where("hospitalId", "==", id))
+    // );
+    const doctorList = await getDocs(collection(firestore, "doctors"));
+    const value = [];
+    doctorList.forEach((doc) => {
+      value.push({ ...doc.data() });
+    });
+    return [...value];
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getTime = async (id) => {
+  try {
+    const time = await getDocs(collection(firestore, `facilites/${id}/time`));
+    const value = [];
+    time.forEach((doc) => {
+      const data = doc.data();
+      value.push({
+        ...data,
+        start: data.start.toDate(),
+        end: data.end.toDate(),
+      });
+    });
+    return [...value];
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const setAppointment = async (info, userId) => {
+  try {
+    const userRef = doc(firestore, "users", userId);
+
+    return userRef;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getUserRef = async (userId) => {
+  try {
+    const userRef = doc(firestore, "users", userId);
+    return userRef;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const addAppointment = async (appointmentInfo) => {
+  try {
+    const appoint = await addDoc(
+      collection(firestore, `users/${appointmentInfo.userId}/appointments`),
+      appointmentInfo
+    );
+    return appoint.id;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const addChat = async (userId, doctorId) => {
+  try {
+    const chat = await setDoc(
+      doc(firestore, "chats", `${userId}-${doctorId}`),
+      {
+        messages: [],
+      }
+    );
+    return chat.id;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getAppointments = async () => {
+  try {
+    const auth = await getAuth();
+    const uid = auth.currentUser.uid;
+    const appointRef = collection(firestore, `users/${uid}/appointments`);
+    const appointmentSnap = await getDocs(appointRef);
+    const value = [];
+    appointmentSnap.forEach((doc) => {
+      value.push({ ...value });
+    });
+    return [...value];
+  } catch (e) {
+    console.log(e);
   }
 };

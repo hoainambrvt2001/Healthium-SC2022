@@ -82,7 +82,14 @@ const HospitalDetailScreen = ({
             marginRight: 20,
             marginBottom: 20,
           }}
-          onPress={() => navigation.navigate("Booking")}
+          onPress={() =>
+            navigation.navigate("Booking", {
+              hospitalId: item.hospitalId,
+              hospitalName: item.hospitalName,
+              hospitalHotline: item.hospitalHotline,
+              hospitalAddress: item.hospitalAddress,
+            })
+          }
         >
           <Title style={{ color: "white" }}>Book appointment</Title>
         </Button>

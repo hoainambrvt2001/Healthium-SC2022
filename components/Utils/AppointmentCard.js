@@ -1,14 +1,17 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { Avatar, Divider, Paragraph, Title, Button } from "react-native-paper";
+import moment from "moment";
 
 const AppointmentCard = ({
   doctorName,
   doctorSpeciality,
-  appointmentDate,
   appointmentTime,
   appointmentPlace,
   navigation,
+  doctorAvatar,
+  userId,
+  doctorId,
   contactInfo,
 }) => {
   return (
@@ -44,7 +47,11 @@ const AppointmentCard = ({
         </View>
         <View>
           <Avatar.Image
-            source={require("assets/doctor-avatar.png")}
+            source={
+              doctorAvatar
+                ? { uri: doctorAvatar }
+                : require("assets/doctor-avatar.png")
+            }
             style={{ backgroundColor: "#003145" }}
             size={50}
           />
@@ -66,12 +73,13 @@ const AppointmentCard = ({
       >
         <Button icon="calendar" color="#00A2B6">
           <Text style={{ color: "black", textTransform: "none" }}>
-            {appointmentDate}
+            {moment(appointmentTime.date).format("LL")}
           </Text>
         </Button>
         <Button icon="clock-outline" color="#00A2B6">
           <Text style={{ color: "black", textTransform: "none" }}>
-            {appointmentTime}
+            {moment(appointmentTime.start).format("LT")} -{" "}
+            {moment(appointmentTime.end).format("LT")}
           </Text>
         </Button>
         <Button icon="map-marker-outline" color="#00A2B6">
@@ -93,7 +101,12 @@ const AppointmentCard = ({
             labelStyle={{ color: "white", textTransform: "none" }}
             style={{ borderRadius: 50, width: 100 }}
             onPress={() => {
-              navigation.navigate("Chat");
+              navigation.navigate("Chat", {
+                userId: userId,
+                doctorId: doctorId,
+                doctorName: doctorName,
+                doctorAvatar: doctorAvatar,
+              });
             }}
           >
             Contact

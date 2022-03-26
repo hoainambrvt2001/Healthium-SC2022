@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, FlatList } from "react-native";
 import AppointmentCard from "components/Utils/AppointmentCard";
+import { getAppointments } from "firebaseServices/firestoreApi";
 
 const AppointmentScreen = ({ navigation }) => {
+  const [appointments, setAppointments] = useState([]);
+
+  useEffect(async () => {
+    if (appointments.length) {
+      await getAppointments().then((data) => {
+        setAppointments([...data]);
+      });
+    }
+  }, [appointments]);
+
   return (
     <View style={{ flex: 1 }}>
       <View
@@ -53,11 +64,21 @@ const AppointmentScreen = ({ navigation }) => {
       <View style={{ flex: 1 }}>
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={[1, 2, 3]}
-          keyExtractor={(item) => item}
-          renderItem={() => {
+          data={appointments}
+          keyExtractor={(item) => item.userId}
+          renderItem={({ item }) => {
             return (
-              <AppointmentCard navigation={navigation} contactInfo={true} />
+              <AppointmentCard
+                navigation={navigation}
+                doctorName={item.doctorName}
+                doctorSpeciality={item.doctorSpeciality}
+                appointmentTime={item.time}
+                userId={item.userId}
+                doctorId={item.doctorId}
+                appointmentPlace={item.hospitalName}
+                doctorAvatar={item.doctorAvatar}
+                contactInfo={true}
+              />
             );
           }}
         />

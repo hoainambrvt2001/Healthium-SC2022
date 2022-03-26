@@ -1,19 +1,58 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, FlatList } from "react-native";
 import { Title, Button } from "react-native-paper";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 import TimeRangeCard from "./TimeRangeCard";
 import DoctorCard from "./DoctorCard";
-import { listDoctors, listTimeRanges } from "components/Utils/CLONEDATA";
 import moment from "moment";
 
-const SecondStep = ({ navigation }) => {
+const SecondStep = ({
+  navigation,
+  doctorList,
+  time,
+  appointmentInfo,
+  setAppointmentInfo,
+}) => {
   const [bookingDate, setBookingDate] = useState(false);
   const [show, setShow] = useState(false);
+  const [appointTime, setAppointTime] = useState(-1);
+  const [doctorChoice, setDoctorChoice] = useState(-1);
+
+  useEffect(() => {
+    if (!bookingDate) return;
+    setAppointmentInfo({
+      ...appointmentInfo,
+      time: { ...appointmentInfo.time, date: new Date(bookingDate).getTime() },
+    });
+  }, [bookingDate]);
+
+  useEffect(() => {
+    if (appointTime == -1) return;
+    setAppointmentInfo({
+      ...appointmentInfo,
+      time: {
+        ...appointmentInfo.time,
+        start: time[appointTime].start.getTime(),
+        end: time[appointTime].end.getTime(),
+      },
+    });
+  }, [appointTime]);
+
+  useEffect(() => {
+    if (doctorChoice == -1) return;
+    setAppointmentInfo({
+      ...appointmentInfo,
+      doctorId: doctorList[doctorChoice].doctorId,
+      doctorAvatar: doctorList[doctorChoice].docAvatar,
+      doctorName: doctorList[doctorChoice].docName,
+      doctorSpeciality: doctorList[doctorChoice].docSpeciality,
+    });
+  }, [doctorChoice]);
 
   const onChange = (event, selectedDate) => {
     let currentDate = selectedDate;
+    // console.log(Date(currentDate));
     if (currentDate) {
       setBookingDate(currentDate);
     }
@@ -22,6 +61,14 @@ const SecondStep = ({ navigation }) => {
 
   const showDatepicker = () => {
     setShow(true);
+  };
+
+  const handleChangeAppointTime = (index) => {
+    setAppointTime(index);
+  };
+
+  const handleChangeDoctorChoice = (index) => {
+    setDoctorChoice(index);
   };
 
   return (
@@ -53,10 +100,15 @@ const SecondStep = ({ navigation }) => {
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
-          data={listTimeRanges}
+          data={time}
           keyExtractor={(_, idx) => idx}
-          renderItem={({ item }) => (
-            <TimeRangeCard startTime={item.startTime} endTime={item.endTime} />
+          renderItem={({ item, index }) => (
+            <TimeRangeCard
+              handlePress={() => handleChangeAppointTime(index)}
+              isChose={appointTime === index ? 1 : 0}
+              startTime={moment(item.start).format("LT")}
+              endTime={moment(item.end).format("LT")}
+            />
           )}
         />
       </View>
@@ -67,13 +119,15 @@ const SecondStep = ({ navigation }) => {
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
-          data={listDoctors}
+          data={doctorList}
           keyExtractor={(_, idx) => idx}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <DoctorCard
-              doctorAvatar={item.doctorAvatar}
-              doctorName={item.doctorName}
-              doctorSpeciality={item.doctorSpeciality}
+              handlePress={() => handleChangeDoctorChoice(index)}
+              isChose={doctorChoice === index ? 1 : 0}
+              doctorAvatar={item.docAvatar}
+              doctorName={item.docName}
+              doctorSpeciality={item.docSpeciality}
             />
           )}
         />

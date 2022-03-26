@@ -5,8 +5,6 @@ import Icon from "react-native-vector-icons/Feather";
 import { useState, useEffect, useCallback } from "react";
 import { GiftedChat, Send } from "react-native-gifted-chat";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
-
-import { getDatabase } from "firebase/database";
 import {
   doc,
   getDoc,
@@ -19,15 +17,14 @@ import {
 // Get a reference to the database service
 const db = getFirestore();
 
-const ChatSection = ({ user_id, user_name, curUser_id }) => {
+const ChatSection = ({ userId, doctorId, doctorName, doctorAvatar }) => {
   const [mes, setMes] = useState([]);
   let init = false;
-  const chatsRef =
-    user_id < curUser_id
-      ? doc(db, "chats", `${user_id}-${curUser_id}`)
-      : doc(db, "chats", `${curUser_id}-${user_id}`);
+  const chatsRef = doc(db, "chats", `${userId}-${doctorId}`);
 
-  const avatar = "https://placeimg.com/140/140/any";
+  const avatar = doctorAvatar
+    ? doctorAvatar
+    : "https://placeimg.com/140/140/any";
 
   const appendMessages = useCallback(
     (messages) => {
@@ -79,27 +76,27 @@ const ChatSection = ({ user_id, user_name, curUser_id }) => {
           style={{ marginLeft: 32 }}
         />
         <View style={styles.detail}>
-          <Title style={styles.text}>Name</Title>
-          <Subheading style={styles.text}>Speciality</Subheading>
+          <Title style={styles.text}>{doctorName}</Title>
+          <Subheading style={styles.text}>{doctorSpeciality}</Subheading>
         </View>
       </View>
       <GiftedChat
         messages={mes}
         onSend={handleSend}
         user={{
-          _id: user_id,
-          name: user_name,
+          _id: userId,
         }}
+        renderAvatar={null}
         renderBubble={({ currentMessage }) => {
           const viewStyle =
-            currentMessage.user._id === curUser_id ? styles.left : styles.right;
+            currentMessage.user._id === userId ? styles.left : styles.right;
           const textStyle =
-            currentMessage.user._id === curUser_id
+            currentMessage.user._id === userId
               ? styles.leftText
               : styles.rightText;
 
           const dateStyle =
-            currentMessage.user._id === curUser_id
+            currentMessage.user._id === userId
               ? styles.dateLeft
               : styles.dateRight;
 
@@ -138,12 +135,12 @@ const ChatSection = ({ user_id, user_name, curUser_id }) => {
   );
 };
 
-const random = Math.floor(Math.random() * 2).toString();
+// const random = Math.floor(Math.random() * 2).toString();
 
-ChatSection.defaultProps = {
-  user_id: random == 1 ? "1" : "2",
-  user_name: random == 1 ? "dat" : "nam",
-  curUser_id: random == 1 ? "2" : "1",
-};
+// ChatSection.defaultProps = {
+//   doctorId: random == 1 ? "1" : "2",
+//   user_name: random == 1 ? "dat" : "nam",
+//   userId: random == 1 ? "2" : "1",
+// };
 
 export default ChatSection;

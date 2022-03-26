@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, ScrollView } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, ScrollView, Text } from "react-native";
 import { Button } from "react-native-paper";
 import { primaryColor } from "styles/globalStyles";
 
@@ -8,9 +8,83 @@ import StepSection from "components/Booking/StepSection";
 import FirstStep from "components/Booking/FirstStep";
 import SecondStep from "components/Booking/SecondStep";
 import ThirdStep from "components/Booking/ThirdStep";
+import {
+  getCurUser,
+  getService,
+  getDoctors,
+  getTime,
+  getUserRef,
+  firestore,
+  addAppointment,
+  addChat,
+} from "firebaseServices/firestoreApi";
+import { onSnapshot, collection, addDoc } from "firebase/firestore";
+import app from "firebaseServices/firebaseApp";
 
-const BookingScreen = ({ navigation }) => {
+const BookingScreen = ({
+  navigation,
+  route: {
+    params: { hospitalAddress, hospitalName, hospitalId, hospitalHotline },
+  },
+}) => {
   const [step, setStep] = useState(0);
+  // console.log(hospitalAddress, hospitalName, hospitalId, hospitalHotline);
+  const [userInfo, setUserInfo] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [time, setTime] = useState([]);
+  const [services, setServices] = useState([]);
+  const [doctorList, setDoctorList] = useState([]);
+  const [appointmentInfo, setAppointmentInfo] = useState({
+    userId: "",
+    patientNo: -1,
+    doctorId: "",
+    doctorName: "",
+    doctorAvatar: "",
+    doctorSpeciality: "",
+    services: [],
+    time: {
+      date: "",
+      start: "",
+      end: "",
+    },
+    hospitalName: hospitalName,
+  });
+  const [toggle, setToggle] = useState(false);
+
+  useEffect(async () => {
+    if (step === 0) {
+      if (userInfo["email"]) return;
+      setLoading(true);
+      await getCurUser().then((data) => {
+        setAppointmentInfo({ ...appointmentInfo, userId: data.userId });
+        setUserInfo({ ...data });
+      });
+      await getService(hospitalId).then((data) => setServices([...data]));
+      setLoading(false);
+    } else if (step === 1) {
+      if (time.length) return;
+      setLoading(true);
+      await getTime(hospitalId).then((data) => setTime([...data]));
+      await getDoctors(hospitalId).then((data) => setDoctorList([...data]));
+      setLoading(false);
+    }
+  }, [step]);
+
+  useEffect(() => {
+    const unsubscribe = async () => {
+      if (!userInfo.userId) return;
+      const userRef = await getUserRef(userInfo.userId).then((data) => data);
+      onSnapshot(userRef, (doc) => {
+        setUserInfo({ ...doc.data() });
+      });
+    };
+    return () => unsubscribe();
+  }, [toggle]);
+
+  useEffect(() => {
+    console.log("appoint");
+    console.log(appointmentInfo);
+  }, [appointmentInfo]);
 
   return (
     <View style={{ flex: 1 }}>
@@ -31,9 +105,9 @@ const BookingScreen = ({ navigation }) => {
             }}
           ></View>
           <InfoHospitalCard
-            hospitalAddress={"Ho Chi Minh city, Vietnam"}
-            hospitalName={"Truong Vuong"}
-            hospitalContact={"09123123"}
+            hospitalAddress={hospitalAddress}
+            hospitalName={hospitalName}
+            hospitalContact={hospitalHotline}
           />
         </View>
       </View>
@@ -41,12 +115,33 @@ const BookingScreen = ({ navigation }) => {
         <StepSection step={step} />
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {step === 0 ? (
-          <FirstStep navigation={navigation} />
+        {loading ? (
+          <View>
+            <Text>loading</Text>
+          </View>
+        ) : step === 0 ? (
+          <FirstStep
+            navigation={navigation}
+            patients={userInfo.patients}
+            services={[...services]}
+            setToggle={setToggle}
+            toggle={toggle}
+            appointmentInfo={appointmentInfo}
+            setAppointmentInfo={setAppointmentInfo}
+          />
         ) : step === 1 ? (
-          <SecondStep navigation={navigation} />
+          <SecondStep
+            navigation={navigation}
+            doctorList={doctorList}
+            time={time}
+            appointmentInfo={appointmentInfo}
+            setAppointmentInfo={setAppointmentInfo}
+          />
         ) : (
-          <ThirdStep navigation={navigation} />
+          <ThirdStep
+            navigation={navigation}
+            appointmentInfo={appointmentInfo}
+          />
         )}
         <View
           style={{
@@ -71,9 +166,18 @@ const BookingScreen = ({ navigation }) => {
           <Button
             mode="contained"
             style={{ width: "45%" }}
-            onPress={() => setStep(step + 1)}
+            onPress={async () => {
+              if (step !== 2) setStep(step + 1);
+              else {
+                await addAppointment({ ...appointmentInfo }).then((data) =>
+                  console.log(data)
+                );
+                await addChat(appointmentInfo.userId, appointmentInfo.doctorId);
+                navigation.goBack();
+              }
+            }}
           >
-            Next
+            {step !== 2 ? "Next" : "Confirm"}
           </Button>
         </View>
       </ScrollView>
