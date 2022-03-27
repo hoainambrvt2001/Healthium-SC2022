@@ -51,24 +51,28 @@ const BookingScreen = ({
     hospitalName: hospitalName,
   });
 
-  useEffect(async () => {
-    if (step === 0) {
-      if (userInfo["email"]) return;
-      setLoading(true);
-      await getCurUser().then((data) => {
-        setAppointmentInfo({ ...appointmentInfo, userId: data.userId });
-        setUserInfo({ ...data });
-      });
-      await getService(hospitalId).then((data) => setServices([...data]));
-      setLoading(false);
-    } else if (step === 1) {
-      if (time.length) return;
-      setLoading(true);
-      await getTime(hospitalId).then((data) => setTime([...data]));
-      await getDoctors(hospitalId).then((data) => setDoctorList([...data]));
-      setLoading(false);
-    }
-  }, [step]);
+  useEffect(() => {
+    const getData = async () => {
+      if (step === 0) {
+        if (userInfo["email"]) return;
+        setLoading(true);
+        await getCurUser().then((data) => {
+          setAppointmentInfo({ ...appointmentInfo, userId: data.userId });
+          setUserInfo({ ...data });
+        });
+        await getService(hospitalId).then((data) => setServices([...data]));
+        setLoading(false);
+      } else if (step === 1) {
+        if (time.length) return;
+        setLoading(true);
+        await getTime(hospitalId).then((data) => setTime([...data]));
+        await getDoctors(hospitalId).then((data) => setDoctorList([...data]));
+        setLoading(false);
+      }
+    };
+
+    getData();
+  }, []);
 
   // useEffect(() => {
   //   const unsubscribe = async () => {
@@ -81,10 +85,10 @@ const BookingScreen = ({
   //   return () => unsubscribe();
   // }, [toggle]);
 
-  useEffect(() => {
-    console.log("appoint");
-    console.log(appointmentInfo);
-  }, [appointmentInfo]);
+  // useEffect(() => {
+  //   console.log("appoint");
+  //   console.log(appointmentInfo);
+  // }, [appointmentInfo]);
 
   return (
     <View style={{ flex: 1 }}>

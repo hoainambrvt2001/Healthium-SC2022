@@ -20,7 +20,7 @@ const MedicalServiceScreen = ({ navigation, route }) => {
   });
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [isInit, setIsInit] = useState(false);
+  // const [isInit, setIsInit] = useState(false);
 
   const serviceDict = {
     all: "All services",
@@ -53,14 +53,16 @@ const MedicalServiceScreen = ({ navigation, route }) => {
 
   // getFacilities(setItems);
 
-  useEffect(async () => {
-    // getPlaces(queryList, setItems, setLoading);
-    if (isInit) return;
-    setLoading(true);
-    await getFacilities(setItems);
-    setLoading(false);
-    setIsInit(true);
-  }, [isInit]);
+  useEffect(() => {
+    const getInit = async () => {
+      // if (isInit) return;
+      setLoading(true);
+      await getFacilities(setItems);
+      setLoading(false);
+      // setIsInit(true);
+    };
+    getInit();
+  }, []);
 
   const handleSetQuery = (type) => {
     if (type === "athome") setQueryList({ ...queryList, type: "at-home" });
