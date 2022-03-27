@@ -27,7 +27,7 @@ const MedicalServiceScreen = ({ navigation, route }) => {
     hospital: "Hospital",
     polyclinic: "Clinic",
     // drugstore: "Drugstore",
-    gp: "General Practice",
+    gp: "General Practicioner",
     dental: "Dental Care",
     pharmacy: "Pharmacy",
     // physiotherapist: "Physical recovery",
