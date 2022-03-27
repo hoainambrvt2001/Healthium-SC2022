@@ -41,6 +41,7 @@ const BookingScreen = ({
     doctorName: "",
     doctorAvatar: "",
     doctorSpeciality: "",
+    note: "",
     services: [],
     time: {
       date: "",
@@ -139,6 +140,7 @@ const BookingScreen = ({
           <ThirdStep
             navigation={navigation}
             appointmentInfo={appointmentInfo}
+            setAppointmentInfo={setAppointmentInfo}
           />
         )}
         <View

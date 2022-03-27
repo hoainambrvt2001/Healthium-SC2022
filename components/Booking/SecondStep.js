@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { View, FlatList } from "react-native";
-import { Title, Button } from "react-native-paper";
+import { View, FlatList, ScrollView } from "react-native";
+import { Title, Button, Dialog, Portal, Paragraph } from "react-native-paper";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 import TimeRangeCard from "./TimeRangeCard";
@@ -18,6 +18,7 @@ const SecondStep = ({
   const [show, setShow] = useState(false);
   const [appointTime, setAppointTime] = useState(-1);
   const [doctorChoice, setDoctorChoice] = useState(-1);
+  const [isOpen, setIsOpen] = useState(-1);
 
   useEffect(() => {
     if (!bookingDate) return;
@@ -68,11 +69,46 @@ const SecondStep = ({
   };
 
   const handleChangeDoctorChoice = (index) => {
-    setDoctorChoice(index);
+    setIsOpen(index);
   };
 
   return (
-    <>
+    <ScrollView>
+      <Portal>
+        <Dialog visible={isOpen !== -1} onDismiss={() => setIsOpen(-1)}>
+          <Dialog.Title>Doctor information</Dialog.Title>
+          {isOpen === -1 ? null : (
+            <>
+              <Dialog.Content>
+                <Title>
+                  Doctor name:{" "}
+                  <Paragraph>{doctorList[isOpen].docName}</Paragraph>
+                </Title>
+                <Title>
+                  Doctor speciality:{" "}
+                  <Paragraph>{doctorList[isOpen].docSpeciality}</Paragraph>
+                </Title>
+                <Title>Description: </Title>
+                <Paragraph>{doctorList[isOpen].description}</Paragraph>
+                {/* <Paragraph>You have to pay $1</Paragraph> */}
+              </Dialog.Content>
+            </>
+          )}
+
+          <Dialog.Actions>
+            <Button onPress={() => setIsOpen(-1)}>Cancel</Button>
+            <Button
+              onPress={() => {
+                const index = isOpen;
+                setDoctorChoice(index);
+                setIsOpen(-1);
+              }}
+            >
+              Book this doctor
+            </Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
       <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
         <Title>Choose date</Title>
       </View>
@@ -133,7 +169,7 @@ const SecondStep = ({
         />
         <View style={{ height: 60 }}></View>
       </View>
-    </>
+    </ScrollView>
   );
 };
 
