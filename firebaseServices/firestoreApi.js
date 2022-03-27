@@ -330,9 +330,9 @@ export const addChat = async (info) => {
   try {
     const chatsRef = doc(firestore, "chats", `${info.userId}-${info.doctorId}`);
     const getChat = await getDoc(chatsRef);
-    console.log("yes");
+    // console.log("yes");
     if (!getChat.exists()) {
-      console.log("no");
+      // console.log("no");
       const chat = await setDoc(
         doc(firestore, "chats", `${info.userId}-${info.doctorId}`),
         {

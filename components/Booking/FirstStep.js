@@ -17,12 +17,11 @@ const FirstStep = ({
   userInfo,
   setUserInfo,
   services,
-  setToggle,
-  toggle,
   appointmentInfo,
   setAppointmentInfo,
 }) => {
   const [patientChoice, setPatientChoice] = useState(appointmentInfo.patientNo);
+  const [init, setInit] = useState(false);
   const [serviceChoice, setServiceChoice] = useState([]);
 
   useEffect(() => {
@@ -34,22 +33,37 @@ const FirstStep = ({
   }, [patientChoice]);
 
   useEffect(() => {
-    if (!serviceChoice.length && appointmentInfo.services.length) {
+    // if (!serviceChoice.length && appointmentInfo.services.length) {
+    //   const value = services.map(({ name }, index) => {
+    //     const [isInclude] = appointmentInfo.services.map((ele) => {
+    //       if (ele.name === name) return true;
+    //     });
+    //     if (isInclude) return index;
+    //     return -1;
+    //   });
+    //   setServiceChoice(value.filter((ele) => ele > -1));
+
+    //   return;
+    // }
+    const value = [];
+    serviceChoice.forEach((ele) => value.push(services[ele]));
+    setAppointmentInfo({ ...appointmentInfo, services: value });
+  }, [serviceChoice]);
+
+  useEffect(() => {
+    if (!init) {
       const value = services.map(({ name }, index) => {
-        const [isInclude] = appointmentInfo.services.map((ele) => {
-          if (ele.name === name) return true;
+        let isInclude = false;
+        appointmentInfo.services.map((ele) => {
+          if (ele.name === name) isInclude = true;
         });
         if (isInclude) return index;
         return -1;
       });
       setServiceChoice(value.filter((ele) => ele > -1));
-
-      return;
+      setInit(true);
     }
-    const value = [];
-    serviceChoice.forEach((ele) => value.push(services[ele]));
-    setAppointmentInfo({ ...appointmentInfo, services: value });
-  }, [serviceChoice]);
+  }, [init]);
 
   const handleChoosePatient = (index) => {
     setPatientChoice(index);

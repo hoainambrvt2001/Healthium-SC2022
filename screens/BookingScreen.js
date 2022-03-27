@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, ScrollView, Text } from "react-native";
-import { Button } from "react-native-paper";
+import { Button, Snackbar } from "react-native-paper";
 import { primaryColor } from "styles/globalStyles";
 
 import InfoHospitalCard from "components/Utils/InfoHospitalCard";
@@ -18,8 +18,6 @@ import {
   addAppointment,
   addChat,
 } from "firebaseServices/firestoreApi";
-import { onSnapshot, collection, addDoc } from "firebase/firestore";
-import app from "firebaseServices/firebaseApp";
 
 const BookingScreen = ({
   navigation,
@@ -29,6 +27,7 @@ const BookingScreen = ({
 }) => {
   const [step, setStep] = useState(0);
   // console.log(hospitalAddress, hospitalName, hospitalId, hospitalHotline);
+  const [isOpenSnackbar, setIsOpenSnackbar] = useState(false);
   const [userInfo, setUserInfo] = useState({});
   const [loading, setLoading] = useState(true);
   const [time, setTime] = useState([]);
@@ -51,6 +50,10 @@ const BookingScreen = ({
     hospitalName: hospitalName,
   });
 
+  const openToggleSnackBar = () => setIsOpenSnackbar(true);
+
+  const onDismissSnackBar = () => setIsOpenSnackbar(false);
+
   useEffect(() => {
     const getData = async () => {
       if (step === 0) {
@@ -72,7 +75,7 @@ const BookingScreen = ({
     };
 
     getData();
-  }, []);
+  }, [step]);
 
   // useEffect(() => {
   //   const unsubscribe = async () => {
@@ -174,21 +177,51 @@ const BookingScreen = ({
             mode="contained"
             style={{ width: "45%" }}
             onPress={async () => {
-              if (step !== 2) setStep(step + 1);
-              else {
+              if (step === 0) {
+                if (
+                  appointmentInfo.patientNo !== -1 &&
+                  appointmentInfo.services.length
+                ) {
+                  setStep(1);
+                } else {
+                  openToggleSnackBar();
+                }
+              } else if (step === 1) {
+                if (
+                  appointmentInfo.doctorId !== "" &&
+                  appointmentInfo.time.date !== "" &&
+                  appointmentInfo.time.start !== ""
+                ) {
+                  setStep(2);
+                } else {
+                  openToggleSnackBar();
+                }
+              } else {
                 await addAppointment(appointmentInfo).then((data) => {
                   // console.log(data)
                 });
                 await addChat(appointmentInfo).then((data) => {
                   // console.log(data)
                 });
-                navigation.goBack();
+                navigation.replace("AppointmentScreen");
               }
             }}
           >
             {step !== 2 ? "Next" : "Confirm"}
           </Button>
         </View>
+        <Snackbar
+          visible={isOpenSnackbar}
+          onDismiss={onDismissSnackBar}
+          action={{
+            label: "Hide",
+            onPress: () => {
+              // Do something
+            },
+          }}
+        >
+          You should fill detail before go to next step
+        </Snackbar>
       </ScrollView>
     </View>
   );

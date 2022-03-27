@@ -6,6 +6,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import TimeRangeCard from "./TimeRangeCard";
 import DoctorCard from "./DoctorCard";
 import moment from "moment";
+import { Timestamp } from "firebase/firestore";
 
 const SecondStep = ({
   navigation,
@@ -19,6 +20,36 @@ const SecondStep = ({
   const [appointTime, setAppointTime] = useState(-1);
   const [doctorChoice, setDoctorChoice] = useState(-1);
   const [isOpen, setIsOpen] = useState(-1);
+  const [init, setInit] = useState(false);
+
+  useEffect(() => {
+    if (init) return;
+
+    doctorList.map(({ doctorId }, index) => {
+      if (doctorId === appointmentInfo.doctorId) setDoctorChoice(index);
+    });
+
+    time.map(({ start }, index) => {
+      const infoStartDate =
+        appointmentInfo.time.start instanceof Timestamp
+          ? new Date(appointmentInfo.time.start.toDate()).getTime()
+          : new Date(appointmentInfo.time.start).getTime();
+      // console.log(ele);
+      const startTime =
+        start instanceof Timestamp
+          ? new Date(start.toDate()).getTime()
+          : new Date(start).getTime();
+      if (startTime === infoStartDate) setAppointTime(index);
+    });
+
+    if (appointmentInfo.time.date !== "") {
+      if (appointmentInfo.time.date instanceof Timestamp) {
+        setBookingDate(new Date(appointmentInfo.time.date.toDate()));
+      } else setBookingDate(new Date(appointmentInfo.time.date));
+    }
+
+    setInit(true);
+  }, [init]);
 
   useEffect(() => {
     if (!bookingDate) return;
@@ -42,6 +73,8 @@ const SecondStep = ({
 
   useEffect(() => {
     if (doctorChoice == -1) return;
+    console.log("doctor");
+    console.log(doctorList[doctorChoice]);
     setAppointmentInfo({
       ...appointmentInfo,
       doctorId: doctorList[doctorChoice].doctorId,
