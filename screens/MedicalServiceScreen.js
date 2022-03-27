@@ -147,7 +147,7 @@ const MedicalServiceScreen = ({ navigation, route }) => {
                   .toLowerCase()
                   .includes(route.params.searchText.toLowerCase())
               ) {
-                console.log("in if");
+                // console.log("in if");
                 return <HospitalCard {...item} navigation={navigation} />;
               }
               return null;

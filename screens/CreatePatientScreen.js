@@ -22,7 +22,7 @@ const BoxDivider = ({ height }) => {
 const CreatePatientScreen = ({
   navigation,
   route: {
-    params: { setToggle, toggle },
+    params: { userInfo, setUserInfo },
   },
 }) => {
   const [checked, setChecked] = useState(0);
@@ -63,9 +63,12 @@ const CreatePatientScreen = ({
         }}
         validationSchema={patientSchema}
         onSubmit={async (values, actions) => {
-          addPatient(values, user.uid);
+          await addPatient(values, user.uid).then((data) => {
+            console.log(data);
+            setUserInfo({ ...userInfo, patients: [...data] });
+          });
           actions.setSubmitting(false);
-          if (setToggle) setToggle(!toggle);
+          // if (setToggle) setToggle(!toggle);
           navigation.goBack();
         }}
       >

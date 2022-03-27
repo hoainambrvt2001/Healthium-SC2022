@@ -185,8 +185,13 @@ export const addPatient = async (patientInfo, userId) => {
     if (userSnap.exists()) {
       const userDoc = userSnap.data();
       userDoc.patients.push({ ...patientInfo, no: userDoc.patients.length });
-      await updateDoc(userRef, userDoc);
+      await updateDoc(userRef, userDoc).then((doc) => {
+        console.log("doc");
+        console.log(doc);
+      });
+      return [...userDoc.patients];
     }
+    return [];
   } catch (error) {
     console.log(error);
   }
@@ -312,24 +317,36 @@ export const getUserRef = async (userId) => {
 export const addAppointment = async (appointmentInfo) => {
   try {
     const appoint = await addDoc(
-      collection(firestore, `users/${appointmentInfo.userId}/appointments`),
+      collection(firestore, "users", appointmentInfo.userId, "appointments"),
       appointmentInfo
     );
-    return appoint.id;
+    return "appoint: " + appoint.id;
   } catch (e) {
     console.log(e);
   }
 };
 
-export const addChat = async (userId, doctorId) => {
+export const addChat = async (info) => {
   try {
-    const chat = await setDoc(
-      doc(firestore, "chats", `${userId}-${doctorId}`),
-      {
-        messages: [],
-      }
-    );
-    return chat.id;
+    const chatsRef = doc(firestore, "chats", `${info.userId}-${info.doctorId}`);
+    const getChat = await getDoc(chatsRef);
+    console.log("yes");
+    if (!getChat.exists()) {
+      console.log("no");
+      const chat = await setDoc(
+        doc(firestore, "chats", `${info.userId}-${info.doctorId}`),
+        {
+          doctorName: info.doctorName,
+          doctorAvatar: info.doctorAvatar,
+          userId: info.userId,
+          doctorId: info.doctorId,
+          doctorSpeciality: info.doctorSpeciality,
+          messages: [],
+        }
+      );
+      return "chat: " + chat.id;
+    }
+    return "Already have";
   } catch (e) {
     console.log(e);
   }
@@ -345,6 +362,27 @@ export const getAppointments = async () => {
     appointmentSnap.forEach((doc) => {
       value.push({ ...value });
     });
+    return [...value];
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getContactList = async () => {
+  try {
+    const auth = await getAuth();
+    const uid = auth.currentUser.uid;
+    const chatsRef = query(
+      collection(firestore, "chats"),
+      where("userId", "==", uid)
+    );
+    const chatSnap = await getDocs(chatsRef);
+    const value = [];
+    chatSnap.forEach((doc) => {
+      value.push({ ...doc.data() });
+    });
+    console.log("value");
+    console.log(value);
     return [...value];
   } catch (e) {
     console.log(e);

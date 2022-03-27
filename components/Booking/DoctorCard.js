@@ -38,12 +38,13 @@ const DoctorCard = ({
       >
         <Avatar.Image
           size={60}
-          source={{
-            uri:
-              doctorAvatar !== ""
-                ? doctorAvatar
-                : "https://placeimg.com/140/140/any",
-          }}
+          source={
+            doctorAvatar !== ""
+              ? {
+                  uri: doctorAvatar,
+                }
+              : require("assets/doctor-avatar.png")
+          }
           style={{ marginRight: 10 }}
         />
 

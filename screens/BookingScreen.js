@@ -49,7 +49,6 @@ const BookingScreen = ({
     },
     hospitalName: hospitalName,
   });
-  const [toggle, setToggle] = useState(false);
 
   useEffect(async () => {
     if (step === 0) {
@@ -158,7 +157,10 @@ const BookingScreen = ({
               backgroundColor: "#E4E4E7",
             }}
             labelStyle={{ color: "#000000" }}
-            onPress={() => setStep(step - 1)}
+            onPress={() => {
+              if (step === 0) navigation.goBack();
+              else setStep(step - 1);
+            }}
           >
             Back
           </Button>
@@ -168,10 +170,12 @@ const BookingScreen = ({
             onPress={async () => {
               if (step !== 2) setStep(step + 1);
               else {
-                await addAppointment({ ...appointmentInfo }).then((data) =>
+                await addAppointment(appointmentInfo).then((data) =>
                   console.log(data)
                 );
-                await addChat(appointmentInfo.userId, appointmentInfo.doctorId);
+                await addChat(appointmentInfo).then((data) =>
+                  console.log(data)
+                );
                 navigation.goBack();
               }
             }}

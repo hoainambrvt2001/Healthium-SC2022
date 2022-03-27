@@ -8,16 +8,40 @@ const CustomCallout = ({ name, rating, photoUrl }) => {
   return (
     <View style={styles.callout}>
       {/* <View style={styles.callout_image}> */}
-      <Image
-        source={{ uri: photoUrl }}
-        style={{ width: 100, height: 100, resizeMode: "cover" }}
-        borderRadius={3}
-      />
+      {/* <View style={{ width: 100, height: 100, position: "relative" }}> */}
+      <Text
+        style={{
+          position: "relative",
+          width: 100,
+          height: 200,
+          bottom: 50,
+        }}
+      >
+        <Image
+          source={{ uri: photoUrl }}
+          style={{
+            width: 100,
+            height: 100,
+            // resizeMode: "cover",
+            // resizeMode: "center",
+            // marginBottom: -50,
+          }}
+          borderRadius={3}
+        />
+      </Text>
+      {/* </View> */}
       {/* </View> */}
       {/* <Text>haha</Text> */}
-      <View style={{ flex: 1 }}>
-        <Title>{name}</Title>
-        <Text>Rating: {rating}</Text>
+      <View
+        style={{
+          marginLeft: 4,
+          width: 200,
+        }}
+      >
+        <Title style={{ flexShrink: 1, fontSize: 14, lineHeight: 15 }}>
+          {name}
+        </Title>
+        <Text style={{ fontSize: 12, lineHeight: 13 }}>Rating: {rating}</Text>
       </View>
     </View>
   );

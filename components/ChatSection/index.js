@@ -28,9 +28,7 @@ const ChatSection = ({
   let init = false;
   const chatsRef = doc(db, "chats", `${userId}-${doctorId}`);
 
-  const avatar = doctorAvatar
-    ? doctorAvatar
-    : "https://placeimg.com/140/140/any";
+  const avatar = doctorAvatar ? doctorAvatar : undefined;
 
   const appendMessages = useCallback(
     (messages) => {
@@ -78,8 +76,10 @@ const ChatSection = ({
       <View style={styles.info}>
         <Avatar.Image
           size={72}
-          source={{ uri: avatar }}
-          style={{ marginLeft: 32 }}
+          source={
+            avatar ? { uri: avatar } : require("assets/doctor-avatar.png")
+          }
+          style={{ marginLeft: 32, borderColor: "white", borderWidth: 1 }}
         />
         <View style={styles.detail}>
           <Title style={styles.text}>{doctorName}</Title>

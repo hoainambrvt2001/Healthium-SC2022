@@ -21,6 +21,7 @@ const PatientCard = ({
       useNativeDriver: false,
     }).start();
   }, [isChose]);
+  console.log(patientBirthday);
 
   return (
     <TouchableOpacity

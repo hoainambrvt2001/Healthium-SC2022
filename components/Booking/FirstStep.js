@@ -10,6 +10,7 @@ import {
 import NoteCard from "components/HomeScreen/NoteCard";
 import PatientCard from "components/Booking/PatientCard";
 import ServiceCard from "components/Booking/ServiceCard";
+import { Timestamp } from "firebase/firestore";
 
 const FirstStep = ({
   navigation,
@@ -28,7 +29,7 @@ const FirstStep = ({
     if (patientChoice === -1) return;
     setAppointmentInfo({
       ...appointmentInfo,
-      patientNo: patients[patientChoice].no,
+      patientNo: userInfo.patients[patientChoice].no,
     });
   }, [patientChoice]);
 
@@ -84,7 +85,11 @@ const FirstStep = ({
                 patientName={item.patientName}
                 patientGender={item.patientGender}
                 patientId={item.patientIdCardNo}
-                patientBirthday={new Date(item.patientBirthday.toDate())}
+                patientBirthday={
+                  item.patientBirthday instanceof Timestamp
+                    ? new Date(item.patientBirthday.toDate())
+                    : new Date(item.patientBirthday)
+                }
                 patientAddress={item.patientAddress}
                 patientPhone={item.patientTel}
               />

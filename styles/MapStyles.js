@@ -15,7 +15,10 @@ export const styles = StyleSheet.create({
   },
   callout: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
+    width: 300,
+    padding: 2,
+    height: 100,
   },
   callout_image: {
     width: 100,
