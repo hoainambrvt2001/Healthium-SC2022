@@ -45,9 +45,11 @@ const HospitalDetailScreen = ({
         <View
           style={{
             paddingHorizontal: 10,
-            paddingTop: 40,
+            paddingTop: 100,
             paddingBottom: 20,
             width: "100%",
+            borderColor:"#C4C4C4",
+            borderWidth:3,
           }}
         >
           <InfoHospitalCard

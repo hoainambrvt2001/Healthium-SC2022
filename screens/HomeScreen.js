@@ -37,7 +37,7 @@ const HomeScreen = ({ navigation }) => {
         })}
       </View>
 
-      <Title style={{ marginLeft: 10 }}>Notifications</Title>
+      <Title style={{ marginLeft: 10 }}>Medical News</Title>
 
       <TouchableWithoutFeedback
         onPress={() => navigation.navigate("NotificationScreen")}
@@ -52,22 +52,23 @@ const HomeScreen = ({ navigation }) => {
             marginHorizontal: 25,
             padding: 10,
             borderRadius: 10,
+            
           }}
         >
           <Image
-            source={require("assets/sms-icon.png")}
-            style={{ width: 20, height: 20, marginHorizontal: 5 }}
+            source={require("assets/NOTI.png")}
+            style={{ width: 70, height: 70, marginHorizontal: 5 }}
           />
           <View
             style={{
               marginLeft: 5,
-              minHeight: 100,
+              minHeight: 60,
+              
             }}
           >
-            <Title>Doctor A</Title>
+           
             <Paragraph numberOfLines={3}>
-              Do ullamco ex velit anim do proident exercitation et anim tempor.
-              Lorem sunt deserunt labore non excepteur venia
+            View the latest health news and explore articles on parenting medicine, diseases and healthy living,.. with Healthium.
             </Paragraph>
           </View>
         </View>
@@ -77,3 +78,4 @@ const HomeScreen = ({ navigation }) => {
 };
 
 export default HomeScreen;
+
