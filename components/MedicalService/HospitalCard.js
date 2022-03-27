@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image, TouchableWithoutFeedback } from "react-native";
+import { View, Image, TouchableWithoutFeedback, Touchable } from "react-native";
 import { Caption, Paragraph, Title } from "react-native-paper";
 
 const HospitalCard = ({
@@ -22,7 +22,7 @@ const HospitalCard = ({
   navigation,
 }) => {
   return (
-    <TouchableWithoutFeedback
+    <Touchable
       onPress={() => {
         navigation.navigate("HospitalDetail", {
           hospitalId: hospitalId,
@@ -79,7 +79,7 @@ const HospitalCard = ({
           </View>
         </View>
       </View>
-    </TouchableWithoutFeedback>
+    </Touchable>
   );
 };
 
