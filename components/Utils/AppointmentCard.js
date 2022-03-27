@@ -1,6 +1,14 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { Avatar, Divider, Paragraph, Title, Button } from "react-native-paper";
+import {
+  Avatar,
+  Divider,
+  Paragraph,
+  Title,
+  Button,
+  Dialog,
+  Portal,
+} from "react-native-paper";
 import moment from "moment";
 
 const AppointmentCard = ({
@@ -10,8 +18,7 @@ const AppointmentCard = ({
   appointmentPlace,
   navigation,
   doctorAvatar,
-  userId,
-  doctorId,
+  handleContact,
   contactInfo,
 }) => {
   return (
@@ -100,15 +107,7 @@ const AppointmentCard = ({
             color="#54A9D3"
             labelStyle={{ color: "white", textTransform: "none" }}
             style={{ borderRadius: 50, width: 100 }}
-            onPress={() => {
-              navigation.navigate("Chat", {
-                userId: userId,
-                doctorId: doctorId,
-                doctorName: doctorName,
-                doctorAvatar: doctorAvatar,
-                doctorSpeciality: doctorSpeciality,
-              });
-            }}
+            onPress={handleContact}
           >
             Contact
           </Button>

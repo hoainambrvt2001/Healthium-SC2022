@@ -14,6 +14,10 @@ const HospitalCard = ({
   lat,
   lng,
   userRating,
+  carefulConsultRating,
+  facilityRating,
+  fastMedicalExamineProcessRating,
+  patientCareRating,
   status,
   navigation,
 }) => {
@@ -30,6 +34,10 @@ const HospitalCard = ({
           lat: lat,
           lng: lng,
           userRating: userRating,
+          carefulConsultRating: carefulConsultRating,
+          facilityRating: facilityRating,
+          fastMedicalExamineProcessRating: fastMedicalExamineProcessRating,
+          patientCareRating: patientCareRating,
         });
       }}
     >

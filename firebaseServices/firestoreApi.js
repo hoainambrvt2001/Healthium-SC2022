@@ -360,7 +360,7 @@ export const getAppointments = async () => {
     const appointmentSnap = await getDocs(appointRef);
     const value = [];
     appointmentSnap.forEach((doc) => {
-      value.push({ ...value });
+      value.push({ ...doc.data(), id: doc.id });
     });
     return [...value];
   } catch (e) {

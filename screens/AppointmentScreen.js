@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, FlatList } from "react-native";
+import { Dialog, Portal, Paragraph, Button } from "react-native-paper";
 import AppointmentCard from "components/Utils/AppointmentCard";
 import { getAppointments } from "firebaseServices/firestoreApi";
 
 const AppointmentScreen = ({ navigation }) => {
   const [appointments, setAppointments] = useState([]);
-  const [isInit, setIsInit] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [choice, setChoice] = useState(-1);
 
-  useEffect(async () => {
-    if (!isInit) {
+  useEffect(() => {
+    const getData = async () => {
       await getAppointments().then((data) => {
         console.log("data");
         console.log(data);
         setAppointments([...data]);
       });
-      setIsInit(true);
-    }
-  }, [isInit]);
+    };
+    getData();
+  }, []);
+
+  // console.log("appointment");
+  // console.log(appointments);
 
   return (
     <View style={{ flex: 1 }}>
@@ -66,19 +71,49 @@ const AppointmentScreen = ({ navigation }) => {
         </View>
       </View>
       <View style={{ flex: 1 }}>
+        <Portal>
+          <Dialog visible={isOpen} onDismiss={() => setIsOpen(false)}>
+            <Dialog.Title>
+              Contact doctor{" "}
+              {choice === -1 ? "" : appointments[choice].doctorName}
+            </Dialog.Title>
+            <Dialog.Content>
+              <Paragraph>You have to pay $1</Paragraph>
+            </Dialog.Content>
+            <Dialog.Actions>
+              <Button onPress={() => setIsOpen(false)}>Cancel</Button>
+              <Button
+                onPress={() => {
+                  navigation.navigate("Chat", {
+                    userId: appointments[choice].userId,
+                    doctorId: appointments[choice].doctorId,
+                    doctorName: appointments[choice].doctorName,
+                    doctorAvatar: appointments[choice].doctorAvatar,
+                    doctorSpeciality: appointments[choice].doctorSpeciality,
+                  });
+                  setIsOpen(false);
+                }}
+              >
+                Accept
+              </Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
         <FlatList
           showsVerticalScrollIndicator={false}
           data={appointments}
-          keyExtractor={(item) => item.userId}
-          renderItem={({ item }) => {
+          keyExtractor={(item) => item.id}
+          renderItem={({ item, index }) => {
             return (
               <AppointmentCard
                 navigation={navigation}
                 doctorName={item.doctorName}
                 doctorSpeciality={item.doctorSpeciality}
                 appointmentTime={item.time}
-                userId={item.userId}
-                doctorId={item.doctorId}
+                handleContact={() => {
+                  setChoice(index);
+                  setIsOpen(true);
+                }}
                 appointmentPlace={item.hospitalName}
                 doctorAvatar={item.doctorAvatar}
                 contactInfo={true}

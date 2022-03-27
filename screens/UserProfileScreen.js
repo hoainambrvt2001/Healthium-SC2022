@@ -20,6 +20,10 @@ const general = [
     name: "Privacy",
     desc: "Change your password",
   },
+  {
+    name: "Payments",
+    desc: "Add your payment method",
+  },
 ];
 
 const support = [

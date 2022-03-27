@@ -4,6 +4,7 @@ import { Paragraph, Title, Button } from "react-native-paper";
 import InfoHospitalCard from "components/Utils/InfoHospitalCard";
 import MyMapView from "components/Map/MyMapView";
 import { getCurFacility } from "firebaseServices/firestoreApi";
+import Icon from "react-native-vector-icons/AntDesign";
 
 const HospitalDetailScreen = ({
   navigation,
@@ -18,6 +19,10 @@ const HospitalDetailScreen = ({
       lat,
       lng,
       userRating,
+      carefulConsultRating,
+      facilityRating,
+      fastMedicalExamineProcessRating,
+      patientCareRating,
     },
   },
 }) => {
@@ -39,6 +44,44 @@ const HospitalDetailScreen = ({
   //       <Text>loading</Text>
   //     </View>
   //   );
+
+  const carefulConsultRatingList = [];
+  const facilityRatingList = [];
+  const fastMedicalExamineProcessRatingList = [];
+  const patientCareRatingList = [];
+
+  console.log(carefulConsultRating);
+
+  while (carefulConsultRating !== 0) {
+    carefulConsultRatingList.push(
+      <Icon size={20} color="#FFC830" name="star" key={carefulConsultRating} />
+    );
+    carefulConsultRating--;
+  }
+
+  while (facilityRating !== 0) {
+    facilityRatingList.push(
+      <Icon size={20} color="#FFC830" name="star" key={facilityRating} />
+    );
+    facilityRating--;
+  }
+  while (fastMedicalExamineProcessRating !== 0) {
+    fastMedicalExamineProcessRatingList.push(
+      <Icon
+        size={20}
+        color="#FFC830"
+        name="star"
+        key={fastMedicalExamineProcessRating}
+      />
+    );
+    fastMedicalExamineProcessRating--;
+  }
+  while (patientCareRating !== 0) {
+    patientCareRatingList.push(
+      <Icon size={20} color="#FFC830" name="star" key={patientCareRating} />
+    );
+    patientCareRating--;
+  }
 
   return (
     <ScrollView style={{ flex: 1, paddingBottom: 16 }}>
@@ -69,11 +112,21 @@ const HospitalDetailScreen = ({
           />
         </View>
       </View>
+
       <View style={{ paddingHorizontal: 20 }}>
         <Title>Overview</Title>
-        <Paragraph>{hospitalDescription}</Paragraph>
+        <Paragraph numberOfLines={6}>{hospitalDescription}</Paragraph>
         <Title>Location</Title>
         <Paragraph>{hospitalAddress}</Paragraph>
+
+        <Title>Rating</Title>
+        <Paragraph>Careful consulting: {carefulConsultRatingList}</Paragraph>
+        <Paragraph>Facility: {facilityRatingList}</Paragraph>
+        <Paragraph>
+          Fast medical examine process: {fastMedicalExamineProcessRatingList}
+        </Paragraph>
+        <Paragraph>Patient care: {patientCareRatingList}</Paragraph>
+
         <Title>Map</Title>
 
         <MyMapView

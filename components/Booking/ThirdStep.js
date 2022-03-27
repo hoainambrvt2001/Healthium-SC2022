@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { View, TextInput } from "react-native";
 import { Title } from "react-native-paper";
 import AppointmentCard from "components/Utils/AppointmentCard";
 
@@ -19,6 +19,17 @@ const ThirdStep = ({ navigation, appointmentInfo }) => {
       <View>
         <AppointmentCard {...props} />
       </View>
+      <TextInput
+        placeholder="Symptom note"
+        style={{
+          height: 40,
+          margin: 12,
+          borderWidth: 1,
+          padding: 10,
+        }}
+        // onChangeText={onChangeText}
+        // value={text}
+      />
       <View style={{ height: 105 }}></View>
     </>
   );
