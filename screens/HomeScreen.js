@@ -45,26 +45,40 @@ const HomeScreen = ({ navigation }) => {
         <View
           style={{
             flexDirection: "row",
-            alignItems: "baseline",
-            elevation: 4,
+            alignItems: "flex-start",
+
             backgroundColor: "#fafafa",
             marginVertical: 10,
             marginHorizontal: 25,
             padding: 10,
             borderRadius: 10,
+
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 1,
+            },
+            shadowOpacity: 0.2,
+            shadowRadius: 1.41,
+            elevation: 2,
           }}
         >
           <Image
             source={require("assets/NOTI.png")}
-            style={{ width: 70, height: 70, marginHorizontal: 5 }}
+            style={{
+              width: 80,
+              height: 80,
+              resizeMode: "contain",
+              marginLeft: 5,
+            }}
           />
           <View
             style={{
-              marginLeft: 5,
-              minHeight: 60,
+              flex: 1,
+              marginLeft: 15,
             }}
           >
-            <Paragraph numberOfLines={3}>
+            <Paragraph numberOfLines={4}>
               View the latest health news and explore articles on parenting
               medicine, diseases and healthy living,.. with Healthium.
             </Paragraph>
