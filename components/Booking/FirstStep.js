@@ -105,6 +105,7 @@ const FirstStep = ({
                     setUserInfo: setUserInfo,
                   })
                 }
+                style={{ marginBottom: 10, marginRight: 10 }}
               />
             );
           }}

@@ -4,7 +4,7 @@ import { IconButton } from "react-native-paper";
 
 const TitleNavigation = ({ navigation, mainRoute, route, back }) => {
   let routeTitle;
-  if (mainRoute === "AppointmentScreen") {
+  if (route.name === "AppointmentScreen") {
     routeTitle = "Appointments";
   } else if (mainRoute === "UserProfileScreen") {
     routeTitle = "Profile";

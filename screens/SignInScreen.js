@@ -2,7 +2,6 @@ import React from "react";
 import { View, Image, Text } from "react-native";
 import SignIn from "components/Authentication/SignIn";
 import { Button } from "react-native-paper";
-import GoogleSignIn from "components/Authentication/GoogleSignIn";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const SignInScreen = ({ navigation }) => {
@@ -32,7 +31,6 @@ const SignInScreen = ({ navigation }) => {
         <View style={{ paddingHorizontal: 30 }}>
           <SignIn navigation={navigation} />
           <View style={{ height: 20 }}></View>
-          <GoogleSignIn navigation={navigation} />
         </View>
         <View style={{ height: 70 }}></View>
         <View
