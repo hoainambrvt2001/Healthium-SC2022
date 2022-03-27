@@ -26,9 +26,9 @@ const MedicalServiceScreen = ({ navigation, route }) => {
     all: "All services",
     hospital: "Hospital",
     polyclinic: "Clinic",
-    drugstore: "Drugstore",
+    // drugstore: "Drugstore",
     dental: "Dental Care",
-    physiotherapist: "Physical recovery",
+    // physiotherapist: "Physical recovery",
     athome: "At home",
     polyclinic: "Polyclinic",
     prenentalcare: "Prenental Care",
@@ -128,15 +128,7 @@ const MedicalServiceScreen = ({ navigation, route }) => {
             showsVerticalScrollIndicator={false}
             data={items}
             keyExtractor={(item) => item.hospitalId}
-            renderItem={({
-              item: {
-                hospitalId,
-                hospitalName,
-                hospitalPhoto,
-                hospitalSpeciality,
-                status,
-              },
-            }) => {
+            renderItem={({ item }) => {
               // console.log("photots");
               // console.log(photos);
               // const photoUrl = photos
@@ -144,26 +136,19 @@ const MedicalServiceScreen = ({ navigation, route }) => {
               //       photo_reference: photos[0].photo_reference,
               //     })
               //   : undefined;
-              console.log("here");
-              console.log(queryList.type);
-              console.log(route.params.searchText);
+              // console.log("here");
+              // console.log(queryList.type);
+              // console.log(route.params.searchText);
               if (
-                hospitalSpeciality.toLowerCase().includes(queryList.type) &&
-                hospitalName
+                item.hospitalSpeciality
+                  .toLowerCase()
+                  .includes(queryList.type) &&
+                item.hospitalName
                   .toLowerCase()
                   .includes(route.params.searchText.toLowerCase())
               ) {
                 console.log("in if");
-                return (
-                  <HospitalCard
-                    hospitalId={hospitalId}
-                    hospitalName={hospitalName}
-                    hospitalPhoto={hospitalPhoto}
-                    hospitalSpeciality={hospitalSpeciality}
-                    status={status}
-                    navigation={navigation}
-                  />
-                );
+                return <HospitalCard {...item} navigation={navigation} />;
               }
               return null;
             }}

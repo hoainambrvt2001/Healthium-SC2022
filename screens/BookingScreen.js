@@ -70,16 +70,16 @@ const BookingScreen = ({
     }
   }, [step]);
 
-  useEffect(() => {
-    const unsubscribe = async () => {
-      if (!userInfo.userId) return;
-      const userRef = await getUserRef(userInfo.userId).then((data) => data);
-      onSnapshot(userRef, (doc) => {
-        setUserInfo({ ...doc.data() });
-      });
-    };
-    return () => unsubscribe();
-  }, [toggle]);
+  // useEffect(() => {
+  //   const unsubscribe = async () => {
+  //     if (!userInfo.userId) return;
+  //     const userRef = await getUserRef(userInfo.userId).then((data) => data);
+  //     onSnapshot(userRef, (doc) => {
+  //       setUserInfo({ ...doc.data() });
+  //     });
+  //   };
+  //   return () => unsubscribe();
+  // }, [toggle]);
 
   useEffect(() => {
     console.log("appoint");
@@ -122,10 +122,9 @@ const BookingScreen = ({
         ) : step === 0 ? (
           <FirstStep
             navigation={navigation}
-            patients={userInfo.patients}
+            userInfo={userInfo}
+            setUserInfo={setUserInfo}
             services={[...services]}
-            setToggle={setToggle}
-            toggle={toggle}
             appointmentInfo={appointmentInfo}
             setAppointmentInfo={setAppointmentInfo}
           />

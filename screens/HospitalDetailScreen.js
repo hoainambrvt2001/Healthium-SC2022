@@ -8,27 +8,37 @@ import { getCurFacility } from "firebaseServices/firestoreApi";
 const HospitalDetailScreen = ({
   navigation,
   route: {
-    params: { hospitalId },
+    params: {
+      hospitalId,
+      hospitalName,
+      hospitalAddress,
+      hospitalPhoto,
+      hospitalHotline,
+      hospitalDescription,
+      lat,
+      lng,
+      userRating,
+    },
   },
 }) => {
-  const [item, setItem] = useState({});
-  const [loading, setLoading] = useState(true);
+  // const [item, setItem] = useState({});
+  // const [loading, setLoading] = useState(true);
 
-  useEffect(async () => {
-    setLoading(true);
-    await getCurFacility(setItem, hospitalId);
-    setLoading(false);
-  }, []);
+  // useEffect(async () => {
+  //   setLoading(true);
+  //   await getCurFacility(setItem, hospitalId);
+  //   setLoading(false);
+  // }, []);
 
   // console.log("item");
   // console.log(item);
 
-  if (loading)
-    return (
-      <View>
-        <Text>loading</Text>
-      </View>
-    );
+  // if (loading)
+  //   return (
+  //     <View>
+  //       <Text>loading</Text>
+  //     </View>
+  //   );
 
   return (
     <ScrollView style={{ flex: 1, paddingBottom: 16 }}>
@@ -39,7 +49,7 @@ const HospitalDetailScreen = ({
         }}
       >
         <Image
-          source={{ uri: item.hospitalPhoto }}
+          source={{ uri: hospitalPhoto }}
           style={{ width: "100%", height: 160, position: "absolute", top: 0 }}
         />
         <View
@@ -48,31 +58,31 @@ const HospitalDetailScreen = ({
             paddingTop: 100,
             paddingBottom: 20,
             width: "100%",
-            borderColor:"#C4C4C4",
-            borderWidth:3,
+            borderColor: "#C4C4C4",
+            borderWidth: 3,
           }}
         >
           <InfoHospitalCard
-            hospitalAddress={item.hospitalAddress}
-            hospitalName={item.hospitalName}
-            hospitalContact={item.hospitalHotline}
+            hospitalAddress={hospitalAddress}
+            hospitalName={hospitalName}
+            hospitalContact={hospitalHotline}
           />
         </View>
       </View>
       <View style={{ paddingHorizontal: 20 }}>
         <Title>Overview</Title>
-        <Paragraph>{item.hospitalDescription}</Paragraph>
+        <Paragraph>{hospitalDescription}</Paragraph>
         <Title>Location</Title>
-        <Paragraph>{item.hospitalAddress}</Paragraph>
+        <Paragraph>{hospitalAddress}</Paragraph>
         <Title>Map</Title>
 
         <MyMapView
           hospitalId={hospitalId}
-          hospitalName={item.hospitalName}
-          userRating={item.userRating}
-          lat={item.lat}
-          lng={item.lng}
-          hospitalPhoto={item.hospitalPhoto}
+          hospitalName={hospitalName}
+          userRating={userRating}
+          lat={lat}
+          lng={lng}
+          hospitalPhoto={hospitalPhoto}
         />
       </View>
       <View>
@@ -86,10 +96,10 @@ const HospitalDetailScreen = ({
           }}
           onPress={() =>
             navigation.navigate("Booking", {
-              hospitalId: item.hospitalId,
-              hospitalName: item.hospitalName,
-              hospitalHotline: item.hospitalHotline,
-              hospitalAddress: item.hospitalAddress,
+              hospitalId: hospitalId,
+              hospitalName: hospitalName,
+              hospitalHotline: hospitalHotline,
+              hospitalAddress: hospitalAddress,
             })
           }
         >

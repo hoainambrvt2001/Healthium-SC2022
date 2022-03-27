@@ -6,8 +6,14 @@ const HospitalCard = ({
   hospitalId,
   hospitalName,
   hospitalPhoto,
+  hospitalAddress,
   hospitalSpeciality,
   hospitalDistance,
+  hospitalHotline,
+  hospitalDescription,
+  lat,
+  lng,
+  userRating,
   status,
   navigation,
 }) => {
@@ -16,6 +22,14 @@ const HospitalCard = ({
       onPress={() => {
         navigation.navigate("HospitalDetail", {
           hospitalId: hospitalId,
+          hospitalName: hospitalName,
+          hospitalPhoto: hospitalPhoto,
+          hospitalAddress: hospitalAddress,
+          hospitalHotline: hospitalHotline,
+          hospitalDescription: hospitalDescription,
+          lat: lat,
+          lng: lng,
+          userRating: userRating,
         });
       }}
     >

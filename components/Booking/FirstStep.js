@@ -13,7 +13,8 @@ import ServiceCard from "components/Booking/ServiceCard";
 
 const FirstStep = ({
   navigation,
-  patients,
+  userInfo,
+  setUserInfo,
   services,
   setToggle,
   toggle,
@@ -73,7 +74,7 @@ const FirstStep = ({
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
-          data={patients}
+          data={userInfo.patients}
           keyExtractor={(_, idx) => idx}
           renderItem={({ item, index }) => {
             return (
@@ -95,8 +96,8 @@ const FirstStep = ({
                 icon="plus"
                 onPress={() =>
                   navigation.navigate("CreatePatient", {
-                    setToggle: setToggle,
-                    toggle: toggle,
+                    userInfo: userInfo,
+                    setUserInfo: setUserInfo,
                   })
                 }
               />

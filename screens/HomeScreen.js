@@ -52,7 +52,6 @@ const HomeScreen = ({ navigation }) => {
             marginHorizontal: 25,
             padding: 10,
             borderRadius: 10,
-            
           }}
         >
           <Image
@@ -63,12 +62,11 @@ const HomeScreen = ({ navigation }) => {
             style={{
               marginLeft: 5,
               minHeight: 60,
-              
             }}
           >
-           
             <Paragraph numberOfLines={3}>
-            View the latest health news and explore articles on parenting medicine, diseases and healthy living,.. with Healthium.
+              View the latest health news and explore articles on parenting
+              medicine, diseases and healthy living,.. with Healthium.
             </Paragraph>
           </View>
         </View>
@@ -78,4 +76,3 @@ const HomeScreen = ({ navigation }) => {
 };
 
 export default HomeScreen;
-

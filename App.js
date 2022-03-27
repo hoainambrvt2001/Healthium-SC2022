@@ -18,6 +18,7 @@ import BookingScreen from "screens/BookingScreen";
 import CreatePatientScreen from "screens/CreatePatientScreen";
 import TreatmentCareScreen from "screens/TreatmentCareScreen";
 import NotificationScreen from "screens/NotificationScreen";
+import AppointmentScreen from "screens/AppointmentScreen";
 
 // Firebase:
 import "./firebaseServices/firebaseApp";
@@ -87,6 +88,10 @@ const App = () => {
               <Stack.Screen
                 name="TreatmentCare"
                 component={TreatmentCareScreen}
+              />
+              <Stack.Screen
+                name="AppointmentScreen"
+                component={AppointmentScreen}
               />
               <Stack.Screen
                 name="NotificationScreen"

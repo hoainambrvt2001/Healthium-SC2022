@@ -20,7 +20,7 @@ const MainScreenRoutes = () => {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="AppointmentScreen"
         component={AppointmentScreen}
         options={{
@@ -29,7 +29,7 @@ const MainScreenRoutes = () => {
             <MaterialCommunityIcons name="calendar" color={color} size={26} />
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name="NotificationScreen"
         component={NotificationScreen}

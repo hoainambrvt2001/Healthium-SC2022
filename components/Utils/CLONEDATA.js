@@ -13,7 +13,7 @@ export const listServices = [
   },
   {
     img: require("assets/calendar-icon.png"),
-    title: "Appoint-ment",
+    title: "Appointment",
   },
 ];
 
