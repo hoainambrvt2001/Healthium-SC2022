@@ -7,8 +7,8 @@ import { globalStyles } from "../styles/globalStyles";
 const NotificationScreen = ({ navigation }) => {
   return (
     // <View style={globalStyles.container}>
-    <Noti/>
-    
+    <Noti />
+
     // </View>
   );
 };
