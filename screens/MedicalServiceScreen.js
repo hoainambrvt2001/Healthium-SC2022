@@ -57,7 +57,7 @@ const MedicalServiceScreen = ({ navigation, route }) => {
     const getInit = async () => {
       // if (isInit) return;
       setLoading(true);
-      await getFacilities(setItems);
+      await getFacilities().then((data) => setItems([...data]));
       setLoading(false);
       // setIsInit(true);
     };

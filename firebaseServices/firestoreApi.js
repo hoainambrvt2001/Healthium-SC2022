@@ -105,14 +105,14 @@ export const existsUser = async (userId) => {
   }
 };
 
-export const getFacilities = async (setItems) => {
+export const getFacilities = async () => {
   try {
     const facilities = await getDocs(collection(firestore, "facilites"));
     const value = [];
     facilities.forEach((doc) => {
       value.push({ ...doc.data() });
     });
-    setItems([...value]);
+    return [...value];
   } catch (e) {
     console.log(e);
   }
