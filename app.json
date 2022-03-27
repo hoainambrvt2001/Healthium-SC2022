@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "ucare",
-    "slug": "ucare",
+    "name": "Healthium",
+    "slug": "healthium",
     "scheme": "ucare",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -14,17 +14,19 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
+      "bundleIdentifier": "tothepointcode.healthium",
+      "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "versionCode": 1,
+      "package": "tothepointcode.healthium"
     },
     "web": {
       "favicon": "./assets/favicon.png"
