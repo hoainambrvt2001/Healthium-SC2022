@@ -26,7 +26,12 @@
         "backgroundColor": "#FFFFFF"
       },
       "versionCode": 1,
-      "package": "tothepointcode.healthium"
+      "package": "tothepointcode.healthium",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAWaAtaKV8BYTY2nDCmVtA5WW0M4yyi4Y0"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"

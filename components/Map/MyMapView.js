@@ -2,7 +2,7 @@ import { FlatList, View, Text, Image, Dimensions } from "react-native";
 import { Title } from "react-native-paper";
 import { useState, useEffect } from "react";
 import { styles } from "../../styles/MapStyles";
-import MapView, { Marker, Callout } from "react-native-maps";
+import MapView, { Marker, Callout, PROVIDER_GOOGLE } from "react-native-maps";
 
 const CustomCallout = ({ name, rating, photoUrl }) => {
   return (
@@ -64,6 +64,7 @@ const MyMapView = ({
       {/* <Title>Map</Title> */}
       <View style={styles.map_wrap}>
         <MapView
+          provider={PROVIDER_GOOGLE}
           style={styles.map}
           initialRegion={{
             latitude: Number(lat),
