@@ -58,7 +58,7 @@ const ChatSection = ({
           ...doc.data().messages[0],
           createdAt: doc.data().messages[0].createdAt.toDate(),
         };
-        console.log(newMessage);
+        // console.log(newMessage);
         appendMessages(newMessage);
       } else {
         const oldMessage = [...doc.data().messages].map((value) => {

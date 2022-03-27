@@ -12,8 +12,8 @@ const AppointmentScreen = ({ navigation }) => {
   useEffect(() => {
     const getData = async () => {
       await getAppointments().then((data) => {
-        console.log("data");
-        console.log(data);
+        // console.log("data");
+        // console.log(data);
         setAppointments([...data]);
       });
     };

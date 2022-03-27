@@ -64,7 +64,7 @@ const CreatePatientScreen = ({
         validationSchema={patientSchema}
         onSubmit={async (values, actions) => {
           await addPatient(values, user.uid).then((data) => {
-            console.log(data);
+            // console.log(data);
             setUserInfo({ ...userInfo, patients: [...data] });
           });
           actions.setSubmitting(false);

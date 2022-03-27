@@ -381,8 +381,8 @@ export const getContactList = async () => {
     chatSnap.forEach((doc) => {
       value.push({ ...doc.data() });
     });
-    console.log("value");
-    console.log(value);
+    // console.log("value");
+    // console.log(value);
     return [...value];
   } catch (e) {
     console.log(e);

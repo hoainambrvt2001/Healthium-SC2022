@@ -176,12 +176,12 @@ const BookingScreen = ({
             onPress={async () => {
               if (step !== 2) setStep(step + 1);
               else {
-                await addAppointment(appointmentInfo).then((data) =>
-                  console.log(data)
-                );
-                await addChat(appointmentInfo).then((data) =>
-                  console.log(data)
-                );
+                await addAppointment(appointmentInfo).then((data) => {
+                  // console.log(data)
+                });
+                await addChat(appointmentInfo).then((data) => {
+                  // console.log(data)
+                });
                 navigation.goBack();
               }
             }}
