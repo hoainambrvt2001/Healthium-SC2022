@@ -50,8 +50,6 @@ const HospitalDetailScreen = ({
   const fastMedicalExamineProcessRatingList = [];
   const patientCareRatingList = [];
 
-  console.log(carefulConsultRating);
-
   while (carefulConsultRating !== 0) {
     carefulConsultRatingList.push(
       <Icon size={20} color="#FFC830" name="star" key={carefulConsultRating} />

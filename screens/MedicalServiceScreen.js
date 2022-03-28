@@ -11,8 +11,8 @@ import {
 } from "firebaseServices/firestoreApi";
 
 const MedicalServiceScreen = ({ navigation, route }) => {
-  console.log("params in body");
-  console.log(route);
+  // console.log("params in body");
+  // console.log(route);
 
   const [queryList, setQueryList] = useState({
     type: "",

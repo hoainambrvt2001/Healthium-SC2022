@@ -46,7 +46,7 @@ const ProfileSettingScreen = ({ navigation }) => {
         .then((infos) => {
           setUserInfo({
             name: infos.name,
-            birthday: infos.birthday.toDate(),
+            birthday: infos.birthday ? infos.birthday.toDate() : "",
             idCardNumber: infos.idCardNumber,
             gender: infos.gender,
             phoneNumber: infos.phoneNumber,

@@ -185,10 +185,7 @@ export const addPatient = async (patientInfo, userId) => {
     if (userSnap.exists()) {
       const userDoc = userSnap.data();
       userDoc.patients.push({ ...patientInfo, no: userDoc.patients.length });
-      await updateDoc(userRef, userDoc).then((doc) => {
-        console.log("doc");
-        console.log(doc);
-      });
+      await updateDoc(userRef, userDoc);
       return [...userDoc.patients];
     }
     return [];
