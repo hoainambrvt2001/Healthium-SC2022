@@ -20,6 +20,17 @@ const AppointmentScreen = ({ navigation }) => {
     getData();
   }, []);
 
+  useEffect(() => {
+    if (choice === -1) return;
+    navigation.navigate("Chat", {
+      userId: appointments[choice].userId,
+      doctorId: appointments[choice].doctorId,
+      doctorName: appointments[choice].doctorName,
+      doctorAvatar: appointments[choice].doctorAvatar,
+      doctorSpeciality: appointments[choice].doctorSpeciality,
+    });
+  }, [choice]);
+
   // console.log("appointment");
   // console.log(appointments);
 
@@ -71,7 +82,7 @@ const AppointmentScreen = ({ navigation }) => {
         </View>
       </View>
       <View style={{ flex: 1 }}>
-        <Portal>
+        {/* <Portal>
           <Dialog visible={isOpen} onDismiss={() => setIsOpen(false)}>
             <Dialog.Title>
               Contact doctor{" "}
@@ -98,7 +109,7 @@ const AppointmentScreen = ({ navigation }) => {
               </Button>
             </Dialog.Actions>
           </Dialog>
-        </Portal>
+        </Portal> */}
         <FlatList
           showsVerticalScrollIndicator={false}
           data={appointments}
@@ -112,7 +123,7 @@ const AppointmentScreen = ({ navigation }) => {
                 appointmentTime={item.time}
                 handleContact={() => {
                   setChoice(index);
-                  setIsOpen(true);
+                  // setIsOpen(true);
                 }}
                 appointmentPlace={item.hospitalName}
                 doctorAvatar={item.doctorAvatar}
