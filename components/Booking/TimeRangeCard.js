@@ -22,7 +22,7 @@ const TimeRangeCard = ({ startTime, endTime, isChose, handlePress }) => {
       <Animated.View
         style={{
           // borderWidth: 1,
-          padding: 4,
+          padding: 3,
           borderRadius: 5,
           marginHorizontal: 8,
           backgroundColor: background.interpolate({

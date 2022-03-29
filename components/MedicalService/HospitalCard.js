@@ -58,18 +58,21 @@ const HospitalCard = ({
           margin: 10,
         }}
       >
-        {/* <Image
+        <Image
           source={{ uri: hospitalPhoto }}
           style={{ width: 100, height: 100 }}
           borderRadius={3}
-        /> */}
+        />
         <View
           style={{
             flex: 1,
             width: "100%",
+            marginLeft: 8,
           }}
         >
-          <Title style={{ color: "#00a19d" }}>{hospitalName}</Title>
+          <Title style={{ color: "#00a19d", marginTop: -8, lineHeight: 28 }}>
+            {hospitalName}
+          </Title>
           {serviceName === "" ? (
             <View
               style={{

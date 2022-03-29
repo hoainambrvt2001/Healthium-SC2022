@@ -20,15 +20,16 @@ const MedicalServiceScreen = ({ navigation, route }) => {
   });
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [chooseType, setChooseType] = useState(0);
   // const [isInit, setIsInit] = useState(false);
 
   const serviceDict = {
     all: "All services",
-    athome: "At home",
-    prenatalcare: "Mom health test",
-    bloodgiving: "Blood giving",
+    // athome: "At home",
     generaltest: "General test",
     covidtest: "Covid test",
+    prenatalcare: "Pregnant test",
+    bloodgiving: "Blood giving",
     // hospital: "Hospital",
     // polyclinic: "Clinic",
     // // drugstore: "Drugstore",
@@ -100,10 +101,14 @@ const MedicalServiceScreen = ({ navigation, route }) => {
           showsHorizontalScrollIndicator={false}
           data={Object.entries(serviceDict)}
           keyExtractor={(item) => item[0]}
-          renderItem={({ item: [type, serviceName] }) => {
+          renderItem={({ item: [type, serviceName], index }) => {
             return (
               <PopularService
-                onPress={() => handleSetQuery(type)}
+                onPress={() => {
+                  handleSetQuery(type);
+                  setChooseType(index);
+                }}
+                isChose={chooseType == index ? 1 : 0}
                 serviceName={serviceName}
               />
             );
@@ -164,6 +169,9 @@ const MedicalServiceScreen = ({ navigation, route }) => {
                 name = "Children test";
               else if (queryList.type === "denta") name = "Detal implant";
               else if (queryList.type === "thyroidtest") name = "Thyroid test";
+              else if (queryList.type === "athome") name = "At home";
+              else if (queryList.type === "prenatal-care")
+                name = "Pregnant test";
               else name = "";
 
               // console.log("service:");

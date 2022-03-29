@@ -24,7 +24,7 @@ const DoctorCard = ({
       <Animated.View
         style={{
           flexDirection: "row",
-          padding: 4,
+          padding: 3,
           backgroundColor: border.interpolate({
             inputRange: [0, 1],
             outputRange: ["#C4C4C4", "#00a19d"],

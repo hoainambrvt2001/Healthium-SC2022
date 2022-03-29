@@ -263,7 +263,7 @@ const SecondStep = ({
               inputRange: [0, 1],
               outputRange: ["#C4C4C4", "#00a19d"],
             }),
-            padding: 4,
+            padding: 3,
             borderRadius: 6,
           }}
         >

@@ -32,7 +32,7 @@ const ServiceCard = ({ serviceName, servicePrice, handlePress, isChose }) => {
           alignItems: "center",
           // borderWidth: 1,
           borderRadius: 10,
-          padding: 4,
+          padding: 2,
           marginBottom: 12,
           // borderColor: transition.interpolate({
           //   inputRange: [0, 1],

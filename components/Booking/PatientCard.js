@@ -44,7 +44,7 @@ const PatientCard = ({
           alignItems: "flex-start",
           // borderWidth: 2,
           borderRadius: 10,
-          padding: 6,
+          padding: 4,
           marginHorizontal: 10,
           // borderColor: transition.interpolate({
           //   inputRange: [0, 1],
@@ -61,7 +61,7 @@ const PatientCard = ({
             backgroundColor: "white",
             flexDirection: "row",
             flex: 1,
-            padding: 4,
+            padding: 6,
             borderRadius: 10,
           }}
         >
