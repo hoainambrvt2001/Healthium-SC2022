@@ -33,7 +33,7 @@ const MedicalHistory = () => {
       })}
 
       <View>
-        <Title>General Diagonise</Title>
+        <Title style={{ marginBottom: 5 }}>General Diagonise</Title>
         <View
           style={{
             borderColor: "#d9d9d9",
@@ -42,6 +42,15 @@ const MedicalHistory = () => {
             paddingHorizontal: 15,
             backgroundColor: "#f5f3ff",
             borderRadius: 5,
+
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 1,
+            },
+            shadowOpacity: 0.22,
+            shadowRadius: 2.22,
+            elevation: 3,
           }}
         >
           <Text>
