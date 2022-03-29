@@ -137,7 +137,7 @@ const MedicalServiceScreen = ({ navigation, route }) => {
       </View>
       <View style={{ flex: 1, marginHorizontal: 15 }}>
         {loading ? (
-          <Text>loading</Text>
+          <Text></Text>
         ) : (
           <FlatList
             showsVerticalScrollIndicator={false}

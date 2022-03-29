@@ -71,7 +71,8 @@ const OverviewSection = ({ medicalRecord }) => {
             <View
               style={{
                 alignItems: "baseline",
-                margin: 10,
+                // padding: 10,
+                marginVertical: 10,
               }}
               key={idx}
             >
@@ -85,9 +86,7 @@ const OverviewSection = ({ medicalRecord }) => {
             </View>
           );
         })}
-        <View
-          style={{ height: 160, width: 175, margin: 10, padding: 10 }}
-        ></View>
+        <View style={{ height: 160, width: 175, padding: 10 }}></View>
       </View>
     </ScrollView>
   );

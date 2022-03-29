@@ -43,7 +43,7 @@ const TreatmentCareScreen = ({ navigation }) => {
     getList();
   }, []);
 
-  if (loading) return <Text>loading</Text>;
+  if (loading) return <Text></Text>;
 
   if (!contactList.length)
     return <Text>You have not contact any doctors yet</Text>;

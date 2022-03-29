@@ -9,7 +9,7 @@ const HealthCard = ({ iconName, typeName, typeUnit, value, measureTime }) => {
         borderRadius: 5,
         backgroundColor: "#ffffff",
         height: 160,
-        width: 175,
+        width: 165,
         padding: 10,
 
         shadowColor: "#000",

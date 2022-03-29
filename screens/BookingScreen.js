@@ -124,7 +124,7 @@ const BookingScreen = ({
       <ScrollView showsVerticalScrollIndicator={false}>
         {loading ? (
           <View>
-            <Text>loading</Text>
+            <Text></Text>
           </View>
         ) : step === 0 ? (
           <FirstStep
