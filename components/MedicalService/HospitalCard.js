@@ -5,7 +5,7 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
 } from "react-native";
-import { Caption, Paragraph, Title } from "react-native-paper";
+import { Caption, Paragraph, Title, Subheading } from "react-native-paper";
 
 const HospitalCard = ({
   hospitalId,
@@ -25,6 +25,8 @@ const HospitalCard = ({
   patientCareRating,
   status,
   navigation,
+  serviceName,
+  price,
 }) => {
   return (
     <TouchableWithoutFeedback
@@ -56,21 +58,64 @@ const HospitalCard = ({
           margin: 10,
         }}
       >
-        <Image
+        {/* <Image
           source={{ uri: hospitalPhoto }}
           style={{ width: 100, height: 100 }}
           borderRadius={3}
-        />
-        <View style={{ flex: 1, marginLeft: 15 }}>
+        /> */}
+        <View
+          style={{
+            flex: 1,
+            width: "100%",
+          }}
+        >
           <Title style={{ color: "#00a19d" }}>{hospitalName}</Title>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "flex-end",
-            }}
-          >
+          {serviceName === "" ? (
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "flex-end",
+              }}
+            >
+              <Subheading style={{ fontSize: 13, fontWeight: "700" }}>
+                Average price:{" "}
+              </Subheading>
+              <Paragraph>${price}</Paragraph>
+            </View>
+          ) : (
+            <>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "flex-end",
+                }}
+              >
+                <Subheading style={{ fontSize: 13, fontWeight: "700" }}>
+                  Service:{" "}
+                </Subheading>
+                <Paragraph style={{ textTransform: "capitalize" }}>
+                  {serviceName}
+                </Paragraph>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "flex-end",
+                }}
+              >
+                <Subheading style={{ fontSize: 13, fontWeight: "700" }}>
+                  Price:{" "}
+                </Subheading>
+                <Paragraph>${price}</Paragraph>
+              </View>
+            </>
+          )}
+
+          <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
             <Caption style={{ fontSize: 13 }}>Speciality: </Caption>
-            <Paragraph>{hospitalSpeciality}</Paragraph>
+            <Paragraph style={{ textTransform: "capitalize" }}>
+              {hospitalSpeciality}
+            </Paragraph>
           </View>
           <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
             <Caption style={{ fontSize: 13 }}>From your location: </Caption>

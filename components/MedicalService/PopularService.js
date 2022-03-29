@@ -9,11 +9,12 @@ const PopularService = ({ onPress, serviceName }) => {
       onPress={onPress}
       style={{
         backgroundColor: "#F8F8F9",
-        width: 70,
+        width: 80,
         // height: 70,
-        padding: 1,
+        height: 80,
+        padding: 3,
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "flex-start",
         borderRadius: 10,
         marginHorizontal: 5,
       }}

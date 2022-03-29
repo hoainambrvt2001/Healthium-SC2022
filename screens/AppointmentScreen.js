@@ -1,13 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, FlatList } from "react-native";
-import { Dialog, Portal, Paragraph, Button } from "react-native-paper";
+import {
+  Dialog,
+  Portal,
+  Paragraph,
+  Button,
+  Snackbar,
+} from "react-native-paper";
 import AppointmentCard from "components/Utils/AppointmentCard";
-import { getAppointments } from "firebaseServices/firestoreApi";
+import {
+  getAppointments,
+  deleteAppointment,
+} from "firebaseServices/firestoreApi";
 
 const AppointmentScreen = ({ navigation }) => {
   const [appointments, setAppointments] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [choice, setChoice] = useState(-1);
+  const [deleteChoice, setDeleteChoice] = useState(-1);
+  const [deleted, setDeleted] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
@@ -55,7 +66,7 @@ const AppointmentScreen = ({ navigation }) => {
           }}
         >
           <Text style={{ fontWeight: "bold", color: "white", fontSize: 16 }}>
-            Upcomming
+            Upcoming
           </Text>
         </View>
         <View
@@ -82,6 +93,42 @@ const AppointmentScreen = ({ navigation }) => {
         </View>
       </View>
       <View style={{ flex: 1 }}>
+        <Portal>
+          <Dialog visible={isOpen} onDismiss={() => setIsOpen(false)}>
+            <Dialog.Title>Cancel appointment</Dialog.Title>
+            <Dialog.Content>
+              <Paragraph>Do you want to cancel this appointment?</Paragraph>
+            </Dialog.Content>
+            <Dialog.Actions>
+              <Button onPress={() => setIsOpen(false)}>Cancel</Button>
+              <Button
+                onPress={async () => {
+                  // navigation.navigate("Chat", {
+                  //   userId: appointments[choice].userId,
+                  //   doctorId: appointments[choice].doctorId,
+                  //   doctorName: appointments[choice].doctorName,
+                  //   doctorAvatar: appointments[choice].doctorAvatar,
+                  //   doctorSpeciality: appointments[choice].doctorSpeciality,
+                  // });
+                  await deleteAppointment(
+                    appointments[deleteChoice].userId,
+                    appointments[deleteChoice].id
+                  ).then(() => {
+                    console.log(temp);
+                    const temp = appointments;
+                    temp.splice(deleteChoice, 1);
+                    setAppointments([...temp]);
+                    setDeleteChoice(-1);
+                    setDeleted(true);
+                  });
+                  setIsOpen(false);
+                }}
+              >
+                Accept
+              </Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
         {/* <Portal>
           <Dialog visible={isOpen} onDismiss={() => setIsOpen(false)}>
             <Dialog.Title>
@@ -121,9 +168,13 @@ const AppointmentScreen = ({ navigation }) => {
                 doctorName={item.doctorName}
                 doctorSpeciality={item.doctorSpeciality}
                 appointmentTime={item.time}
-                handleContact={() => {
+                handleContact={async () => {
                   setChoice(index);
                   // setIsOpen(true);
+                }}
+                handleCancel={() => {
+                  setDeleteChoice(index);
+                  setIsOpen(true);
                 }}
                 appointmentPlace={item.hospitalName}
                 doctorAvatar={item.doctorAvatar}
@@ -132,6 +183,19 @@ const AppointmentScreen = ({ navigation }) => {
             );
           }}
         />
+        <Snackbar
+          visible={deleted}
+          onDismiss={() => setDeleted(false)}
+          action={{
+            label: "Hide",
+            onPress: () => {
+              // Do something
+              setDeleted(false);
+            },
+          }}
+        >
+          Cancel appointment success!
+        </Snackbar>
       </View>
     </View>
   );

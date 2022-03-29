@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FlatList, View, TouchableOpacity } from "react-native";
-import { Title, Paragraph, Avatar } from "react-native-paper";
+import { Title, Paragraph, Avatar, Text } from "react-native-paper";
 import { styles } from "styles/TreatmentCareStyle";
 import Icon from "react-native-vector-icons/AntDesign";
 import { getContactList } from "firebaseServices/firestoreApi";
@@ -36,10 +36,17 @@ const TreatmentCareScreen = ({ navigation }) => {
 
   useEffect(() => {
     const getList = async () => {
+      setLoading(true);
       await getContactList().then((data) => setContactList([...data]));
+      setLoading(false);
     };
     getList();
   }, []);
+
+  if (loading) return <Text>loading</Text>;
+
+  if (!contactList.length)
+    return <Text>You have not contact any doctors yet</Text>;
 
   return (
     <FlatList

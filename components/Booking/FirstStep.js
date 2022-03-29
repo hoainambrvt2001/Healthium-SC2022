@@ -83,7 +83,9 @@ const FirstStep = ({
   return (
     <>
       <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
-        <Title>Select patient</Title>
+        <Title style={{ fontSize: 26, lineHeight: 36 }}>
+          Patient Information
+        </Title>
       </View>
       <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
         <FlatList
@@ -145,7 +147,7 @@ const FirstStep = ({
         />
       </View> */}
       <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
-        <Title>Services</Title>
+        <Title style={{ fontSize: 26, lineHeight: 36 }}>Services</Title>
       </View>
       <View style={{ paddingHorizontal: 30, marginBottom: 30 }}>
         {services.map((hospitalService, idx) => {

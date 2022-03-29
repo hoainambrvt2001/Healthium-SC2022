@@ -8,8 +8,10 @@ import {
   Button,
   Dialog,
   Portal,
+  IconButton,
 } from "react-native-paper";
 import moment from "moment";
+import { primaryColor } from "styles/globalStyles";
 
 const AppointmentCard = ({
   doctorName,
@@ -19,6 +21,7 @@ const AppointmentCard = ({
   navigation,
   doctorAvatar,
   handleContact,
+  handleCancel,
   contactInfo,
 }) => {
   return (
@@ -28,7 +31,15 @@ const AppointmentCard = ({
         margin: 15,
         backgroundColor: "#f7f7f8",
         paddingBottom: 15,
-        elevation: 4,
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 3,
+        },
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65,
+
+        elevation: 6,
       }}
     >
       <View
@@ -102,35 +113,109 @@ const AppointmentCard = ({
         }}
       >
         {contactInfo ? (
-          <Button
-            mode="contained"
-            color="#54A9D3"
-            labelStyle={{ color: "white", textTransform: "none" }}
-            style={{ borderRadius: 50, width: 100 }}
-            onPress={handleContact}
-          >
-            Contact
-          </Button>
+          <>
+            <IconButton
+              size={30}
+              icon="phone-forward"
+              onPress={() => {}}
+              color="#F2F2F2"
+              style={{
+                backgroundColor: "#00b3b0",
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.23,
+                shadowRadius: 2.62,
+
+                elevation: 4,
+              }}
+            />
+            <IconButton
+              color="#F2F2F2"
+              icon="chat"
+              size={30}
+              onPress={handleContact}
+              style={{
+                backgroundColor: "#54A9D3",
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.23,
+                shadowRadius: 2.62,
+
+                elevation: 4,
+              }}
+            />
+            <IconButton
+              color="#F2F2F2"
+              icon="google-hangouts"
+              size={30}
+              onPress={() => {}}
+              style={{
+                backgroundColor: "#1BA261",
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.23,
+                shadowRadius: 2.62,
+
+                elevation: 4,
+              }}
+            />
+            <IconButton
+              color="#F2F2F2"
+              icon="close"
+              size={30}
+              onPress={handleCancel}
+              style={{
+                backgroundColor: "#BEBDC5",
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.23,
+                shadowRadius: 2.62,
+
+                elevation: 4,
+              }}
+            />
+            {/* <Button
+              mode="contained"
+              color="#54A9D3"
+              labelStyle={{ color: "white", textTransform: "none" }}
+              style={{ borderRadius: 50, width: 100 }}
+              onPress={handleContact}
+            >
+              Contact
+            </Button>
+            <Button
+              mode="contained"
+              color="#54A9D3"
+              labelStyle={{ color: "white", textTransform: "none" }}
+              style={{ borderRadius: 50, width: contactInfo ? 130 : 150 }}
+            >
+              Join meet
+            </Button>
+            <Button
+              mode="contained"
+              color="#BEBDC5"
+              labelStyle={{ color: "white", textTransform: "none" }}
+              style={{ borderRadius: 50, width: contactInfo ? 100 : 150 }}
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
+              Cancel
+            </Button> */}
+          </>
         ) : null}
-        <Button
-          mode="contained"
-          color="#54A9D3"
-          labelStyle={{ color: "white", textTransform: "none" }}
-          style={{ borderRadius: 50, width: contactInfo ? 130 : 150 }}
-        >
-          Join meet
-        </Button>
-        <Button
-          mode="contained"
-          color="#BEBDC5"
-          labelStyle={{ color: "white", textTransform: "none" }}
-          style={{ borderRadius: 50, width: contactInfo ? 100 : 150 }}
-          onPress={() => {
-            navigation.goBack();
-          }}
-        >
-          Cancel
-        </Button>
       </View>
     </View>
   );

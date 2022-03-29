@@ -24,33 +24,39 @@ const DoctorCard = ({
       <Animated.View
         style={{
           flexDirection: "row",
-          padding: 10,
-          borderColor: border.interpolate({
+          padding: 4,
+          backgroundColor: border.interpolate({
             inputRange: [0, 1],
-            outputRange: ["#B5B5B5", "#00a19d"],
+            outputRange: ["#C4C4C4", "#00a19d"],
           }),
-          borderWidth: 1,
           borderRadius: 5,
           marginHorizontal: 10,
-          shadowColor: "#000000",
-          maxWidth: 300,
         }}
       >
-        <Avatar.Image
-          size={60}
-          source={
-            doctorAvatar !== ""
-              ? {
-                  uri: doctorAvatar,
-                }
-              : require("assets/doctor-avatar.png")
-          }
-          style={{ marginRight: 10 }}
-        />
+        <View
+          style={{
+            flexDirection: "row",
+            padding: 6,
+            borderRadius: 5,
+            backgroundColor: "white",
+          }}
+        >
+          <Avatar.Image
+            size={60}
+            source={
+              doctorAvatar !== ""
+                ? {
+                    uri: doctorAvatar,
+                  }
+                : require("assets/doctor-avatar.png")
+            }
+            style={{ marginRight: 10 }}
+          />
 
-        <View>
-          <Title>{doctorName}</Title>
-          <Text>Speciality: {doctorSpeciality}</Text>
+          <View>
+            <Title>{doctorName}</Title>
+            <Text>Speciality: {doctorSpeciality}</Text>
+          </View>
         </View>
       </Animated.View>
     </TouchableOpacity>

@@ -1,6 +1,11 @@
 import React, { useRef, useEffect } from "react";
-import { View, TouchableOpacity, Animated } from "react-native";
-import { Caption, IconButton } from "react-native-paper";
+import {
+  View,
+  TouchableOpacity,
+  Animated,
+  TouchableWithoutFeedback,
+} from "react-native";
+import { Caption } from "react-native-paper";
 
 const ServiceCard = ({ serviceName, servicePrice, handlePress, isChose }) => {
   const transition = useRef(new Animated.Value(0)).current;
@@ -14,7 +19,7 @@ const ServiceCard = ({ serviceName, servicePrice, handlePress, isChose }) => {
   }, [isChose]);
 
   return (
-    <TouchableOpacity
+    <TouchableWithoutFeedback
       onPress={() => {
         handlePress();
       }}
@@ -25,27 +30,57 @@ const ServiceCard = ({ serviceName, servicePrice, handlePress, isChose }) => {
           flexWrap: "wrap",
           justifyContent: "space-between",
           alignItems: "center",
-          borderWidth: 1,
+          // borderWidth: 1,
           borderRadius: 10,
-          paddingLeft: 10,
-          marginBottom: 10,
-          borderColor: transition.interpolate({
+          padding: 4,
+          marginBottom: 12,
+          // borderColor: transition.interpolate({
+          //   inputRange: [0, 1],
+          //   outputRange: ["#B5B5B5", "#00a19d"],
+          // }),
+          backgroundColor: transition.interpolate({
             inputRange: [0, 1],
             outputRange: ["#B5B5B5", "#00a19d"],
           }),
         }}
       >
-        <Caption
-          style={{ fontSize: 16, width: 150, textTransform: "capitalize" }}
+        <View
+          style={{
+            flex: 1,
+
+            padding: 8,
+            borderRadius: 8,
+
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            alignItems: "center",
+            backgroundColor: "white",
+          }}
         >
-          {serviceName}
-        </Caption>
-        <Caption style={{ fontSize: 16, textTransform: "capitalize" }}>
-          {servicePrice}
-        </Caption>
-        <IconButton icon="hospital-box-outline" size={25} />
+          <Caption
+            style={{
+              fontSize: 16,
+              width: 150,
+              textTransform: "capitalize",
+              lineHeight: 20,
+            }}
+          >
+            {serviceName}
+          </Caption>
+          <Caption
+            style={{
+              fontSize: 16,
+              textTransform: "capitalize",
+              lineHeight: 20,
+            }}
+          >
+            {servicePrice}
+          </Caption>
+          {/* <IconButton icon="hospital-box-outline" size={25} /> */}
+        </View>
       </Animated.View>
-    </TouchableOpacity>
+    </TouchableWithoutFeedback>
   );
 };
 

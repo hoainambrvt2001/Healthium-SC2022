@@ -220,7 +220,15 @@ const BookingScreen = ({
             },
           }}
         >
-          You should fill detail before go to next step
+          {appointmentInfo.patientNo === -1
+            ? "You should choose the patient needed examine"
+            : !appointmentInfo.services.length
+            ? "You should choose the service(s)"
+            : appointmentInfo.time.date == ""
+            ? "You should choose date to book appointment"
+            : appointmentInfo.time.start == ""
+            ? "You should choose the time to examine"
+            : "You should choose which doctor to examine"}
         </Snackbar>
       </ScrollView>
     </View>

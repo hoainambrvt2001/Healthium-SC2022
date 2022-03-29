@@ -24,17 +24,22 @@ const MedicalServiceScreen = ({ navigation, route }) => {
 
   const serviceDict = {
     all: "All services",
-    hospital: "Hospital",
-    polyclinic: "Clinic",
-    // drugstore: "Drugstore",
-    gp: "General Practicioner",
-    dental: "Dental Care",
-    pharmacy: "Pharmacy",
-    // physiotherapist: "Physical recovery",
     athome: "At home",
-    polyclinic: "Polyclinic",
-    prenentalcare: "Prenental Care",
-    childrencare: "Children Care",
+    prenatalcare: "Mom health test",
+    bloodgiving: "Blood giving",
+    generaltest: "General test",
+    covidtest: "Covid test",
+    // hospital: "Hospital",
+    // polyclinic: "Clinic",
+    // // drugstore: "Drugstore",
+    // gp: "General Practicioner",
+    // dental: "Dental Care",
+    // pharmacy: "Pharmacy",
+    // // physiotherapist: "Physical recovery",
+    // polyclinic: "Polyclinic",
+    childrencare: "Children test",
+    dental: "Detal implant",
+    thyroidtest: "Thyroid test",
   };
 
   const activityDict = {
@@ -69,6 +74,12 @@ const MedicalServiceScreen = ({ navigation, route }) => {
     else if (type === "childrencare")
       setQueryList({ ...queryList, type: "children-care" });
     else if (type === "all") setQueryList({ ...queryList, type: "" });
+    else if (type === "prenatalcare")
+      setQueryList({ ...queryList, type: "prenatal-care" });
+    // else if (type === "bloodgiving") setQueryList({ ...queryList, type: "" });
+    // else if (type === "generaltest") setQueryList({ ...queryList, type: "" });
+    // else if (type === "covidtest") setQueryList({ ...queryList, type: "" });
+    // else if (type === "thyroidtest") setQueryList({ ...queryList, type: "" });
     else setQueryList({ ...queryList, type: type });
   };
 
@@ -132,7 +143,7 @@ const MedicalServiceScreen = ({ navigation, route }) => {
             showsVerticalScrollIndicator={false}
             data={items}
             keyExtractor={(item) => item.hospitalId}
-            renderItem={({ item }) => {
+            renderItem={({ item, index }) => {
               // console.log("photots");
               // console.log(photos);
               // const photoUrl = photos
@@ -143,18 +154,50 @@ const MedicalServiceScreen = ({ navigation, route }) => {
               // console.log("here");
               // console.log(queryList.type);
               // console.log(route.params.searchText);
+              // if (index % (Math.floor(Math.random)))
+
+              let name = "";
+              if (queryList.type === "bloodgiving") name = "Blood giving";
+              else if (queryList.type === "generaltest") name = "General test";
+              else if (queryList.type === "covidtest") name = "Covid test";
+              else if (queryList.type === "childrencare")
+                name = "Children test";
+              else if (queryList.type === "denta") name = "Detal implant";
+              else if (queryList.type === "thyroidtest") name = "Thyroid test";
+              else name = "";
+
+              // console.log("service:");
+              // console.log(serviceName);
               if (
-                item.hospitalSpeciality
-                  .toLowerCase()
-                  .includes(queryList.type) &&
-                item.hospitalName
-                  .toLowerCase()
-                  .includes(route.params.searchText.toLowerCase())
+                ["athome", "prenatalcare", "dental"].includes(queryList.type)
               ) {
-                // console.log("in if");
-                return <HospitalCard {...item} navigation={navigation} />;
+                if (
+                  item.hospitalSpeciality
+                    .toLowerCase()
+                    .includes(queryList.type) &&
+                  item.hospitalName
+                    .toLowerCase()
+                    .includes(route.params.searchText.toLowerCase())
+                ) {
+                  return (
+                    <HospitalCard
+                      {...item}
+                      navigation={navigation}
+                      serviceName={name}
+                      price={Math.floor(Math.random() * 100) + 20}
+                    />
+                  );
+                } else return null;
+              } else {
+                return (
+                  <HospitalCard
+                    {...item}
+                    navigation={navigation}
+                    serviceName={name}
+                    price={Math.floor(Math.random() * 100) + 20}
+                  />
+                );
               }
-              return null;
             }}
           />
         )}

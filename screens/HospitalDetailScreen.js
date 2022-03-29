@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, ScrollView } from "react-native";
+import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
 import { Paragraph, Title, Button } from "react-native-paper";
 import InfoHospitalCard from "components/Utils/InfoHospitalCard";
 import MyMapView from "components/Map/MyMapView";
@@ -45,41 +45,7 @@ const HospitalDetailScreen = ({
   //     </View>
   //   );
 
-  const carefulConsultRatingList = [];
-  const facilityRatingList = [];
-  const fastMedicalExamineProcessRatingList = [];
-  const patientCareRatingList = [];
-
-  while (carefulConsultRating !== 0) {
-    carefulConsultRatingList.push(
-      <Icon size={20} color="#FFC830" name="star" key={carefulConsultRating} />
-    );
-    carefulConsultRating--;
-  }
-
-  while (facilityRating !== 0) {
-    facilityRatingList.push(
-      <Icon size={20} color="#FFC830" name="star" key={facilityRating} />
-    );
-    facilityRating--;
-  }
-  while (fastMedicalExamineProcessRating !== 0) {
-    fastMedicalExamineProcessRatingList.push(
-      <Icon
-        size={20}
-        color="#FFC830"
-        name="star"
-        key={fastMedicalExamineProcessRating}
-      />
-    );
-    fastMedicalExamineProcessRating--;
-  }
-  while (patientCareRating !== 0) {
-    patientCareRatingList.push(
-      <Icon size={20} color="#FFC830" name="star" key={patientCareRating} />
-    );
-    patientCareRating--;
-  }
+  const [showMore, setShowMore] = useState(false);
 
   return (
     <ScrollView style={{ flex: 1, paddingBottom: 16 }}>
@@ -111,36 +77,11 @@ const HospitalDetailScreen = ({
         </View>
       </View>
 
-      <View style={{ paddingHorizontal: 20 }}>
-        <Title>Overview</Title>
-        <Paragraph numberOfLines={6}>{hospitalDescription}</Paragraph>
-        <Title>Location</Title>
-        <Paragraph>{hospitalAddress}</Paragraph>
-
-        <Title>Rating</Title>
-        <Paragraph>Careful consulting: {carefulConsultRatingList}</Paragraph>
-        <Paragraph>Facility: {facilityRatingList}</Paragraph>
-        <Paragraph>
-          Fast medical examine process: {fastMedicalExamineProcessRatingList}
-        </Paragraph>
-        <Paragraph>Patient care: {patientCareRatingList}</Paragraph>
-
-        <Title>Map</Title>
-
-        <MyMapView
-          hospitalId={hospitalId}
-          hospitalName={hospitalName}
-          userRating={userRating}
-          lat={lat}
-          lng={lng}
-          hospitalPhoto={hospitalPhoto}
-        />
-      </View>
       <View>
         <Button
           style={{
             backgroundColor: "#00a19d",
-            marginTop: 50,
+            marginTop: 20,
             marginLeft: 20,
             marginRight: 20,
             marginBottom: 20,
@@ -156,6 +97,98 @@ const HospitalDetailScreen = ({
         >
           <Title style={{ color: "white" }}>Book appointment</Title>
         </Button>
+      </View>
+
+      <View style={{ paddingHorizontal: 20 }}>
+        <Title>Overview</Title>
+        <Paragraph numberOfLines={!showMore ? 3 : null}>
+          {hospitalDescription}
+        </Paragraph>
+        <TouchableOpacity onPress={() => setShowMore(!showMore)}>
+          <Text
+            style={{ color: "rgb(3,122,255)", textDecorationLine: "underline" }}
+          >
+            {!showMore ? "Show more" : "Show less"}
+          </Text>
+        </TouchableOpacity>
+        <Title>Location</Title>
+        <Paragraph>{hospitalAddress}</Paragraph>
+
+        <Title>Rating</Title>
+        <Paragraph>
+          Careful consulting: <Icon size={20} color="#FFC830" name="star" />{" "}
+          <Text style={{ fontWeight: "700" }}>
+            {Number(carefulConsultRating).toFixed(1)}{" "}
+            {carefulConsultRating == 5
+              ? "Brilliant"
+              : carefulConsultRating == 4
+              ? "Great"
+              : carefulConsultRating == 3
+              ? "Average"
+              : carefulConsultRating == 2
+              ? "Bad"
+              : "Very bad"}
+          </Text>
+        </Paragraph>
+        <Paragraph>
+          Facility: <Icon size={20} color="#FFC830" name="star" />{" "}
+          <Text style={{ fontWeight: "700" }}>
+            {Number(facilityRating).toFixed(1)}{" "}
+            {facilityRating == 5
+              ? "Brilliant"
+              : facilityRating == 4
+              ? "Great"
+              : facilityRating == 3
+              ? "Average"
+              : facilityRating == 2
+              ? "Bad"
+              : "Very bad"}
+          </Text>
+        </Paragraph>
+        <Paragraph>
+          Fast med. examine process:
+          <Icon size={20} color="#FFC830" name="star" />{" "}
+          <Text style={{ fontWeight: "700" }}>
+            {Number(fastMedicalExamineProcessRating).toFixed(1)}{" "}
+            {fastMedicalExamineProcessRating == 5
+              ? "Brilliant"
+              : fastMedicalExamineProcessRating == 4
+              ? "Great"
+              : fastMedicalExamineProcessRating == 3
+              ? "Average"
+              : fastMedicalExamineProcessRating == 2
+              ? "Bad"
+              : "Very bad"}
+          </Text>
+        </Paragraph>
+        <Paragraph>
+          Patient care:
+          <Icon size={20} color="#FFC830" name="star" />{" "}
+          <Text style={{ fontWeight: "700" }}>
+            {Number(patientCareRating).toFixed(1)}{" "}
+            {patientCareRating == 5
+              ? "Brilliant"
+              : patientCareRating == 4
+              ? "Great"
+              : patientCareRating == 3
+              ? "Average"
+              : patientCareRating == 2
+              ? "Bad"
+              : "Very bad"}
+          </Text>
+        </Paragraph>
+
+        <Title>Map</Title>
+        <View style={{ marginBottom: 20 }}>
+          <MyMapView
+            hospitalId={hospitalId}
+            hospitalName={hospitalName}
+            userRating={userRating}
+            lat={lat}
+            lng={lng}
+            hospitalPhoto={hospitalPhoto}
+          />
+        </View>
       </View>
     </ScrollView>
   );

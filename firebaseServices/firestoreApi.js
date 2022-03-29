@@ -10,6 +10,7 @@ import {
   query,
   where,
   addDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getAuth } from "firebase/auth";
@@ -381,6 +382,18 @@ export const getContactList = async () => {
     // console.log("value");
     // console.log(value);
     return [...value];
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const deleteAppointment = async (userId, appointId) => {
+  try {
+    const appointRef = doc(
+      firestore,
+      `users/${userId}/appointments/${appointId}`
+    );
+    return await deleteDoc(appointRef).then(() => console.log("deleted"));
   } catch (e) {
     console.log(e);
   }
