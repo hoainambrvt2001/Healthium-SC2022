@@ -8,7 +8,7 @@ export const listServices = [
     title: "Medical record",
   },
   {
-    img: require("assets/analytic-icon.png"),
+    img: require("assets/treatment-care.png"),
     title: "Treatment and Care",
   },
   {

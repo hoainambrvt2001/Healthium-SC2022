@@ -10,7 +10,9 @@ const Option = ({ name, desc, navigation, border }) => {
       style={[option.container, border]}
       onPress={() => {
         if (name === "Privacy") {
-          navigation.navigate("ResetPassword");
+          navigation.navigate("ResetPassword", {
+            parentRoute: "UserProfileScreen",
+          });
         } else if (name === "Profile settings") {
           navigation.navigate("ProfileSettings");
         }

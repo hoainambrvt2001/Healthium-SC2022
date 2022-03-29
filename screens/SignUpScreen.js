@@ -1,11 +1,11 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { IconButton, Button } from "react-native-paper";
 import SignUp from "components/Authentication/SignUp";
 
 const SignUpScreen = ({ navigation }) => {
   return (
-    <View style={{ flex: 1 }}>
+    <ScrollView style={{ flex: 1 }}>
       <View style={{ alignItems: "flex-start", marginTop: 50, marginLeft: 10 }}>
         <IconButton
           icon="arrow-left"
@@ -21,7 +21,7 @@ const SignUpScreen = ({ navigation }) => {
           Let's Get Started!
         </Text>
         <Text style={{ color: "#909090" }}>
-          Create an account to UCare to experience our features
+          Create an account to Healthium to experience our features
         </Text>
       </View>
       <View
@@ -48,7 +48,7 @@ const SignUpScreen = ({ navigation }) => {
           Sign in
         </Button>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
