@@ -58,7 +58,7 @@ const SignOutButton = () => {
 };
 
 const UserProfileScreen = ({ navigation, route }) => {
-  const [visibleNotify, setVisibleNotify] = useState(true);
+  const [visibleNotify, setVisibleNotify] = useState(false);
   const [userInfo, setUserInfo] = useState({});
 
   const user = auth.currentUser;
