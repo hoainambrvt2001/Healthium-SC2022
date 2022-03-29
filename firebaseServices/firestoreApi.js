@@ -219,15 +219,16 @@ const uploadImageAsync = async (userId, uri) => {
 };
 
 export const updateUserInfo = async (userInfo, userId, userAvatar) => {
-  try {
-    const userRef = doc(firestore, "users", userId);
-    await uploadImageAsync(userId, userAvatar)
+  const userRef = doc(firestore, "users", userId);
+  await updateDoc(userRef, userInfo).catch((error) => console.log(error));
+  if (userAvatar.isChanged) {
+    await uploadImageAsync(userId, userAvatar.uri)
       .then((imgUrl) => {
-        userInfo.avatar = imgUrl;
+        updateDoc(userRef, {
+          avatar: imgUrl,
+        });
       })
-      .then(() => updateDoc(userRef, userInfo));
-  } catch (error) {
-    console.log(error);
+      .catch((error) => console.log(error));
   }
 };
 

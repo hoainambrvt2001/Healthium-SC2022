@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Image, Text } from "react-native";
 import SignIn from "components/Authentication/SignIn";
-import { Button } from "react-native-paper";
+import { Button, Snackbar } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const SignInScreen = ({ navigation }) => {
+const SignInScreen = ({ navigation, route }) => {
+  const [visibleNotify, setVisibleNotify] = useState(false);
+
+  useEffect(() => {
+    if (route.params) setVisibleNotify(route.params?.resetPasswordStatus);
+  }, [route.params]);
+
+  const onDismissSnackBar = () => setVisibleNotify(false);
+
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <View>
         <View style={{ marginBottom: "20%" }}>
           <Image
@@ -21,10 +29,10 @@ const SignInScreen = ({ navigation }) => {
                 marginBottom: 6,
               }}
             >
-              Welcome back!
+              Welcome to Healthium
             </Text>
             <Text style={{ color: "#909090" }}>
-              Log in to your existant account of UCare
+              Log in to your existant account of Healthium
             </Text>
           </View>
         </View>
@@ -51,6 +59,16 @@ const SignInScreen = ({ navigation }) => {
           </Button>
         </View>
       </View>
+      <Snackbar
+        visible={visibleNotify}
+        duration={1000}
+        onDismiss={onDismissSnackBar}
+        style={{ height: 55 }}
+      >
+        <Text style={{ fontSize: 16 }}>
+          Reset password email has been sent!
+        </Text>
+      </Snackbar>
     </SafeAreaView>
   );
 };

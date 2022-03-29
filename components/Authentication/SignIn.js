@@ -108,7 +108,11 @@ const SignIn = ({ navigation }) => {
               </View>
               <View style={{ alignItems: "flex-end", marginBottom: 10 }}>
                 <TouchableWithoutFeedback
-                  onPress={() => navigation.navigate("ResetPassword")}
+                  onPress={() =>
+                    navigation.navigate("ResetPassword", {
+                      parentRoute: "SignIn",
+                    })
+                  }
                 >
                   <Text>Forgot Password?</Text>
                 </TouchableWithoutFeedback>

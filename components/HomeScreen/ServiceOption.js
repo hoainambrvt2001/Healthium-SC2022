@@ -12,7 +12,6 @@ const ServiceOption = ({ service, navigation }) => {
         } else if (service.title === "Treatment and Care") {
           navigation.navigate("TreatmentCare");
         } else if (service.title === "Appointment") {
-          // navigation.dispatch(CommonActions.setParams({ testAnother: true }));
           navigation.navigate("AppointmentScreen");
         } else {
           navigation.navigate("MedicalService");
@@ -21,13 +20,17 @@ const ServiceOption = ({ service, navigation }) => {
     >
       <View
         style={{
-          flex: 1,
+          flex: service.title === "Appointment" ? 1.3 : 1,
           alignItems: "center",
           justifyContent: "center",
         }}
       >
         <View>
-          <Image source={service.img} style={{ width: 25, height: 25 }} />
+          <Image
+            source={service.img}
+            style={{ width: 30, height: 30 }}
+            resizeMode="contain"
+          />
         </View>
         <View>
           <Paragraph>{service.title}</Paragraph>

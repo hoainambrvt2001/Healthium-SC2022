@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import { TextInput, HelperText, Button, IconButton } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -6,8 +6,15 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
-const ResetPasswordScreen = ({ navigation }) => {
+const ResetPasswordScreen = ({ navigation, route }) => {
+  const [parentRoute, setParentRoute] = useState("");
   const auth = getAuth();
+
+  useEffect(() => {
+    if (route.params) {
+      setParentRoute(route.params.parentRoute);
+    }
+  }, [route]);
 
   const emailSchema = Yup.object({
     email: Yup.string()
@@ -55,7 +62,9 @@ const ResetPasswordScreen = ({ navigation }) => {
               .then(() => {
                 // Pasword reset email sent!
                 actions.setSubmitting(false);
-                navigation.goBack();
+                navigation.navigate(parentRoute, {
+                  resetPasswordStatus: true,
+                });
               })
               .catch((errors) => {
                 console.log(errors);

@@ -67,9 +67,9 @@ const MedicalRecordScreen = ({ navigation }) => {
         <View style={{ marginHorizontal: 10 }}>
           <Title style={{ color: "#ffffff" }}>{userInfo.name}</Title>
           <Text style={{ color: "#ffffff" }}>
-            Me {userInfo.gender ? `-${userInfo.gender}` : null}
+            Me {userInfo.gender ? ` - ${userInfo.gender}` : null}
             {userInfo.birthday
-              ? `- ${getAge(userInfo.birthday)} year olds`
+              ? ` - ${getAge(userInfo.birthday)} year olds`
               : null}
           </Text>
         </View>
@@ -82,7 +82,7 @@ const MedicalRecordScreen = ({ navigation }) => {
           paddingHorizontal: 10,
           paddingVertical: 5,
           backgroundColor: "#f5f7fd",
-          maxHeight: 50,
+          maxHeight: 60,
         }}
         showsHorizontalScrollIndicator={false}
       >
@@ -108,6 +108,7 @@ const MedicalRecordScreen = ({ navigation }) => {
                 <Title
                   style={{
                     color: chosenOption === idx ? "#00a19d" : "#000000",
+                    height: 40,
                   }}
                 >
                   {item.title}
@@ -130,7 +131,14 @@ const MedicalRecordScreen = ({ navigation }) => {
           right: 0,
           bottom: 0,
           margin: 16,
-          marginBottom: 70,
+          // marginBottom: 70,
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
           elevation: 5,
         }}
         icon="plus"

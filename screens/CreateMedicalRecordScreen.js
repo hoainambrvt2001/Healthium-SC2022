@@ -27,6 +27,8 @@ const CreateMedicalRecordScreen = ({ navigation }) => {
     bloodPressureMeasureTime: "",
     height: "",
     heightMeasureTime: "",
+    weight: "",
+    weightMeasureTime: "",
   });
   const auth = getAuth();
   const user = auth.currentUser;
@@ -168,7 +170,7 @@ const CreateMedicalRecordScreen = ({ navigation }) => {
                 outlineColor="#CCCDC6"
               />
               <BoxDivider height={10} />
-              <Title>Height (Cm)</Title>
+              <Title>Height (cm)</Title>
               <Text>Measure value:</Text>
               <TextInput
                 value={values.height}
@@ -179,10 +181,28 @@ const CreateMedicalRecordScreen = ({ navigation }) => {
               />
               <Text>Measure time: </Text>
               <TextInput
-                value={values.heightPressureMeasureTime}
+                value={values.heightMeasureTime}
                 mode="outlined"
                 onChangeText={handleChange("heightMeasureTime")}
                 onBlur={handleBlur("heightMeasureTime")}
+                outlineColor="#CCCDC6"
+              />
+              <BoxDivider height={10} />
+              <Title>Weight (kg)</Title>
+              <Text>Measure value:</Text>
+              <TextInput
+                value={values.weight}
+                mode="outlined"
+                onChangeText={handleChange("weight")}
+                onBlur={handleBlur("weight")}
+                outlineColor="#CCCDC6"
+              />
+              <Text>Measure time: </Text>
+              <TextInput
+                value={values.weightMeasureTime}
+                mode="outlined"
+                onChangeText={handleChange("weightMeasureTime")}
+                onBlur={handleBlur("weightMeasureTime")}
                 outlineColor="#CCCDC6"
               />
               <BoxDivider height={40} />

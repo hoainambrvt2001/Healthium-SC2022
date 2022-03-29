@@ -6,13 +6,20 @@ const HealthCard = ({ iconName, typeName, typeUnit, value, measureTime }) => {
   return (
     <View
       style={{
-        elevation: 5,
-        margin: 10,
         borderRadius: 5,
         backgroundColor: "#ffffff",
-        height: 150,
-        width: 180,
+        height: 160,
+        width: 175,
         padding: 10,
+
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
       }}
     >
       <View

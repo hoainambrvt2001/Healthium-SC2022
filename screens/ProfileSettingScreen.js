@@ -33,7 +33,10 @@ const ProfileSettingScreen = ({ navigation }) => {
     phoneNumber: "",
     address: "",
   });
-  const [userAvatar, setUserAvatar] = useState("");
+  const [userAvatar, setUserAvatar] = useState({
+    isChanged: false,
+    uri: "",
+  });
   const [checked, setChecked] = useState(0);
   const [showDatePicker, setShowDatePicker] = useState(false);
 
@@ -52,7 +55,11 @@ const ProfileSettingScreen = ({ navigation }) => {
             phoneNumber: infos.phoneNumber,
             address: infos.address,
           });
-          setUserAvatar(infos.avatar);
+          setUserAvatar({
+            isChanged: false,
+            uri: infos.avatar,
+          });
+          setChecked(infos.gender === "Male" ? 0 : 1);
         })
         .catch((errors) => {
           console.log(errors);
@@ -79,7 +86,10 @@ const ProfileSettingScreen = ({ navigation }) => {
     });
 
     if (!result.cancelled) {
-      setUserAvatar(result.uri);
+      setUserAvatar({
+        isChanged: true,
+        uri: result.uri,
+      });
     }
   };
 
@@ -121,8 +131,8 @@ const ProfileSettingScreen = ({ navigation }) => {
                     <Avatar.Image
                       size={100}
                       source={
-                        userAvatar
-                          ? { uri: userAvatar }
+                        userAvatar.uri
+                          ? { uri: userAvatar.uri }
                           : require("assets/avatar.png")
                       }
                       style={{
