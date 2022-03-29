@@ -67,9 +67,9 @@ const MedicalRecordScreen = ({ navigation }) => {
         <View style={{ marginHorizontal: 10 }}>
           <Title style={{ color: "#ffffff" }}>{userInfo.name}</Title>
           <Text style={{ color: "#ffffff" }}>
-            Me {userInfo.gender ? `-${userInfo.gender}` : null}
+            Me {userInfo.gender ? ` - ${userInfo.gender}` : null}
             {userInfo.birthday
-              ? `- ${getAge(userInfo.birthday)} year olds`
+              ? ` - ${getAge(userInfo.birthday)} year olds`
               : null}
           </Text>
         </View>
@@ -82,15 +82,14 @@ const MedicalRecordScreen = ({ navigation }) => {
           paddingHorizontal: 10,
           paddingVertical: 5,
           backgroundColor: "#f5f7fd",
+          maxHeight: 60,
         }}
         showsHorizontalScrollIndicator={false}
       >
         {[
           { title: "Overview" },
-          {
-            /* { title: "Medical history" },
-          { title: "Covid-19 Vacination" }, */
-          },
+          { title: "Medical history" },
+          { title: "Covid-19 Vacination" },
         ].map((item, idx) => {
           return (
             <TouchableWithoutFeedback

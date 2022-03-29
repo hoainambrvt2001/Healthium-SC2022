@@ -12,6 +12,7 @@ const OverviewSection = ({ medicalRecord }) => {
           flexDirection: "row",
           flexWrap: "wrap",
           backgroundColor: "#f5f7fd",
+          justifyContent: "space-around",
         }}
       >
         {[
@@ -67,7 +68,13 @@ const OverviewSection = ({ medicalRecord }) => {
           },
         ].map((item, idx) => {
           return (
-            <View style={{ alignItems: "baseline", width: "50%" }} key={idx}>
+            <View
+              style={{
+                alignItems: "baseline",
+                margin: 10,
+              }}
+              key={idx}
+            >
               <HealthCard
                 iconName={item.iconName}
                 typeName={item.typeName}
@@ -78,6 +85,9 @@ const OverviewSection = ({ medicalRecord }) => {
             </View>
           );
         })}
+        <View
+          style={{ height: 160, width: 175, margin: 10, padding: 10 }}
+        ></View>
       </View>
     </ScrollView>
   );
