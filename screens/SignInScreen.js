@@ -18,8 +18,12 @@ const SignInScreen = ({ navigation, route }) => {
       <View>
         <View style={{ marginBottom: "20%" }}>
           <Image
-            source={require("assets/AppLogo.png")}
-            style={{ marginLeft: 10, height: 100, width: 100 }}
+            source={require("assets/icon-signin.png")}
+            style={{
+              marginLeft: 10,
+              height: 100,
+              width: 100,
+            }}
           />
           <View style={{ alignItems: "center" }}>
             <Text
