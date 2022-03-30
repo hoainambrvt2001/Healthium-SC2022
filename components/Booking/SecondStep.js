@@ -174,8 +174,8 @@ const SecondStep = ({
                 <Title style={{ fontSize: 18, marginTop: 8, lineHeight: 20 }}>
                   Experience:
                 </Title>
-                {doctorExp.map((exp) => {
-                  return <Paragraph>- {exp}</Paragraph>;
+                {doctorExp.map((exp, idx) => {
+                  return <Paragraph key={idx}>- {exp}</Paragraph>;
                 })}
               </Dialog.Content>
             </>
