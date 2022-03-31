@@ -1,6 +1,6 @@
 # Healthium
 * Welcome to our application, Healthium. 
-* Healthium is a brainchild of our group. It is created to help people access to medical service fast and suitable for their situation.
+* Healthium is a brainchild of our group. It is created to help people access to medical service fast and suitable for their situations.
 	
 # APK Installation
   There are 02 ways:
@@ -8,18 +8,17 @@
   * Download .apk file from [Expo](https://expo.dev/artifacts/6d9ed118-9346-442a-8914-afe5deb40db6)
 
 # Prerequisites
-* Before continue to clone our app, ensure you meet the following requirements:
-  * Install expo
+* Before clonning our app, ensure you meet the following requirements:
+  * Expo is installed.
   * (Optional):
-    * Install android studio
-    * Have android emulator
+    * Android Studio is installed to run Android emulator.
 
 # Clone our project
 Step 1: Clone our project to your directory
 ```
 git clone https://github.com/hoainambrvt2001/Healthium-SC2022.git
 ```
-Step 2: Install dependencies
+Step 2: Install all dependencies
 ```
 yarn install
 ```
@@ -30,18 +29,11 @@ You can either run on emulator `expo run android` or your own device (via Expo G
 # Technologies
 * Healthium project is created with:
 	* Language: Javascript
-	* Database: Google Firebase
+	* Database: Firebase - Google
   * Framework:
     * React Native
     * Expo
 		
-# Main features
-* Easily manage task on deadline. 
-* Work effectively with Pomodoro method.
-* Easy to create and manage Note in app.
-* Rank system due to time work in app.  
-* Community shares mainly in educational events that can be joined and donated.
-
 # Contributors
 * Miss Huỳnh Gia Dinh
 * Mr. Trần Đăng Khoa
