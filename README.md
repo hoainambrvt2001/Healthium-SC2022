@@ -22,7 +22,8 @@ Step 2: Install all dependencies
 ```
 yarn install
 ```
-We recommend to use `yarn install` instead of `npm install` because npm may create some errors.<br/>
+We recommend to use `yarn install` instead of `npm install` because npm may create some errors.
+<br/>
 Step 3: Run our app <br/>
 You can either run on emulator `expo start --android` or your own device (via Expo Go app and QR code in the terminal) `expo start`.
 
