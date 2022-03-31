@@ -24,7 +24,7 @@ yarn install
 ```
 We recommend to use `yarn install` instead of `npm install` because npm may create some errors.
 Step 3: Run our app <br/>
-You can either run on emulator `expo run android` or your own device (via Expo Go app and QR code in the terminal) `expo start`.
+You can either run on emulator `expo start --android` or your own device (via Expo Go app and QR code in the terminal) `expo start`.
 
 # Technologies
 * Healthium project is created with:
