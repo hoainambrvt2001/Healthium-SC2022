@@ -197,14 +197,21 @@ const MedicalServiceScreen = ({ navigation, route }) => {
                   );
                 } else return null;
               } else {
-                return (
-                  <HospitalCard
-                    {...item}
-                    navigation={navigation}
-                    serviceName={name}
-                    price={Math.floor(Math.random() * 100) + 20}
-                  />
-                );
+                if (
+                  item.hospitalName
+                    .toLowerCase()
+                    .includes(route.params.searchText.toLowerCase())
+                ) {
+                  return (
+                    <HospitalCard
+                      {...item}
+                      navigation={navigation}
+                      serviceName={name}
+                      price={Math.floor(Math.random() * 100) + 20}
+                    />
+                  );
+                }
+                return null;
               }
             }}
           />
